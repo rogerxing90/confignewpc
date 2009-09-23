@@ -1,0 +1,22 @@
+#!/bin/bash
+# usage: 
+# mmmgrep "FPGA_*"
+# mmmgrep "FPGA_*" "*LED" "*Set"
+# options: n(list number), i(ignorecase), I(no binary), r(recursive), 
+#	   E(regexp) 
+# change history
+# 22-oct-2008
+#	1. support extend-regexp (-E)
+#	2. do not search for whole word (no -w)
+
+set -x
+if [ "$#" == "3" ]
+then
+   grep -rIinE --include=*.cpp --include=*.[ch] "$1" * | grep -rIinE --include=*.[ch] $2 --color=auto | grep -rIinE --include=*.[ch] $3 --color=auto
+elif [ "$#" == "2" ]
+then
+   grep -rIinE --include=*.cpp --include=*.[ch] "$1" * | grep -rIinE --include=*.[ch] $2 --color=auto 
+else
+   grep -rIinE --include=*.cpp --include=*.[ch] "$1" * --color=auto
+fi
+
