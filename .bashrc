@@ -141,8 +141,8 @@ alias newgppr="cd ~/project_powerline/newGppMac/ref/mac_ref/modified/"
 alias sshh="ssh -X knng@10.217.137.55"
 
 #temp
-alias runmac="cd ~/project_powerline/newGppMac/obj && 		sudo ./mac && cd 
-../src"
+newprogpp=~/project_powerline/newGppMac
+alias runmac="cd $newprogpp/obj && sudo ./mac && cd $newprogpp/src"
 
 PATH=$PATH:/opt/modelsim/modeltech/linux:/home/insidepower/localbin
 MGLS_HOME=/opt/modelsim/modeltech/linux/mgls
