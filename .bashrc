@@ -112,7 +112,7 @@ alias bashh="gvim ~/.bashrc"
 alias bassh="source ~/.bashrc"
 alias ctagg="ctags -R --sort=foldcase --c-types=+p --fields=+S *.h *.c"
 alias grep="grep -nrEI --color"
-alias xc="| xclip -selection c"
+alias xc="tr '\n' ' ' | xclip -selection c"
 
 #essential ls
 alias ll="ls -la"
@@ -141,6 +141,7 @@ alias newgppr="cd ~/project_powerline/newGppMac/ref/mac_ref/modified/"
 alias sshh="ssh -X knng@10.217.137.55"
 
 #temp
+PATH=$PATH:~/confignewpc/
 newprogpp=~/project_powerline/newGppMac
 alias runmac="cd $newprogpp/obj && sudo ./mac && cd $newprogpp/src"
 

@@ -1,0 +1,12 @@
+#!/bin/bash
+# usage: copy file to /usr/local/bin
+
+#check total input
+if [ "$#" -ne 1 ]; then
+   echo "need one filename to copy to local/bin"
+fi
+
+cp $1 /usr/local/bin/
+# sort by ctime(-ct), in reverse order (-r)
+# -ctrla (control a)
+ls -lactr /usr/local/bin 
