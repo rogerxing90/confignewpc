@@ -31,5 +31,7 @@
 #will appropriately merge from that remote branch. Recommended. Without this,
 #you will have to add --track to your branch command or manually merge remote
 #tracking branches with "fetch" and then "merge".
+[push]
+	default = tracking
 [merge]
 	tool = meld

@@ -297,12 +297,11 @@ nmap ,d :e main.c<bar>%s#//\(while(i);\)# \1<CR>
 nmap ,n :b main<bar>%s#[^/]\(while(i);\)#//\1<CR>
 "nmap \bh i/*<ESC>73A=<ESC>o<C-W>==  @  @<CR>==<CR>==  DESC:<CR>==  USAGE:<CR>==  INPUTS:<CR>==  OUTPUTS:<CR>==  RETURN:<CR>==  IMP NOTE:<CR><ESC>73A=<ESC>a*/<ESC>=8k
 "nmap \bi i/*<ESC>73A=<ESC>o<C-W>==  <CR><ESC>73A=<ESC>a*/<ESC>=1k
-"nmap \bj i/*++++++++++++++++++++++++++++<  >++++++++++++++++++++++++++++++++*/<ESC>F<l
-"nmap \bk i//--------------------------------------------  //<ESC>==F-3l
-nmap \bh i/**<ESC>75A=<ESC>o<C-W>==  @  @<CR>==<CR>==  DESC:<CR>==  USAGE:<CR>==  INPUTS:<CR>==  OUTPUTS:<CR>==  RETURN:<CR>==  IMP NOTE:<CR><ESC>76A=<ESC>a*/<ESC>=8k
-nmap \bi i/**<ESC>75A=<ESC>o<C-W>==  <CR><ESC>76A=<ESC>a*/<ESC>=1k
-nmap \bj i/**++++++++++++++++++++++++++++++++<  >++++++++++++++++++++++++++++++++*/<ESC>F<l
-nmap \bk i/// -------------------------------------------  //<ESC>==F-3l
+nmap \bh i/*=<ESC>75A=<ESC>o<C-W>==  @  @<CR>==<CR>==  DESC:<CR>==  USAGE:<CR>==  INPUTS:<CR>==  OUTPUTS:<CR>==  RETURN:<CR>==  IMP NOTE:<CR><ESC>76A=<ESC>a*/<ESC>=8k
+nmap \bi i/*=<ESC>75A=<ESC>o<C-W>==  <CR><ESC>76A=<ESC>a*/<ESC>=1k
+nmap \bj i/*+++++++++++++++++++++++++++++++++<  >++++++++++++++++++++++++++++++++*/<ESC>F<l
+nmap \bk i// -------------------------------------------  //<ESC>==F-3l
+nmap ,p ?PROTOTYPES<CR>
 
 "map <C-A-z> :source ~/kn/myscript/savePaper.vim
 "//---------------------------------- title comment start //

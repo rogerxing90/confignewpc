@@ -134,6 +134,7 @@ alias igg=">> .gitignore"
 alias gitss="git status | sed '/Untracked/q'"
 
 #misc
+alias vims="gvim -S kn.vim"
 alias binn="cd /usr/local/bin"
 alias newgppp="cd ~/project_powerline/newGppMac/src"
 alias newgppr="cd ~/project_powerline/newGppMac/ref/mac_ref/modified/"
