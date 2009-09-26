@@ -127,6 +127,8 @@ alias vimm="gvim $(ls -ctr | tail -n-1)"
 source ~/.git-completion.bash
 alias gits="git status"
 alias gita="git commit -a"
+alias gitb="git branch"
+alias gitco="git checkout"
 alias gitl="git log"
 alias igg=">> .gitignore"
 alias gitss="git status | sed '/Untracked/q'"
