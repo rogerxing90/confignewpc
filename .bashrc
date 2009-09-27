@@ -52,8 +52,9 @@ fi
 if [ "$color_prompt" = yes ]; then
     PS1='${debian_chroot:+($debian_chroot)}\[\033[01;32m\]\u@\h\[\033[00m\]:\[\033[01;34m\]\w\[\033[00m\]\$ '
  else
-    #PS1='${debian_chroot:+($debian_chroot)}\u@\h:\w\$ '
-	PS1='${debian_chroot:+($debian_chroot)}\w\e[37m$(__git_ps1 "(%s)")\e[0m>\$ '
+    PS1='${debian_chroot:+($debian_chroot)}\u@\h:\w\$ '
+	#PS1='${debian_chroot:+($debian_chroot)}\w\e[37m$(__git_ps1 "(%s)")\e[0m>\$ '
+	PS1='${debian_chroot:+($debian_chroot)}\w>\$ '
 fi
 unset color_prompt force_color_prompt
 
@@ -130,7 +131,7 @@ alias gita="git commit -a"
 alias gitb="git branch"
 alias gitco="git checkout"
 alias gitl="git log"
-alias igg=">> .gitignore"
+#alias igg=">> .gitignore"
 alias gitss="git status | sed '/Untracked/q'"
 
 #misc
@@ -144,7 +145,7 @@ alias newgppr="cd ~/project_powerline/newGppMac/ref/mac_ref/modified/"
 alias sshh="ssh -X knng@10.217.137.55"
 
 #temp
-PATH=$PATH:~/confignewpc/
+PATH=$PATH:~/confignewpc
 newprogpp=~/project_powerline/newGppMac
 alias runmac="cd $newprogpp/obj && sudo ./mac && cd $newprogpp/src"
 

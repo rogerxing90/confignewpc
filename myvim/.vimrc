@@ -50,7 +50,7 @@ set ruler              "display cursor position
 "set formatoptions+=tcroqn      "auto formatting, t=linebreak at textwidth
 "set formatoptions=tcrqnwa      "auto formatting, t=linebreak at textwidth
 "set fo+=a is convenient, but can be a pain too
-set formatoptions=tcrqnw      "auto formatting, t=linebreak at textwidth
+set formatoptions=lcrqnw      "auto formatting, t=linebreak at textwidth
 "default: set formatoptions=tcrqol
 set textwidth=79 wrap linebreak
 set nowrap
@@ -608,6 +608,24 @@ function! MyToglleScrollBind()
     endif
 endfunction
 
+"===============================================================
+"== Function: toggle line break
+"===============================================================
+nmap <C-M-T> :call MyToglleScrollBind()<CR>
+let g:line_break_on = "1"
+function! MyToglleScrollBind()
+    if g:line_break_on == "1"
+		let g:line_break_on = "0"
+		set fo-=ta
+		set fo+=l
+		echo "linebreak off"
+	else
+		set fo+=ta
+		set fo-=l
+		let g:line_break_on = "1"
+		echo "linebreak on"
+	endif
+endfunction
 "===============================================================
 "== Function: GUI FONT
 "===============================================================

@@ -1,0 +1,13 @@
+#!/bin/bash
+CUR_DIR=${PWD}
+if [ "$#" == "0" ] ; then
+	MY_FILE=.gitignore
+elif [ $# == "1" ]; then
+	MY_FILE=$1
+fi
+while [ ! -e $MY_FILE ] ; do #if file not exist
+	pwd
+	cd ..
+done
+gvim $MY_FILE
+cd $CUR_DIR
