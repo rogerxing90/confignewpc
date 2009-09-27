@@ -129,6 +129,8 @@ source ~/.git-completion.bash
 alias gits="git status"
 alias gita="git commit -a"
 alias gitb="git branch"
+alias gitd="git diff"
+alias gitp="git push"
 alias gitco="git checkout"
 alias gitl="git log"
 #alias igg=">> .gitignore"
