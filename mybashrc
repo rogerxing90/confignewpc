@@ -51,8 +51,10 @@ alias gitg="git tag"
 #misc
 alias vims="gvim -S kn.vim"
 alias binn="cd /usr/local/bin"
-alias gppp="cd ~/project_powerline/newGppMac/src"
-alias gppr="cd ~/project_powerline/newGppMac/ref/mac_ref/modified/"
+MY_PROJ_DIR=~/project_powerline/newGppMac
+alias gppp="cd $MY_PROJ_DIR/src"
+alias gppr="cd $MY_PROJ_DIR/ref/mac_ref/modified/"
+alias gppt="cd $MY_PROJ_DIR/test"
 
 #temp
 PATH=$PATH:$MYBASHRC_DIR
