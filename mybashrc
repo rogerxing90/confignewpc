@@ -1,0 +1,63 @@
+#!/bin/bash
+###################
+##### my-bash #####
+###################
+
+#to be pasted in .bashrc
+#   MYBASHRC=~/confignewpc/mybashrc
+#   if [ -f $MYBASHRC ]; then
+#   	. $MYBASHRC
+#   else
+#   	echo not found $MYBASHRC
+#   fi
+
+#essential
+alias rm="rm -i"
+alias nn="nautilus . &"
+alias chmodd="chmod 777"
+alias find="find . -name"
+alias bashh="gvim ~/.bashrc"
+alias bassh="source ~/.bashrc"
+alias ctagg="ctags -R --sort=foldcase --c-types=+p --fields=+S *.h *.c"
+alias grep="grep -nrEI --color"
+alias xc="tr '\n' ' ' | xclip -selection c"
+
+#essential ls
+alias ll="ls -la"
+alias lsd="ls -d */"
+alias lsct="ls -ct | head -n 1"
+alias lsa="ls -ctrla | grep -v 4096 | grep -v 65 | tail -n-1"
+alias lsa5="ls -ctrla | grep -v 4096 | grep -v 65 | tail -n-5"
+# maybe need to modified
+alias vimm="gvim $(ls -ctr | tail -n-1)"
+
+#git
+source ~/.git-completion.bash
+alias gits="git status"
+alias gita="git commit -a"
+alias gitb="git branch"
+alias gitd="git diff"
+alias gitp="git push"
+alias gitco="git checkout"
+alias gitl="git log"
+#alias igg=">> .gitignore"
+alias gitss="git status | sed '/Untracked/q'"
+alias gitst="git stash"
+alias gitstl="git stash list"
+alias gitg="git tag"
+
+#misc
+alias vims="gvim -S kn.vim"
+alias binn="cd /usr/local/bin"
+alias gppp="cd ~/project_powerline/newGppMac/src"
+alias gppr="cd ~/project_powerline/newGppMac/ref/mac_ref/modified/"
+
+#temp
+PATH=$PATH:./
+newprogpp=~/project_powerline/newGppMac
+alias runmac="cd $newprogpp/obj && sudo ./mac && cd $newprogpp/src"
+
+#ref-note
+#PS1='${debian_chroot:+($debian_chroot)}\u@\h:\w\$ '
+##PS1='${debian_chroot:+($debian_chroot)}\w\e[37m$(__git_ps1 "(%s)")\e[0m>\$ '
+#PS1='${debian_chroot:+($debian_chroot)}\w>\$ '
