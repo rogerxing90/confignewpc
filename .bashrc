@@ -135,6 +135,9 @@ alias gitco="git checkout"
 alias gitl="git log"
 #alias igg=">> .gitignore"
 alias gitss="git status | sed '/Untracked/q'"
+alias gitst="git stash"
+alias gitstl="git stash list"
+alias gitg="git tag"
 
 #misc
 alias vims="gvim -S kn.vim"
