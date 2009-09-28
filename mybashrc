@@ -4,7 +4,8 @@
 ###################
 
 #to be pasted in .bashrc
-#   MYBASHRC=~/confignewpc/mybashrc
+#   export MYBASHRC_DIR=~/confignewpc
+#   MYBASHRC=$MYBASHRC_DIR/mybashrc
 #   if [ -f $MYBASHRC ]; then
 #   	. $MYBASHRC
 #   else
@@ -16,7 +17,8 @@ alias rm="rm -i"
 alias nn="nautilus . &"
 alias chmodd="chmod 777"
 alias find="find . -name"
-alias bashh="gvim ~/.bashrc"
+alias bashh="gvim $MYBASHRC_DIR/mybashrc"
+alias bashhh="gvim ~/.bashrc"
 alias bassh="source ~/.bashrc"
 alias ctagg="ctags -R --sort=foldcase --c-types=+p --fields=+S *.h *.c"
 alias grep="grep -nrEI --color"
@@ -53,7 +55,7 @@ alias gppp="cd ~/project_powerline/newGppMac/src"
 alias gppr="cd ~/project_powerline/newGppMac/ref/mac_ref/modified/"
 
 #temp
-PATH=$PATH:./
+PATH=$PATH:$MYBASHRC_DIR
 newprogpp=~/project_powerline/newGppMac
 alias runmac="cd $newprogpp/obj && sudo ./mac && cd $newprogpp/src"
 
