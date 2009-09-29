@@ -25,19 +25,22 @@ alias grep="grep -nrEI --color"
 alias xc="tr '\n' ' ' | xclip -selection c"
 
 #essential ls
-alias ll="ls -la"
-alias lsd="ls -d */"
+alias ll="ls -la --color=auto"
+alias lsd="ls -d */ --color=auto"
 alias lsct="ls -ct | head -n 1"
 alias lsa="ls -ctrla | grep -v 4096 | grep -v 65 | tail -n-1"
 alias lsa5="ls -ctrla | grep -v 4096 | grep -v 65 | tail -n-5"
 # maybe need to modified
+#alias vimm="gvim $(ls -ctr | grep -v 4096 | tail -n-1)"
 alias vimm="gvim $(ls -ctr | tail -n-1)"
 
 #git
-source ~/.git-completion.bash
+source $MYBASHRC_DIR/git-completion.bash
 alias gits="git status"
 alias gita="git commit -a"
+alias gitam="git commit -a -m"
 alias gitb="git branch"
+alias gitc="git checkout"
 alias gitd="git diff"
 alias gitp="git push"
 alias gitco="git checkout"
@@ -47,6 +50,8 @@ alias gitss="git status | sed '/Untracked/q'"
 alias gitst="git stash"
 alias gitstl="git stash list"
 alias gitg="git tag"
+alias gitll="git log --pretty=oneline"
+
 
 #misc
 alias vims="gvim -S kn.vim"
