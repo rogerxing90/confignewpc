@@ -64,7 +64,7 @@ alias gppt="cd $MY_PROJ_DIR/test"
 #temp
 PATH=$PATH:$MYBASHRC_DIR
 newprogpp=~/project_powerline/newGppMac
-alias runmac="cd $newprogpp/obj && sudo ./mac && cd $newprogpp/src"
+alias rrrunmac="cd $newprogpp/obj && sudo ./mac && cd $newprogpp/src"
 
 #ref-note
 #PS1='${debian_chroot:+($debian_chroot)}\u@\h:\w\$ '
