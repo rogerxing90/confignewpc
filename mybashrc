@@ -52,6 +52,9 @@ alias gitstl="git stash list"
 alias gitg="git tag"
 alias gitll="git log --pretty=oneline"
 
+#make
+alias mc="make clean"
+alias mm="make"
 
 #misc
 alias vims="gvim -S kn.vim"
@@ -60,6 +63,7 @@ MY_PROJ_DIR=~/project_powerline/newGppMac
 alias gppp="cd $MY_PROJ_DIR/src"
 alias gppr="cd $MY_PROJ_DIR/ref/mac_ref/modified/"
 alias gppt="cd $MY_PROJ_DIR/test"
+alias gppd="cd $MY_PROJ_DIR/../dsplink_1_60/dsplink"
 
 #temp
 PATH=$PATH:$MYBASHRC_DIR

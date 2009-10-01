@@ -616,11 +616,13 @@ let g:line_break_on = "1"
 function! MyToglleScrollBind()
     if g:line_break_on == "1"
 		let g:line_break_on = "0"
-		set fo-=ta
+		set fo-=t
+		set fo-=a
 		set fo+=l
 		echo "linebreak off"
 	else
-		set fo+=ta
+		set fo+=a
+		set fo+=t
 		set fo-=l
 		let g:line_break_on = "1"
 		echo "linebreak on"
