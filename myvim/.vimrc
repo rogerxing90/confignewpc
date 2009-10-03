@@ -65,6 +65,7 @@ set nowrap
 set wildchar=<Tab> wildmenu wildmode=full
 "to avoid mksession error E228 makemap
 set sessionoptions-=options
+set sessionoptions=blank,buffers,curdir,tabpages,winsize,folds
 "set winaltkeys=yes "let window handle Alt key
 " Don't let Windows handle alt-cmds (menu access, etc.); let vim do it
 " Make Alt-F pop down the 'File' menu ['Edit','Tools','Syntax','Buffers','Window','Misc','Help']
@@ -341,8 +342,10 @@ map <C-F11> :execute "vimgrep /" . expand("<cword>") . "/j **" <Bar> cw<CR>
 "nmap <C-J> vip=
 "//---------------------------------- mouse mapping start //
 "double click
-nnoremap <2-LeftMouse> :exe "tag ". expand("<cword>")<CR>
-nnoremap <X1Mouse> <C-O>
+"nnoremap <2-LeftMouse> :exe "tag ". expand("<cword>")<CR>
+"nnoremap <2-LeftMouse> :exe "/". expand("<cword>")<Bar>exe "normal mO"<CR>
+nnoremap <2-LeftMouse> :exe "/". expand("<cword>")<CR>
+nnoremap <RightMouse> <C-O>
 nnoremap <X2Mouse> <C-I>
 
 "reference -- defintion of var
@@ -491,10 +494,21 @@ endfunction
 "else
    nmap <silent> <C-M-S> <Esc>:call MatchSpace() <CR>
 "endif
+"\ze sets end of match so only spaces highlighted
+let g:ErrorMsg_on = 1
+match ErrorMsg /\s\+$\| \+\ze\t/
 function! MatchSpace()
-""flag problematic whitespace (trailing and spaces before tabs)
-"get the same by doing let c_space_errors=1
-match ErrorMsg /\s\+$\| \+\ze\t/ "\ze sets end of match so only spaces highlighted
+if g:ErrorMsg_on == "1"
+	let g:ErrorMsg_on = 0
+	echo "MatchSpace off"
+	match Normal /\s\+$\| \+\ze\t/
+else
+	echo "MatchSpace on"
+	let g:ErrorMsg_on = 1
+	""flag problematic whitespace (trailing and spaces before tabs)
+	"get the same by doing let c_space_errors=1
+	match ErrorMsg /\s\+$\| \+\ze\t/
+endif
 endfunction
 
 "===============================================================
