@@ -217,8 +217,8 @@ nmap <M-,> g,
 "move to the end of line
 nmap ,e $
 nmap ,b ^
-"nmap ,r $a;
-nmap ,r :s/$/;/<CR>
+nmap ,r $a;
+"nmap ,r :s/$/;/<CR>
 "toggle &hls &wrap
 "set option! (invert value)
 "set option!|set option? (invert and show value)
@@ -295,13 +295,14 @@ nmap \bf /8[[:digit:]]\{6}[0-9a-zA-Z]<cr>
 "nmap \bn :%s#^\\(\#define ENABLE_DEBUG\)#//\1<CR>
 nmap ,d :e main.c<bar>%s#//\(while(i);\)# \1<CR>
 nmap ,n :b main<bar>%s#[^/]\(while(i);\)#//\1<CR>
+nmap ,p ?PROTOTYPES<CR>
+nmap ,v ?STATIC\\|GLOBAL<CR>
 "nmap \bh i/*<ESC>73A=<ESC>o<C-W>==  @  @<CR>==<CR>==  DESC:<CR>==  USAGE:<CR>==  INPUTS:<CR>==  OUTPUTS:<CR>==  RETURN:<CR>==  IMP NOTE:<CR><ESC>73A=<ESC>a*/<ESC>=8k
 "nmap \bi i/*<ESC>73A=<ESC>o<C-W>==  <CR><ESC>73A=<ESC>a*/<ESC>=1k
-nmap \bh i/*=<ESC>75A=<ESC>o<C-W>==  @  @<CR>==<CR>==  DESC:<CR>==  USAGE:<CR>==  INPUTS:<CR>==  OUTPUTS:<CR>==  RETURN:<CR>==  IMP NOTE:<CR><ESC>76A=<ESC>a*/<ESC>=8k
-nmap \bi i/*=<ESC>75A=<ESC>o<C-W>==  <CR><ESC>76A=<ESC>a*/<ESC>=1k
+nmap \bh i/*=<ESC>74A=<ESC>o<C-W>==  @  @<CR>==<CR>==  DESC:<CR>==  USAGE:<CR>==  INPUTS:<CR>==  OUTPUTS:<CR>==  RETURN:<CR>==  IMP NOTE:<CR><ESC>75A=<ESC>a*/<ESC>=8k
+nmap \bi i/*=<ESC>74A=<ESC>o<C-W>==  <CR><ESC>75A=<ESC>a*/<ESC>=1k
 nmap \bj i/*+++++++++++++++++++++++++++++++++<  >++++++++++++++++++++++++++++++++*/<ESC>F<l
 nmap \bk i// -------------------------------------------  //<ESC>==F-3l
-nmap ,p ?PROTOTYPES<CR>
 
 "map <C-A-z> :source ~/kn/myscript/savePaper.vim
 "//---------------------------------- title comment start //
@@ -315,6 +316,7 @@ map ,// :s/\/\///<CR>
 "--commentLine--"
 abbr kns //--<kn start>--
 abbr kne //--<kn end>--
+cabbr knm mks! kn.vim
 "abbr knp printk("%s:\r\n", __FILE__);<esc>F:
 "abbr knp printk("(%X) \n",);<esc>2F"
 abbr knp printf("(%d) \n");<esc>2F"
