@@ -52,7 +52,8 @@ set ruler              "display cursor position
 "set fo+=a is convenient, but can be a pain too
 set formatoptions=lcrqnw      "auto formatting, t=linebreak at textwidth
 "default: set formatoptions=tcrqol
-set textwidth=79 wrap linebreak
+"set textwidth=79 wrap linebreak
+set textwidth=79
 set nowrap
 "set textwidth=79 linebreak
 "set wrapwidth=60
@@ -69,7 +70,7 @@ set sessionoptions=blank,buffers,curdir,tabpages,winsize,folds
 "set winaltkeys=yes "let window handle Alt key
 " Don't let Windows handle alt-cmds (menu access, etc.); let vim do it
 " Make Alt-F pop down the 'File' menu ['Edit','Tools','Syntax','Buffers','Window','Misc','Help']
-"set winaltkeys=no  
+"set winaltkeys=no
 "map <M-f> :simalt f<CR>
 "map <M-e> :simalt e<CR>
 "map <M-t> :simalt t<CR>
@@ -218,7 +219,7 @@ nmap <M-,> g,
 "move to the end of line
 nmap ,e $
 nmap ,b ^
-nmap ,r $a;
+nmap ,r $a;<ESC>
 "nmap ,r :s/$/;/<CR>
 "toggle &hls &wrap
 "set option! (invert value)
@@ -487,7 +488,7 @@ function! Paste(mode)
 endfunction
 
 "===============================================================
-"== Function: MatchSpace
+"== Function: MatchSpace & match after column 80
 "===============================================================
 "if has('win32')
 "   nmap <silent> <M-S> <Esc>:call MatchSpace() <CR>
@@ -496,18 +497,22 @@ endfunction
 "endif
 "\ze sets end of match so only spaces highlighted
 let g:ErrorMsg_on = 1
+cabbr ssp /\s\+$\\| \+\ze\t
 match ErrorMsg /\s\+$\| \+\ze\t/
+match ErrorMsg /\%>80v.\+\ze/
 function! MatchSpace()
 if g:ErrorMsg_on == "1"
 	let g:ErrorMsg_on = 0
 	echo "MatchSpace off"
 	match Normal /\s\+$\| \+\ze\t/
+	match Normal /\%>80v.\+\ze/
 else
 	echo "MatchSpace on"
 	let g:ErrorMsg_on = 1
 	""flag problematic whitespace (trailing and spaces before tabs)
 	"get the same by doing let c_space_errors=1
 	match ErrorMsg /\s\+$\| \+\ze\t/
+	match ErrorMsg /\%>80v.\+\ze/
 endif
 endfunction
 
@@ -1072,6 +1077,8 @@ else
     "endif
 endif
 
+hi IncSearch	guifg=slategrey guibg=khaki
+hi Search	guibg=peru guifg=wheat
 "+++++++++++++++++++++++++ Reference ++++++++++++++++++++++++++
 "===============================================================
 "== Reference MY
