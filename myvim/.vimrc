@@ -497,22 +497,23 @@ endfunction
 "endif
 "\ze sets end of match so only spaces highlighted
 let g:ErrorMsg_on = 1
-cabbr ssp /\s\+$\\| \+\ze\t
+cabbr ssp /\s\+$\\| \+\ze\t<CR>
 match ErrorMsg /\s\+$\| \+\ze\t/
-match ErrorMsg /\%>80v.\+\ze/
 function! MatchSpace()
 if g:ErrorMsg_on == "1"
-	let g:ErrorMsg_on = 0
-	echo "MatchSpace off"
-	match Normal /\s\+$\| \+\ze\t/
-	match Normal /\%>80v.\+\ze/
-else
-	echo "MatchSpace on"
-	let g:ErrorMsg_on = 1
+	let g:ErrorMsg_on = 2
+	echo "MatchSpace off, Match 80 on"
+	match ErrorMsg /\%>80v.\+\ze/
+elseif g:ErrorMsg_on == "2"
+	echo "MatchSpace on, Match 80 off"
+	let g:ErrorMsg_on = 3
 	""flag problematic whitespace (trailing and spaces before tabs)
 	"get the same by doing let c_space_errors=1
 	match ErrorMsg /\s\+$\| \+\ze\t/
-	match ErrorMsg /\%>80v.\+\ze/
+else
+	echo "MatchSpace off, Match 80 off"
+	let g:ErrorMsg_on = 1
+	match Normal /\s\+$\| \+\ze\t/
 endif
 endfunction
 
