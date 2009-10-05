@@ -52,7 +52,8 @@ set ruler              "display cursor position
 "set fo+=a is convenient, but can be a pain too
 set formatoptions=lcrqnw      "auto formatting, t=linebreak at textwidth
 "default: set formatoptions=tcrqol
-set textwidth=79 wrap linebreak
+"set textwidth=79 wrap linebreak
+set textwidth=79
 set nowrap
 "set textwidth=79 linebreak
 "set wrapwidth=60
@@ -65,10 +66,11 @@ set nowrap
 set wildchar=<Tab> wildmenu wildmode=full
 "to avoid mksession error E228 makemap
 set sessionoptions-=options
+set sessionoptions=blank,buffers,curdir,tabpages,winsize,folds
 "set winaltkeys=yes "let window handle Alt key
 " Don't let Windows handle alt-cmds (menu access, etc.); let vim do it
 " Make Alt-F pop down the 'File' menu ['Edit','Tools','Syntax','Buffers','Window','Misc','Help']
-"set winaltkeys=no  
+"set winaltkeys=no
 "map <M-f> :simalt f<CR>
 "map <M-e> :simalt e<CR>
 "map <M-t> :simalt t<CR>
@@ -217,8 +219,8 @@ nmap <M-,> g,
 "move to the end of line
 nmap ,e $
 nmap ,b ^
-"nmap ,r $a;
-nmap ,r :s/$/;/<CR>
+nmap ,r $a;<ESC>
+"nmap ,r :s/$/;/<CR>
 "toggle &hls &wrap
 "set option! (invert value)
 "set option!|set option? (invert and show value)
@@ -295,13 +297,14 @@ nmap \bf /8[[:digit:]]\{6}[0-9a-zA-Z]<cr>
 "nmap \bn :%s#^\\(\#define ENABLE_DEBUG\)#//\1<CR>
 nmap ,d :e main.c<bar>%s#//\(while(i);\)# \1<CR>
 nmap ,n :b main<bar>%s#[^/]\(while(i);\)#//\1<CR>
+nmap ,p ?PROTOTYPES<CR>
+nmap ,v ?STATIC\\|GLOBAL<CR>
 "nmap \bh i/*<ESC>73A=<ESC>o<C-W>==  @  @<CR>==<CR>==  DESC:<CR>==  USAGE:<CR>==  INPUTS:<CR>==  OUTPUTS:<CR>==  RETURN:<CR>==  IMP NOTE:<CR><ESC>73A=<ESC>a*/<ESC>=8k
 "nmap \bi i/*<ESC>73A=<ESC>o<C-W>==  <CR><ESC>73A=<ESC>a*/<ESC>=1k
-nmap \bh i/*=<ESC>75A=<ESC>o<C-W>==  @  @<CR>==<CR>==  DESC:<CR>==  USAGE:<CR>==  INPUTS:<CR>==  OUTPUTS:<CR>==  RETURN:<CR>==  IMP NOTE:<CR><ESC>76A=<ESC>a*/<ESC>=8k
-nmap \bi i/*=<ESC>75A=<ESC>o<C-W>==  <CR><ESC>76A=<ESC>a*/<ESC>=1k
+nmap \bh i/*=<ESC>74A=<ESC>o<C-W>==  @  @<CR>==<CR>==  DESC:<CR>==  USAGE:<CR>==  INPUTS:<CR>==  OUTPUTS:<CR>==  RETURN:<CR>==  IMP NOTE:<CR><ESC>75A=<ESC>a*/<ESC>=8k
+nmap \bi i/*=<ESC>74A=<ESC>o<C-W>==  <CR><ESC>75A=<ESC>a*/<ESC>=1k
 nmap \bj i/*+++++++++++++++++++++++++++++++++<  >++++++++++++++++++++++++++++++++*/<ESC>F<l
 nmap \bk i// -------------------------------------------  //<ESC>==F-3l
-nmap ,p ?PROTOTYPES<CR>
 
 "map <C-A-z> :source ~/kn/myscript/savePaper.vim
 "//---------------------------------- title comment start //
@@ -315,6 +318,7 @@ map ,// :s/\/\///<CR>
 "--commentLine--"
 abbr kns //--<kn start>--
 abbr kne //--<kn end>--
+cabbr knm mks! kn.vim
 "abbr knp printk("%s:\r\n", __FILE__);<esc>F:
 "abbr knp printk("(%X) \n",);<esc>2F"
 abbr knp printf("(%d) \n");<esc>2F"
@@ -339,8 +343,10 @@ map <C-F11> :execute "vimgrep /" . expand("<cword>") . "/j **" <Bar> cw<CR>
 "nmap <C-J> vip=
 "//---------------------------------- mouse mapping start //
 "double click
-nnoremap <2-LeftMouse> :exe "tag ". expand("<cword>")<CR>
-nnoremap <X1Mouse> <C-O>
+"nnoremap <2-LeftMouse> :exe "tag ". expand("<cword>")<CR>
+"nnoremap <2-LeftMouse> :exe "/". expand("<cword>")<Bar>exe "normal mO"<CR>
+nnoremap <2-LeftMouse> :exe "/". expand("<cword>")<CR>
+nnoremap <RightMouse> <C-O>
 nnoremap <X2Mouse> <C-I>
 
 "reference -- defintion of var
@@ -482,17 +488,32 @@ function! Paste(mode)
 endfunction
 
 "===============================================================
-"== Function: MatchSpace
+"== Function: MatchSpace & match after column 80
 "===============================================================
 "if has('win32')
 "   nmap <silent> <M-S> <Esc>:call MatchSpace() <CR>
 "else
    nmap <silent> <C-M-S> <Esc>:call MatchSpace() <CR>
 "endif
+"\ze sets end of match so only spaces highlighted
+let g:ErrorMsg_on = 1
+cabbr ssp /\s\+$\\| \+\ze\t
+match ErrorMsg /\s\+$\| \+\ze\t/
+match ErrorMsg /\%>80v.\+\ze/
 function! MatchSpace()
-""flag problematic whitespace (trailing and spaces before tabs)
-"get the same by doing let c_space_errors=1
-match ErrorMsg /\s\+$\| \+\ze\t/ "\ze sets end of match so only spaces highlighted
+if g:ErrorMsg_on == "1"
+	let g:ErrorMsg_on = 0
+	echo "MatchSpace off"
+	match Normal /\s\+$\| \+\ze\t/
+	match Normal /\%>80v.\+\ze/
+else
+	echo "MatchSpace on"
+	let g:ErrorMsg_on = 1
+	""flag problematic whitespace (trailing and spaces before tabs)
+	"get the same by doing let c_space_errors=1
+	match ErrorMsg /\s\+$\| \+\ze\t/
+	match ErrorMsg /\%>80v.\+\ze/
+endif
 endfunction
 
 "===============================================================
@@ -1056,6 +1077,8 @@ else
     "endif
 endif
 
+hi IncSearch	guifg=slategrey guibg=khaki
+hi Search	guibg=peru guifg=wheat
 "+++++++++++++++++++++++++ Reference ++++++++++++++++++++++++++
 "===============================================================
 "== Reference MY

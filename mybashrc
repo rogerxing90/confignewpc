@@ -14,13 +14,17 @@
 
 #essential
 alias rm="rm -i"
+alias cp="cp -i"
+alias mv="mv -i"
 alias nn="nautilus . &"
 alias chmodd="chmod 777"
 alias find="find . -name"
 alias bashh="gvim $MYBASHRC_DIR/mybashrc"
 alias bashhh="gvim ~/.bashrc"
 alias bassh="source ~/.bashrc"
-alias ctagg="ctags -R --sort=foldcase --c-types=+p --fields=+S *.h *.c"
+#alias ctagg="ctags -R --sort=foldcase --c-types=+p --fields=+S *.h *.c"
+#alias ctagg="ctags -R --sort=foldcase --c-kinds=f *.h *.c"
+alias ctagg="ctags -R --sort=foldcase --fields=+S *.h *.c"
 alias grep="grep -nrEI --color"
 alias xc="tr '\n' ' ' | xclip -selection c"
 
@@ -42,6 +46,7 @@ alias gitam="git commit -a -m"
 alias gitb="git branch"
 alias gitc="git checkout"
 alias gitd="git diff"
+alias gitdc="git diff --cached"
 alias gitp="git push"
 alias gitco="git checkout"
 alias gitl="git log"
@@ -63,7 +68,10 @@ MY_PROJ_DIR=~/project_powerline/newGppMac
 alias gppp="cd $MY_PROJ_DIR/src"
 alias gppr="cd $MY_PROJ_DIR/ref/mac_ref/modified/"
 alias gppt="cd $MY_PROJ_DIR/test"
+alias gppo="cd $MY_PROJ_DIR/obj"
 alias gppd="cd $MY_PROJ_DIR/../dsplink_1_60/dsplink"
+alias mmm="cd $MY_PROJ_DIR/src && make"
+alias dddd="sudo ddd $MY_PROJ_DIR/obj/mac"
 
 #temp
 PATH=$PATH:$MYBASHRC_DIR
