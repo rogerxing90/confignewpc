@@ -320,6 +320,8 @@ map ,// :s/\/\///<CR>
 abbr kns //--<kn start>--
 abbr kne //--<kn end>--
 cabbr knm mks! kn.vim
+cabbr mc make clean
+cabbr mm make
 "abbr knp printk("%s:\r\n", __FILE__);<esc>F:
 "abbr knp printk("(%X) \n",);<esc>2F"
 abbr knp printf("(%d) \n");<esc>2F"
