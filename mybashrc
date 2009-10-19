@@ -56,10 +56,14 @@ alias gitst="git stash"
 alias gitstl="git stash list"
 alias gitg="git tag"
 alias gitll="git log --pretty=oneline"
+alias gitpl="git pull origin master"
+alias gitca="git commit --amend"
 
 #make
 alias mc="make clean"
 alias mm="make"
+alias mma="make CC=arm-linux-gcc"
+alias mmcp="make cpmac"
 
 #misc
 alias vims="gvim -S kn.vim"
@@ -72,6 +76,7 @@ alias gppo="cd $MY_PROJ_DIR/obj"
 alias gppd="cd $MY_PROJ_DIR/../dsplink_1_60/dsplink"
 alias mmm="cd $MY_PROJ_DIR/src && make"
 alias dddd="sudo ddd $MY_PROJ_DIR/obj/mac"
+alias ddda="sudo ddd $MY_PROJ_DIR/obj/mac --debugger arm-linux-gdb"
 
 #temp
 PATH=$PATH:$MYBASHRC_DIR
