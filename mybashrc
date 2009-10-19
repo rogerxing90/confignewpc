@@ -11,6 +11,7 @@
 #   else
 #   	echo not found $MYBASHRC
 #   fi
+#	PATH=$PATH:./
 
 #essential
 alias rm="rm -i"
@@ -24,7 +25,7 @@ alias bashhh="gvim ~/.bashrc"
 alias bassh="source ~/.bashrc"
 #alias ctagg="ctags -R --sort=foldcase --c-types=+p --fields=+S *.h *.c"
 #alias ctagg="ctags -R --sort=foldcase --c-kinds=f *.h *.c"
-alias ctagg="ctags -R --sort=foldcase --fields=+S *.h *.c"
+alias ctagg="ctags -R --sort=foldcase --fields=+S *.h *.c *.cpp"
 alias grep="grep -nrEI --color"
 alias xc="tr '\n' ' ' | xclip -selection c"
 
