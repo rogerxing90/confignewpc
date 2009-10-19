@@ -50,7 +50,7 @@ set ruler              "display cursor position
 "set formatoptions+=tcroqn      "auto formatting, t=linebreak at textwidth
 "set formatoptions=tcrqnwa      "auto formatting, t=linebreak at textwidth
 "set fo+=a is convenient, but can be a pain too
-set formatoptions=lcrqnw      "auto formatting, t=linebreak at textwidth
+set formatoptions=lqnw      "auto formatting, t=linebreak at textwidth
 "default: set formatoptions=tcrqol
 "set textwidth=79 wrap linebreak
 set textwidth=79
@@ -299,6 +299,7 @@ nmap ,d :e main.c<bar>%s#//\(while(i);\)# \1<CR>
 nmap ,n :b main<bar>%s#[^/]\(while(i);\)#//\1<CR>
 nmap ,p ?PROTOTYPES<CR>
 nmap ,v ?STATIC\\|GLOBAL<CR>
+nmap ,t :e global.h<bar>/TEST<CR>
 "nmap \bh i/*<ESC>73A=<ESC>o<C-W>==  @  @<CR>==<CR>==  DESC:<CR>==  USAGE:<CR>==  INPUTS:<CR>==  OUTPUTS:<CR>==  RETURN:<CR>==  IMP NOTE:<CR><ESC>73A=<ESC>a*/<ESC>=8k
 "nmap \bi i/*<ESC>73A=<ESC>o<C-W>==  <CR><ESC>73A=<ESC>a*/<ESC>=1k
 nmap \bh i/*=<ESC>74A=<ESC>o<C-W>==  @  @<CR>==<CR>==  DESC:<CR>==  USAGE:<CR>==  INPUTS:<CR>==  OUTPUTS:<CR>==  RETURN:<CR>==  IMP NOTE:<CR><ESC>75A=<ESC>a*/<ESC>=8k
@@ -319,6 +320,8 @@ map ,// :s/\/\///<CR>
 abbr kns //--<kn start>--
 abbr kne //--<kn end>--
 cabbr knm mks! kn.vim
+cabbr mc make clean
+cabbr mm make
 "abbr knp printk("%s:\r\n", __FILE__);<esc>F:
 "abbr knp printk("(%X) \n",);<esc>2F"
 abbr knp printf("(%d) \n");<esc>2F"
@@ -339,6 +342,7 @@ map <F3> <esc>:copen<CR>/error<CR>
 "see next diff
 map <C-A-q> ]c<CR>
 map <C-F11> :execute "vimgrep /" . expand("<cword>") . "/j **" <Bar> cw<CR>
+map <C-F12> :execute "lgrep " . expand("<cword>") . " *" <Bar> lopen<CR>
 "forces (re)indentation of a block of code
 "nmap <C-J> vip=
 "//---------------------------------- mouse mapping start //

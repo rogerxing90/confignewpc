@@ -82,6 +82,7 @@ alias ddda="sudo ddd $MY_PROJ_DIR/obj/mac --debugger arm-linux-gdb"
 PATH=$PATH:$MYBASHRC_DIR
 newprogpp=~/project_powerline/newGppMac
 alias rrrunmac="cd $newprogpp/obj && sudo ./mac && cd $newprogpp/src"
+alias vim72u="cd /usr/share/vim/vim72"
 
 #ref-note
 #PS1='${debian_chroot:+($debian_chroot)}\u@\h:\w\$ '
