@@ -885,6 +885,20 @@ function! GotoBrace()
 endfunction
 
 imap <c-tab> <Esc>:call GotoBrace()<CR>a
+"===============================================================
+"== Replace string
+"===============================================================
+function! Replacestr()
+	"e - don't issue error when search not found
+	execute "%s/String/char */ge"
+	execute "%s/Uint32/unsigned int/ge"
+	execute "%s/Uint16/unsigned short/ge"
+	execute "%s/Int/int/ge"
+	execute "%s/Void/void/ge"
+	execute "%s/Ptr/void */ge"
+	execute "%s/Uns/unsigned int/ge"
+endfunction
+
 "+++++++++++++++++++++++++ PLUGIN MAPPING ++++++++++++++++++++++++++
 "===============================================================
 "== Plugin: Trinity
