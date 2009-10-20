@@ -1,5 +1,8 @@
-"to be pasted in .bashrc
-"	so ~/confignewpc/myvim/.vimrc
+"===============================================================
+"== To be pasted in ~/.vimrc
+"===============================================================
+"so ~/confignewpc/myvim/.vimrc
+"nmap ,rr	:e ~/confignewpc/myvim/.vimrc<CR>
 
 "===============================================================
 "== Miscellaneous Set (:h options)
@@ -17,7 +20,7 @@ set confirm        "Raise a confirm dialog for changed buffer
 set shiftwidth=4
 set tabstop=4       "after set to a new value, use retab to replace old to new tabstop value
 "set expandtab
-set linebreak        "enable breakat
+"set linebreak        "enable breakat
 set visualbell        "set vb t_vb=on "visual bell
 set nu            "display line
 set autoindent
@@ -54,7 +57,7 @@ set ruler              "display cursor position
 set formatoptions=lqnw      "auto formatting, t=linebreak at textwidth
 "default: set formatoptions=tcrqol
 "set textwidth=79 wrap linebreak
-set textwidth=79
+"set textwidth=79
 set nowrap
 "set textwidth=79 linebreak
 "set wrapwidth=60
@@ -180,7 +183,7 @@ imap<S-Tab> <esc>:tabp <CR>
 "map <c-w> :bd <CR> "<c-w> used in multi-doc
 map <c-F4> :bd <CR>
 "open new doc in tab
-map <C-N> :tabnew <CR>
+noremap <C-N> :tabnew <CR>
 "nnoremap <f5> :buffers<cr>:buffer<space>
 
 "===============================================================
@@ -725,7 +728,8 @@ fun! FunctionName()
     let strList = ["while", "for", "if", "else", "try", "catch", "case", "switch"]
     let foundcontrol = 1
     while (foundcontrol)
-        ?{
+		"find the { in this {...}
+		normal [{
         let tempstring = getline(".")
         if(match(tempstring,")") < 0)
            "{ is on a new line itself, e.g. not function(){
@@ -736,9 +740,9 @@ fun! FunctionName()
         for item in strList
             let foundstridx=match(tempstring,item)
             if(foundstridx >= 0)
-                let foundstr = strpart(tempstring, foundstridx, 10) . strArrow . foundstr
+                let foundstr = strpart(tempstring, foundstridx, 30) . strArrow . foundstr
                 let tempstring = ""
-                let strArrow = "<-"
+                let strArrow = " @@@ "
                 let foundcontrol = 1
                 break
             endif
@@ -765,7 +769,7 @@ endfun
 "location on screen returning to the line you started from in FunctionName()
 "nmap \func :let name = FunctionName()<CR> :echo name<CR>
 "if has ("win32")
-nmap <M-n> :let name = FunctionName()<CR> :echo name<CR>
+nmap <C-M-n> :let name = FunctionName()<CR> :echo name<CR>
 "else
 "nmap <C-A-N> :let name = FunctionName()<CR> :echo name<CR>
 "endif
@@ -1059,6 +1063,12 @@ endfunction
 "===============================================================
 let g:TTrCodeAssistor_AutoStart=1
 
+"===============================================================
+"== Plugin: YankRing
+"===============================================================
+"Alt-< and Alt->
+let g:yankring_replace_n_pkey = '<Char-172>'
+let g:yankring_replace_n_nkey = '<Char-174>'
 "+++++++++++++++++++++++++ colorscheme ++++++++++++++++++++++++++
 "map <leader>3 :set syntax=python<cr>
 "map <leader>4 :set ft=javascript<cr>
