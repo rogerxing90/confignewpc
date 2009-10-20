@@ -1085,18 +1085,15 @@ if has ("win32")
     if v:version >= 702
     "colorscheme inkpot
     "colorscheme torte
-    colorscheme koehler
-    else
-    "colorscheme slate
-    "colorscheme murphy
-    "colorscheme torte
-    colorscheme koehler
-     "colorscheme evening
+    "colorscheme koehler
     endif
 else
     "autoload plugin directory
     "runtime! ~/here_software/vim/*.vim
-    set runtimepath+=/root/.vim/plugin,/root/.vim/doc,~/confignewpc/myvim,~/confignewpc/myvim/doc
+    set runtimepath+=/root/.vim/,~/confignewpc/myvim
+	"no need to set doc or colors director, only main dir need to set
+	"set rtp+=~/confignewpc/myvim/doc,~/confignewpc/myvim/colors
+	set rtp+=~/confignewpc/myvim/colors
     set path=$PWD/**   "where gf will look for"
     "--set tag to search current dir (and upto 4 level depth) then the /usr/include
     let $kernel_version=system('uname -r | tr -d "\n"')
@@ -1115,13 +1112,13 @@ else
     endif
     "colorscheme slate
     "colorscheme murphy
-    colorscheme koehler
+    "colorscheme koehler
      "colorscheme evening
     "hi CursorLine guibg=black
     else
     "colorscheme inkpot
     "colorscheme murphy
-    colorscheme koehler
+    "colorscheme koehler
     "colorscheme evening
     set cursorline
     "hi CursorLine term=standout ctermfg=7 ctermbg=8 guifg=grey40 guibg=black
@@ -1138,8 +1135,8 @@ else
     "endif
 endif
 
-hi IncSearch	guifg=slategrey guibg=khaki
-hi Search	guibg=peru guifg=wheat
+"colorscheme mycolor
+colorscheme ir_black
 "+++++++++++++++++++++++++ Reference ++++++++++++++++++++++++++
 "===============================================================
 "== Reference MY
