@@ -1,4 +1,5 @@
-"2009-09-20
+"to be pasted in .bashrc
+"	so ~/confignewpc/myvim/.vimrc
 
 "===============================================================
 "== Miscellaneous Set (:h options)
@@ -83,6 +84,10 @@ set sessionoptions=blank,buffers,curdir,tabpages,winsize,folds
 "noremap <M-Space> :simalt ~<CR>
 "inoremap <M-Space> <C-O>:simalt ~<CR>
 "cnoremap <M-Space> <C-C>:simalt ~<CR>
+
+""Set mapleader
+"let mapleader = ","
+"let g:mapleader = ","
 
 "===============================================================
 "== Autocmd / Filetype
@@ -870,6 +875,29 @@ function! OSearch(action)
 endfunction
 
 "===============================================================
+"== Function: Search visually (* or #)
+"===============================================================
+" From an idea by Michael Naumann
+function! VisualSearch(direction) range
+  let l:saved_reg = @"
+  execute "normal! vgvy"
+  let l:pattern = escape(@", '\\/.*$^~[]')
+  let l:pattern = substitute(l:pattern, "\n$", "", "")
+  if a:direction == 'b'
+    execute "normal ?" . l:pattern . "^M"
+  else
+    execute "normal /" . l:pattern . "^M"
+  endif
+  let @/ = l:pattern
+  let @" = l:saved_reg
+endfunction
+
+"Basically you press * or # to search for the current selection !! Really useful
+vnoremap <silent> * :call VisualSearch('f')<CR>
+vnoremap <silent> # :call VisualSearch('b')<CR>
+
+
+"===============================================================
 "== Formatting
 "===============================================================
 ":[range]ce[nter] [width]     center lines     :.,+3 center 80
@@ -1032,6 +1060,10 @@ endfunction
 let g:TTrCodeAssistor_AutoStart=1
 
 "+++++++++++++++++++++++++ colorscheme ++++++++++++++++++++++++++
+"map <leader>3 :set syntax=python<cr>
+"map <leader>4 :set ft=javascript<cr>
+"map <leader>$ :syntax sync fromstart<cr>
+
 "===============================================================
 "== OS specific
 "===============================================================
@@ -1054,7 +1086,7 @@ if has ("win32")
 else
     "autoload plugin directory
     "runtime! ~/here_software/vim/*.vim
-    set runtimepath+=/root/.vim/plugin,/root/.vim/doc
+    set runtimepath+=/root/.vim/plugin,/root/.vim/doc,~/confignewpc/myvim,~/confignewpc/myvim/doc
     set path=$PWD/**   "where gf will look for"
     "--set tag to search current dir (and upto 4 level depth) then the /usr/include
     let $kernel_version=system('uname -r | tr -d "\n"')

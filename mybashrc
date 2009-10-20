@@ -71,7 +71,7 @@ alias mmcp="make cpmac"
 #misc
 alias vims="gvim -S kn.vim"
 alias binn="cd /usr/local/bin"
-MY_PROJ_DIR=~/project_powerline/newGppMac
+MY_PROJ_DIR=~/project_powerline/newgpp
 alias gppp="cd $MY_PROJ_DIR/src"
 alias gppr="cd $MY_PROJ_DIR/ref/mac_ref/modified/"
 alias gppt="cd $MY_PROJ_DIR/test"
