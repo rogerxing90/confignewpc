@@ -12,10 +12,10 @@
 set -x
 if [ "$#" == "3" ]
 then
-   grep -rIinE --include=*.cpp --include=*.[ch] "$1" * | grep -rIinE --include=*.[ch] $2 --color=auto | grep -rIinE --include=*.[ch] $3 --color=auto
+   grep -rIinE --include=*.cpp --include=*.[ch] "$1" * | grep -rIinE $2 | grep -rIinE --include=*.[ch] $3 --color=auto
 elif [ "$#" == "2" ]
 then
-   grep -rIinE --include=*.cpp --include=*.[ch] "$1" * | grep -rIinE --include=*.[ch] $2 --color=auto 
+   grep -rIinE --include=*.cpp --include=*.[ch] "$1" * | grep -rIinE $2
 else
    grep -rIinE --include=*.cpp --include=*.[ch] "$1" * --color=auto
 fi

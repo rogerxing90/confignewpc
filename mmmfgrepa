@@ -12,11 +12,11 @@
 set -x
 if [ "$#" == "3" ]
 then
-   fgrep -rIin --include=*.cpp --include=*.[ch] "$1" * | fgrep -rIin $2 | fgrep -rIin $3 --color=auto
+   fgrep -rIin  "$1" * | fgrep -rIin  $2 --color=auto | fgrep -rIin  $3 --color=auto
 elif [ "$#" == "2" ]
 then
-   fgrep -rIin --include=*.cpp --include=*.[ch] "$1" * | fgrep -rIin $2 --color=auto 
+   fgrep -rIin  "$1" * | fgrep -rIin  $2 --color=auto 
 else
-   fgrep -rIin --include=*.cpp --include=*.[ch] "$1" * --color=auto
+   fgrep -rIin  "$1" * --color=auto
 fi
 

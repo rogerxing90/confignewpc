@@ -63,8 +63,12 @@ alias gitrs="git reset HEAD~1 --soft"
 alias gitdh="git diff HEAD~1.."
 
 #make
+alias ulimitt="ulimit -c unlimited"
+alias ulimita="ulimit -a"
 alias mc="make clean"
 alias mm="make"
+alias mml="make -f Makefile.local"
+alias mmcl="make -f Makefile.local clean"
 alias mma="make CC=arm-linux-gcc"
 alias mmcp="make cpmac"
 
@@ -84,8 +88,7 @@ alias runb="sudo $MY_PROJ_DIR/test/broadcast"
 
 #temp
 PATH=$PATH:$MYBASHRC_DIR
-newprogpp=~/project_powerline/newGppMac
-alias rrrunmac="cd $newprogpp/obj && sudo ./mac && cd $newprogpp/src"
+alias rrrunmac="cd $MY_PROJ_DIR/obj && sudo ./mac && cd $MY_PROJ_DIR/src"
 alias vim72u="cd /usr/share/vim/vim72"
 
 #ref-note
