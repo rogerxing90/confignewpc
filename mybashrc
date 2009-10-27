@@ -61,6 +61,7 @@ alias gitpl="git pull origin master"
 alias gitca="git commit --amend"
 alias gitrs="git reset HEAD~1 --soft"
 alias gitdh="git diff HEAD~1.."
+alias sd="svn diff --diff-cmd=/usr/bin/meld"
 
 #make
 alias ulimitt="ulimit -c unlimited"
