@@ -3,6 +3,10 @@
 "===============================================================
 "so ~/confignewpc/myvim/.vimrc
 "nmap ,rr	:e ~/confignewpc/myvim/.vimrc<CR>
+"-- win --
+"so D:\kn\1confignewpc\myvim\.vimrc
+"nmap ,rr :e D:\kn\1confignewpc\myvim\.vimrc<CR>
+"set rtp+=D:\kn\1confignewpc\myvim
 
 "===============================================================
 "== Miscellaneous Set (:h options)
@@ -1083,6 +1087,7 @@ if has ("win32")
     "set backupdir=/home/insidepower/Documents
     nmap ,s :source $VIM\_vimrc<cr>
     if v:version >= 702
+	let g:mydir=expand("%:p:h")
     "colorscheme inkpot
     "colorscheme torte
     "colorscheme koehler
