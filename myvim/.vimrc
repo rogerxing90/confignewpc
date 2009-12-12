@@ -237,10 +237,10 @@ nmap ,r $a;<ESC>
 "set option! (invert value)
 "set option!|set option? (invert and show value)
 "if has('win32')
-   nmap <M-C-H> :set hls!<Bar>set hls?<CR>
-   nmap <M-C-W> :set wrap!<Bar>set wrap?<CR>
+   nmap <C-H> :set hls!<Bar>set hls?<CR>
+   nmap <C-W> :set wrap!<Bar>set wrap?<CR>
    "create one empty line and back to normal
-   nmap <M-C-J> o<ESC><ESC>
+   nmap <C-J> o<ESC><ESC>
 "else
 "   nmap <C-M-H> :set hls!<Bar>set hls?<CR>
 "   nmap <C-M-W> :set wrap!<Bar>set wrap?<CR>
