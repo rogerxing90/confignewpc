@@ -215,6 +215,7 @@ inoremap <silent><PageUp> <C-r>=pumvisible()?"\<lt>PageUp>\<lt>C-p>\<lt>C-n>":"\
 "== Ungrouped Mapping
 "===============================================================
 "//---------------------------------- normal mapping start //
+nmap <A-0> :only<cr>
 "save file
 nmap <C-s> :w<cr>
 "cd into current file directory
@@ -353,7 +354,7 @@ map <s-F4> <esc>:cl <CR>
 map <F3> <esc>:copen<CR>/error<CR>
 "see next diff
 map <C-A-q> ]c<CR>
-map <C-F11> :execute "vimgrep /" . expand("<cword>") . "/j **" <Bar> cw<CR>
+map <C-F11> :execute "vimgrep /" . expand("<cword>") . "/j *.c *.h *.cpp" <Bar> cw<CR>
 map <C-F12> :execute "lgrep " . expand("<cword>") . " *" <Bar> lopen<CR>
 "forces (re)indentation of a block of code
 "nmap <C-J> vip=
@@ -509,7 +510,8 @@ endfunction
 "if has('win32')
 "   nmap <silent> <M-S> <Esc>:call MatchSpace() <CR>
 "else
-   nmap <silent> <C-M-S> <Esc>:call MatchSpace() <CR>
+   "nmap <silent> <C-M-S> <Esc>:call MatchSpace() <CR>
+   nmap <silent> <M-F8> <Esc>:call MatchSpace() <CR>
 "endif
 "\ze sets end of match so only spaces highlighted
 let g:ErrorMsg_on = 1
@@ -925,16 +927,36 @@ imap <c-tab> <Esc>:call GotoBrace()<CR>a
 "== Replace string
 "===============================================================
 function! Replacestr()
-	"e - don't issue error when search not found
-	execute "%s/String/char */ge"
-	execute "%s/Uint32/unsigned int/ge"
-	execute "%s/Uint16/unsigned short/ge"
-	execute "%s/Int/int/ge"
-	execute "%s/Void/void/ge"
-	execute "%s/Ptr/void */ge"
-	execute "%s/Uns/unsigned int/ge"
+    "e - don't issue error when search not found
+    execute "%s/String/char */ge"
+    execute "%s/Uint32/unsigned int/ge"
+    execute "%s/Uint16/unsigned short/ge"
+    execute "%s/Int/int/ge"
+    execute "%s/Void/void/ge"
+    execute "%s/Ptr/void */ge"
+    execute "%s/Uns/unsigned int/ge"
 endfunction
 
+
+"===============================================================
+"== Vimgrep with user key-in word
+"===============================================================
+function! Vgrep()
+        echo "vimgrep " . @+
+        execute "vimgrep /" . @+ . "/j *.c *.h *.cpp"
+        execute "cw"
+endfunction
+
+cabbrev vg call Vgrep()
+
+function! Vgrep_with_userInput()
+    let m = inputdialog("search term")
+    if m != ""
+        exec "vimgrep /" . m . "/j *.c *.h *.cpp"
+        exec "cw"
+    endif
+endfunction
+nmap <A-F11> <Esc>:call Vgrep_with_userInput()<CR>
 "+++++++++++++++++++++++++ PLUGIN MAPPING ++++++++++++++++++++++++++
 "===============================================================
 "== Plugin: Trinity
