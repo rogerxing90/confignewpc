@@ -712,7 +712,30 @@ endfunction
 
 " MRUCmp {{{1
 function s:MRUCmp(line1, line2)
-  return index(s:MRUList, str2nr(a:line1)) - index(s:MRUList, str2nr(a:line2))
+  let firstItem = index(s:MRUList, str2nr(a:line1))
+  let secondItem = index(s:MRUList, str2nr(a:line2))
+
+  if (firstItem == -1 && secondItem != -1)
+	"secondItem is in MRU list, put before not in list
+	return 1
+  elseif (firstItem != -1 && secondItem == -1)
+	"firstItem is in MRU list, put before not in list
+	return -1
+  elseif (firstItem == -1 && secondItem == -1)
+	"firstItem and secondItem not in MRU list
+	return 0
+  elseif firstItem == 0
+	"put the 1st most recent list at the bottom of MRUList,
+	"since not likely to open it now (might be just personal need though)
+	return 1
+  elseif secondItem == 0
+	"put the 1st most recent file at the bottom of MRUList
+	return -1
+  else
+	"put 2nd most recent at the top of the list, follow by 3rd, 4th...
+	return firstItem - secondItem
+  endif
+
 endfunction
 
 " SortReverse {{{1

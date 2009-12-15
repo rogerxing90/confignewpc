@@ -223,7 +223,7 @@ nmap ,cd :cd %:p:h<CR>
 "nmap <c-m> O<esc>
 nmap <down> g<down>
 nmap <up> g<up>
-nmap <c-A-F> :set filetype=c <cr>
+nmap <A-F3> :set filetype=c <cr>
 "-- movement --
 " `. (last modification)
 "change list
@@ -239,7 +239,7 @@ nmap ,r $a;<ESC>
 "set option!|set option? (invert and show value)
 "if has('win32')
    nmap <C-H> :set hls!<Bar>set hls?<CR>
-   nmap <C-W> :set wrap!<Bar>set wrap?<CR>
+   nmap <A-F2> :set wrap!<Bar>set wrap?<CR>
    "create one empty line and back to normal
    nmap <C-J> o<ESC><ESC>
 "else
@@ -942,9 +942,11 @@ endfunction
 "== Vimgrep with user key-in word
 "===============================================================
 function! Vgrep()
-        echo "vimgrep " . @+
-        execute "vimgrep /" . @+ . "/j *.c *.h *.cpp"
-        execute "cw"
+    let m = inputdialog("search term")
+    if m != ""
+        exec "vimgrep /" . m . "/j %"
+        exec "cw"
+    endif
 endfunction
 
 cabbrev vg call Vgrep()
