@@ -339,6 +339,8 @@ cabbr mm make
 "abbr knp printk("(%X) \n",);<esc>2F"
 abbr knp printf("(%d) \n");<esc>2F"
 
+"//---------------------------------- command abbreviation //
+cabbr aa arg *c *h
 
 "+++++++++++++++++++++++++ PROGRAMMING +++++++++++++++++++++++++++++
 "===============================================================

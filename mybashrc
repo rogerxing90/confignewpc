@@ -60,6 +60,7 @@ alias gitll="git log --pretty=oneline"
 alias gitpl="git pull origin master"
 alias gitca="git commit --amend"
 alias gitrs="git reset HEAD~1 --soft"
+alias gitrr="git reset HEAD~1"
 alias gitdh="git diff HEAD~1.."
 alias sd="svn diff --diff-cmd=/usr/bin/meld"
 
@@ -91,6 +92,10 @@ alias runb="sudo $MY_PROJ_DIR/test/broadcast"
 PATH=$PATH:$MYBASHRC_DIR
 alias rrrunmac="cd $MY_PROJ_DIR/obj && sudo ./mac && cd $MY_PROJ_DIR/src"
 alias vim72u="cd /usr/share/vim/vim72"
+
+#mmwave
+alias mmw="cd /root/mmwave/1myDesign/src"
+alias cdr="cd /root"
 
 #ref-note
 #PS1='${debian_chroot:+($debian_chroot)}\u@\h:\w\$ '
