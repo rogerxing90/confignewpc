@@ -1,7 +1,7 @@
 " To use, save this file and type ":so %"
 " Optional: First enter ":let g:rgb_fg=1" to highlight foreground only.
 " Restore normal highlighting by typing ":e"
-setlocal nohlsearch
+"setlocal nohlsearch
 call search('^" BEGIN_COLOR_LIST', 'e')
 while search('\w\+') > 0
   let w = expand('<cword>')

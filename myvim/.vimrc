@@ -961,6 +961,18 @@ function! Vgrep_with_userInput()
     endif
 endfunction
 nmap <A-F11> <Esc>:call Vgrep_with_userInput()<CR>
+
+"===============================================================
+"== user input new string to replace the word under cursor
+"===============================================================
+function! Replace_GUI()
+	let newStr=inputdialog("new string to replace word under cursor")
+	if newStr != ""
+		exec "%s/".expand("<cword>")."/".newStr."/gc"
+	endif
+endfunction
+nmap <A-F12> <Esc>:call Replace_GUI()<CR>
+
 "+++++++++++++++++++++++++ PLUGIN MAPPING ++++++++++++++++++++++++++
 "===============================================================
 "== Plugin: Trinity
