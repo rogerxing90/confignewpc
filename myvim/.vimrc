@@ -210,6 +210,7 @@ set omnifunc=ft-c-omni  "set c function keyword auto-completion
 "inoremap <silent><Up> <C-r>=pumvisible()?"\<lt>C-p>":"\<lt>Up>"<CR>
 inoremap <silent><PageDown> <C-r>=pumvisible()?"\<lt>PageDown>\<lt>C-p>\<lt>C-n>":"\<lt>PageDown>"<CR>
 inoremap <silent><PageUp> <C-r>=pumvisible()?"\<lt>PageUp>\<lt>C-p>\<lt>C-n>":"\<lt>PageUp>"<CR>
+inoremap <A-j> <C-X><C-O>
 
 "===============================================================
 "== Ungrouped Mapping
@@ -924,7 +925,7 @@ function! GotoBrace()
    execute "left" . afBraceCol
 endfunction
 
-imap <c-tab> <Esc>:call GotoBrace()<CR>a
+"imap <c-tab> <Esc>:call GotoBrace()<CR>a
 "===============================================================
 "== Replace string
 "===============================================================
@@ -1115,6 +1116,23 @@ let g:TTrCodeAssistor_AutoStart=1
 "Alt-< and Alt->
 let g:yankring_replace_n_pkey = '<Char-172>'
 let g:yankring_replace_n_nkey = '<Char-174>'
+
+"===============================================================
+"== Plugin: omnicppcomplete
+"===============================================================
+cabbr gctags :!ctags -R --c++-kinds=+p --fields=+iaS --extra=+q *.c *.cpp *.h<CR>
+let OmniCpp_NamespaceSearch = 1
+let OmniCpp_GlobalScopeSearch = 1
+let OmniCpp_ShowAccess = 1
+let OmniCpp_ShowPrototypeInAbbr = 1 " show function parameters
+let OmniCpp_MayCompleteDot = 1 " autocomplete after .
+let OmniCpp_MayCompleteArrow = 1 " autocomplete after ->
+let OmniCpp_MayCompleteScope = 0 " autocomplete after ::
+let OmniCpp_DefaultNamespaces = ["std", "_GLIBCXX_STD"]
+" automatically open and close the popup menu / preview window
+"au CursorMovedI,InsertLeave * if pumvisible() == 0|silent! pclose|endif
+set completeopt=menuone,menu,longest
+
 "+++++++++++++++++++++++++ colorscheme ++++++++++++++++++++++++++
 "map <leader>3 :set syntax=python<cr>
 "map <leader>4 :set ft=javascript<cr>
