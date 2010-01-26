@@ -161,6 +161,15 @@ function acp#meetsForCssOmni(context)
   return 0
 endfunction
 
+"//--<kn start>-- for c language
+function acp#meetsForCOmni(context)
+	"to detect var->member or var.member
+  if a:context =~ '\w->\|\.'
+    return 1
+  endif
+endfunction
+"//--<kn end>--
+
 "
 function acp#completeSnipmate(findstart, base)
   if a:findstart

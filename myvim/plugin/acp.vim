@@ -35,6 +35,7 @@ function s:makeDefaultBehavior()
         \   'html'   : [],
         \   'xhtml'  : [],
         \   'css'    : [],
+        \   'c'	     : [],
         \ }
   "---------------------------------------------------------------------------
   if !empty(g:acp_behaviorUserDefinedFunction) &&
@@ -116,6 +117,14 @@ function s:makeDefaultBehavior()
         \   'meets'   : 'acp#meetsForCssOmni',
         \   'repeat'  : 0,
         \ })
+  "---------------------------------------------------------------------------
+  "//--<kn start>-- for c language
+  call add(behavs.c, {
+        \   'command' : "\<C-x>\<C-o>",
+        \   'meets'   : 'acp#meetsForCOmni',
+        \   'repeat'  : 0,
+        \ })
+  "//--<kn end>--
   "---------------------------------------------------------------------------
   return behavs
 endfunction

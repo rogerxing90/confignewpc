@@ -1116,11 +1116,13 @@ let g:TTrCodeAssistor_AutoStart=1
 "Alt-< and Alt->
 let g:yankring_replace_n_pkey = '<Char-172>'
 let g:yankring_replace_n_nkey = '<Char-174>'
+nmap <A-y> :YRShow<CR>
 
 "===============================================================
 "== Plugin: omnicppcomplete
 "===============================================================
-cabbr gctags :!ctags -R --c++-kinds=+p --fields=+iaS --extra=+q *.c *.cpp *.h<CR>
+"cabbr gctags :!ctags -R --c++-kinds=+p --fields=+iaS --extra=+q *.c *.cpp *.h<CR>
+cabbr gtag :!ctags -R *.c *.cpp *.h<CR>
 let OmniCpp_NamespaceSearch = 1
 let OmniCpp_GlobalScopeSearch = 1
 let OmniCpp_ShowAccess = 1
