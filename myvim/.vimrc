@@ -1013,9 +1013,13 @@ let g:SrcExpl_isUpdateTags = 1
 map <S-F11> :call g:SrcExpl_UpdateTags()<CR>
 "===============================================================
 "== Plugin: Cscope
+"== generate cscope.out: cscope -b -q -k -R
 "===============================================================
 if has("cscope")
     set csprg=/usr/bin/cscope
+	if has("win32")
+		set csprg=C:\WINDOWS\cscope
+	endif
     set csto=0
     set cst
     set nocsverb
@@ -1030,14 +1034,14 @@ if has("cscope")
 endif
 
 "set cscopequickfix=s-,c-,d-,i-,t-,e-
-nmap <C-_>s :cs find s <C-R>=expand("<cword>")<CR><CR>
-nmap <C-_>g :cs find g <C-R>=expand("<cword>")<CR><CR>
-nmap <C-_>c :cs find c <C-R>=expand("<cword>")<CR><CR>
-nmap <C-_>t :cs find t <C-R>=expand("<cword>")<CR><CR>
-nmap <C-_>e :cs find e <C-R>=expand("<cword>")<CR><CR>
-nmap <C-_>f :cs find f <C-R>=expand("<cfile>")<CR><CR>
-nmap <C-_>i :cs find i ^<C-R>=expand("<cfile>")<CR>$<CR>
-nmap <C-_>d :cs find d <C-R>=expand("<cword>")<CR><CR>
+nmap ,cs :cs find s <C-R>=expand("<cword>")<CR><CR>
+nmap ,cg :cs find g <C-R>=expand("<cword>")<CR><CR>
+nmap ,cc :cs find c <C-R>=expand("<cword>")<CR><CR>
+nmap ,ct :cs find t <C-R>=expand("<cword>")<CR><CR>
+nmap ,ce :cs find e <C-R>=expand("<cword>")<CR><CR>
+nmap ,cf :cs find f <C-R>=expand("<cfile>")<CR><CR>
+nmap ,ci :cs find i ^<C-R>=expand("<cfile>")<CR>$<CR>
+nmap ,cd :cs find d <C-R>=expand("<cword>")<CR><CR>
 "0 or s: Find this C symbol
 "1 or g: Find this definition
 "2 or d: Find functions called by this function
