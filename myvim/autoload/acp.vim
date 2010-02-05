@@ -167,6 +167,7 @@ function acp#meetsForCOmni(context)
   if a:context =~ '\w->\|\.'
     return 1
   endif
+  return 0
 endfunction
 "//--<kn end>--
 

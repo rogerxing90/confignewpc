@@ -357,7 +357,7 @@ map <s-F4> <esc>:cl <CR>
 map <F3> <esc>:copen<CR>/error<CR>
 "see next diff
 map <C-A-q> ]c<CR>
-map <C-F11> :execute "vimgrep /" . expand("<cword>") . "/j *.c *.h *.cpp" <Bar> cw<CR>
+map <C-F11> :execute "vimgrep /" . expand("<cword>") . "/j *.c *.h *.cpp **/*.vhd" <Bar> cw<CR>
 map <C-F12> :execute "lgrep " . expand("<cword>") . " *" <Bar> lopen<CR>
 "forces (re)indentation of a block of code
 "nmap <C-J> vip=
@@ -365,9 +365,9 @@ map <C-F12> :execute "lgrep " . expand("<cword>") . " *" <Bar> lopen<CR>
 "double click
 "nnoremap <2-LeftMouse> :exe "tag ". expand("<cword>")<CR>
 "nnoremap <2-LeftMouse> :exe "/". expand("<cword>")<Bar>exe "normal mO"<CR>
-nnoremap <2-LeftMouse> :exe "/". expand("<cword>")<CR>
-nnoremap <RightMouse> <C-O>
-nnoremap <X2Mouse> <C-I>
+"nnoremap <2-LeftMouse> :exe "/". expand("<cword>")<CR>
+"nnoremap <RightMouse> <C-O>
+"nnoremap <X2Mouse> <C-I>
 
 "reference -- defintion of var
 "[ x       #start from beginning of files
@@ -957,7 +957,7 @@ cabbrev vg call Vgrep()
 function! Vgrep_with_userInput()
     let m = inputdialog("search term")
     if m != ""
-        exec "vimgrep /" . m . "/j *.c *.h *.cpp"
+        exec "vimgrep /" . m . "/j *.c *.h *.cpp **/*.vhd"
         exec "cw"
     endif
 endfunction
@@ -974,6 +974,19 @@ function! Replace_GUI()
 endfunction
 nmap <A-F12> <Esc>:call Replace_GUI()<CR>
 
+"===============================================================
+"== autocompletion for c programming
+"===============================================================
+"autocmd InsertEnter * call MyC_complete()
+"autocmd CursorMovedI * call MyC_complete()
+"let @b=""
+"let g:curtext="init"
+"let g:curword="init"
+"function! MyC_complete()
+"	let curtext = strpart(getline('.'), 0, col('.') - 1)
+"	let curword = matchstr(curtext, '\k*$')
+"	let @b=@b."a..".curword.curtext."=="
+"endfunction
 "+++++++++++++++++++++++++ PLUGIN MAPPING ++++++++++++++++++++++++++
 "===============================================================
 "== Plugin: Trinity
