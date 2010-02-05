@@ -103,3 +103,4 @@ alias cdr="cd /root"
 #PS1='${debian_chroot:+($debian_chroot)}\u@\h:\w\$ '
 ##PS1='${debian_chroot:+($debian_chroot)}\w\e[37m$(__git_ps1 "(%s)")\e[0m>\$ '
 #PS1='${debian_chroot:+($debian_chroot)}\w>\$ '
+#export PS1='[\u@\h \W]$(__git_ps1 "(%s)")\$ '
