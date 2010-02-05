@@ -116,7 +116,8 @@ filetype plugin indent on
 if has('win32')
     "nmap ,cs :let @*=substitute(expand("%"), "/", "\\", g)<CR>
     nmap ,cs :let @*=expand("%:t")<Bar>echo @*<CR>
-    nmap ,cl :let @*=substitute(expand("%:p"), "/", "\\", g)<Bar>echo @*<CR>
+    "nmap ,cl :let @*=substitute(expand("%:p"), "/", "\\", g)<Bar>echo @*<CR>
+    nmap ,cl :let @*=expand("%:p")<Bar>echo @*<CR>
     " This will copy the path in 8.3 short format, for DOS and Windows 9x
     nmap ,c8 :let @*=substitute(expand("%:p:8"), "/", "\\", g)<Bar>echo @*<CR>
 else
@@ -1148,6 +1149,10 @@ let OmniCpp_DefaultNamespaces = ["std", "_GLIBCXX_STD"]
 "au CursorMovedI,InsertLeave * if pumvisible() == 0|silent! pclose|endif
 set completeopt=menuone,menu,longest
 
+"===============================================================
+"== Plugin: Bgrep
+"===============================================================
+map <A-F9> :execute "Bgrep /" . expand("<cword>") . "/" <CR>
 "+++++++++++++++++++++++++ colorscheme ++++++++++++++++++++++++++
 "map <leader>3 :set syntax=python<cr>
 "map <leader>4 :set ft=javascript<cr>
