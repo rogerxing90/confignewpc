@@ -115,14 +115,14 @@ filetype plugin indent on
 " Convert slashes to backslashes for Windows.
 if has('win32')
     "nmap ,cs :let @*=substitute(expand("%"), "/", "\\", g)<CR>
-    nmap ,cs :let @*=expand("%:t")<Bar>echo @*<CR>
+    nmap ,cp :let @*=expand("%:t")<Bar>echo @*<CR>
     "nmap ,cl :let @*=substitute(expand("%:p"), "/", "\\", g)<Bar>echo @*<CR>
     nmap ,cl :let @*=expand("%:p")<Bar>echo @*<CR>
     " This will copy the path in 8.3 short format, for DOS and Windows 9x
     nmap ,c8 :let @*=substitute(expand("%:p:8"), "/", "\\", g)<Bar>echo @*<CR>
 else
     "nmap ,cs :let @+=expand("%")<CR>
-    nmap ,cs :let @+=expand("%:t")<Bar>echo @*<CR>
+    nmap ,cp :let @+=expand("%:t")<Bar>echo @*<CR>
     "or use * reg (+ and * is the same with slight difference)
     nmap ,cl :let @+=expand("%:p")<Bar>echo @*<CR>
     "nmap ,cs :let @*=expand("%")<CR>
@@ -1049,14 +1049,14 @@ if has("cscope")
 endif
 
 "set cscopequickfix=s-,c-,d-,i-,t-,e-
-nmap ,cs :cs find s <C-R>=expand("<cword>")<CR><CR>
-nmap ,cg :cs find g <C-R>=expand("<cword>")<CR><CR>
-nmap ,cc :cs find c <C-R>=expand("<cword>")<CR><CR>
-nmap ,ct :cs find t <C-R>=expand("<cword>")<CR><CR>
-nmap ,ce :cs find e <C-R>=expand("<cword>")<CR><CR>
-nmap ,cf :cs find f <C-R>=expand("<cfile>")<CR><CR>
-nmap ,ci :cs find i ^<C-R>=expand("<cfile>")<CR>$<CR>
-nmap ,cd :cs find d <C-R>=expand("<cword>")<CR><CR>
+nmap ,csa :cs find s <C-R>=expand("<cword>")<CR><CR>
+nmap ,csg :cs find g <C-R>=expand("<cword>")<CR><CR>
+nmap ,csc :cs find c <C-R>=expand("<cword>")<CR><CR>
+nmap ,cst :cs find t <C-R>=expand("<cword>")<CR><CR>
+nmap ,cse :cs find e <C-R>=expand("<cword>")<CR><CR>
+nmap ,csf :cs find f <C-R>=expand("<cfile>")<CR><CR>
+nmap ,csi :cs find i ^<C-R>=expand("<cfile>")<CR>$<CR>
+nmap ,csd :cs find d <C-R>=expand("<cword>")<CR><CR>
 "0 or s: Find this C symbol
 "1 or g: Find this definition
 "2 or d: Find functions called by this function
