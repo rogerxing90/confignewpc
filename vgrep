@@ -1,0 +1,15 @@
+#!/bin/bash
+# usage: 
+# vgrep "clkgen"
+
+set -x
+if [ "$#" == "3" ]
+then
+   grep -rIinE --include=*.vhd "$1" * | grep -rIinE $2 | grep -rIinE $3 --color=auto
+elif [ "$#" == "2" ]
+then
+   grep -rIinE --include=*.vhd "$1" * | grep -rIinE $2 --color=auto
+else
+   grep -rIinE --include=*.vhd "$1" * --color=auto
+fi
+

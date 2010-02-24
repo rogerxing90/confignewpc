@@ -151,7 +151,7 @@ set listchars=tab:>-,trail:.,extends:>
 
 "highlight word over 80 columns
 highlight OverLength ctermbg=red ctermfg=white guibg=#592929
-match OverLength /\%81v.*/
+"match OverLength /\%81v.*/
 
 
 "+++++++++++++++++++++++++ MAPPING +++++++++++++++++++++++++++++
@@ -518,9 +518,10 @@ endfunction
    nmap <silent> <M-F8> <Esc>:call MatchSpace() <CR>
 "endif
 "\ze sets end of match so only spaces highlighted
-let g:ErrorMsg_on = 1
+let g:ErrorMsg_on = 2
 cabbr ssp /\s\+$\\| \+\ze\t<CR>
-match ErrorMsg /\s\+$\| \+\ze\t \|\%>80v/
+match ErrorMsg /\s\+$\| \+\ze\t /
+"match ErrorMsg /\s\+$\| \+\ze\t \|\%>80v/
 function! MatchSpace()
 if g:ErrorMsg_on == "1"
 	let g:ErrorMsg_on = 2
@@ -1171,6 +1172,7 @@ if has ("win32")
     "colorscheme inkpot
     "colorscheme torte
     "colorscheme koehler
+    set tags+=..\tags,..\..\tags,..\..\..\tags,..\..\..\..\tags,..\..\..\..\..\tags
     endif
 else
     "autoload plugin directory
@@ -1184,6 +1186,7 @@ else
     let $kernel_version=system('uname -r | tr -d "\n"')
     "set tags=./tags,tags,../tags,../../tags,../../../tags,../../../../tags,/lib/modules/$kernel_version/build/tags,/usr/include/tags,/media/f20GB/dsplink_1_60/dsplink/dsp/tags
     set tags=./tags,../tags,../../tags,../../../tags,../../../../tags,/lib/modules/$kernel_version/build/tags,/usr/include/tags
+	set tags+=../../../../../tags
     set tags+=/media/f20GB/0MAC_crop/On_Target/branch/linux-davinci/include/tags
     "set tags+=$DSPLINK/**/tags
     "//---------------------------------- set colorscheme start //
