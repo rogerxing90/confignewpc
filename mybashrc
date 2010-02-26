@@ -64,6 +64,9 @@ alias gitca="git commit --amend"
 alias gitrs="git reset HEAD~1 --soft"
 alias gitrr="git reset HEAD~1"
 alias gitdh="git diff HEAD~1.."
+#diff staged files with previous commit
+#note: git diff only diff unstaged files with previous commit
+alias gitdH="git diff HEAD"
 alias sd="svn diff --diff-cmd=/usr/bin/meld"
 
 #make

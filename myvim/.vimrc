@@ -104,6 +104,7 @@ autocmd filetype c set omnifunc+=ccomplete#Complete
 "autocmd filetype c,cpp set cindent
 autocmd FileType php set omnifunc=phpcomplete#CompletePHP
 autocmd FileType html set omnifunc=htmlcomplete#CompleteTags
+autocmd BufRead *.diff colorscheme patch
 filetype plugin indent on
 "comment follow to enable linebreak
 "setlocal fo-=t fo+=croql @ /usr/share/vim/vim72/ftplugin/c.vim
