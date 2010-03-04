@@ -75,6 +75,7 @@ set wildchar=<Tab> wildmenu wildmode=full
 "to avoid mksession error E228 makemap
 set sessionoptions-=options
 set sessionoptions=blank,buffers,curdir,tabpages,winsize,folds
+set ff=unix
 "set winaltkeys=yes "let window handle Alt key
 " Don't let Windows handle alt-cmds (menu access, etc.); let vim do it
 " Make Alt-F pop down the 'File' menu ['Edit','Tools','Syntax','Buffers','Window','Misc','Help']
@@ -316,6 +317,7 @@ nmap ,n :b main<bar>%s#[^/]\(while(i);\)#//\1<CR>
 nmap ,p ?PROTOTYPES<CR>
 nmap ,v ?STATIC\\|GLOBAL<CR>
 nmap ,t :e global.h<bar>/TEST<CR>
+nmap ,c :%s/\r//g<CR>
 "nmap \bh i/*<ESC>73A=<ESC>o<C-W>==  @  @<CR>==<CR>==  DESC:<CR>==  USAGE:<CR>==  INPUTS:<CR>==  OUTPUTS:<CR>==  RETURN:<CR>==  IMP NOTE:<CR><ESC>73A=<ESC>a*/<ESC>=8k
 "nmap \bi i/*<ESC>73A=<ESC>o<C-W>==  <CR><ESC>73A=<ESC>a*/<ESC>=1k
 nmap \bh i/*=<ESC>74A=<ESC>o<C-W>==  @  @<CR>==<CR>==  DESC:<CR>==  USAGE:<CR>==  INPUTS:<CR>==  OUTPUTS:<CR>==  RETURN:<CR>==  IMP NOTE:<CR><ESC>75A=<ESC>a*/<ESC>=8k
@@ -341,6 +343,21 @@ cabbr mm make
 "abbr knp printk("%s:\r\n", __FILE__);<esc>F:
 "abbr knp printk("(%X) \n",);<esc>2F"
 abbr knp printf("(%d) \n");<esc>2F"
+"change (p_xxx : sdfdksf) to (p_xxx => s_mgt0_xxx,
+"cabbr vvv s/\(p_\)\([[:graph:]]*\).*/\1\2 => s_mgt0_\2,/g
+
+"change (p_xxx : in std_xxx;) to (s_xxx : std_xxx)
+cabbr vvw s/\(p_\)\([[:graph:]]*.*:\).*\(in\|out\)\(.*\)/signal s_\2\4/g
+"change (signal s_xxx : saefsdf) to (p_xxx <= s_xxx)
+cabbr vvsps s/.*\(s_\)\([[:graph:]]*\)\_s*:.*/p_\2 <= \1\2;/g
+"change (p_xxx <= s_xxx) to (signal s_xxx : saefsdf)
+cabbr vvsps s/.*\(s_\)\([[:graph:]]*\)\_s*:.*/s_\2 <= p_\2;/g
+"change (sdfsd s_xxx) to (s_xxx <= (others => '0');
+cabbr vvso0 s/.*\(s_[[:graph:]]*\).*/\1 <= (others => '0');
+cabbr vvs0 s/.*\(s_[[:graph:]]*\).*/\1 <= '0';
+"change from vhdl constant to c #define addr
+"g /.*C_\([[:graph:]]*\).*:= X"\(.*\)".*/ s//#define \1 0x\2/g
+
 
 "//---------------------------------- command abbreviation //
 cabbr aa arg *c *h
@@ -912,7 +929,27 @@ endfunction
 vnoremap <silent> * :call VisualSearch('f')<CR>
 vnoremap <silent> # :call VisualSearch('b')<CR>
 
-
+"===============================================================
+"== Function: repeat repetitive task in a smart way
+"===============================================================
+"generate 2 lines in same pattern
+function! RepeatSmart2()
+	let l:mylinenum = 1
+	let l:startnum = 8
+	let l:bit_start = 64
+	let l:bit_end = bit_start+7
+	let l:loopend= 32
+	while l:startnum < l:loopend
+		let l:mytext = "when C_RUNTIME_MSSID" . startnum . " =>"
+		let l:mytext2 = "s_mSsId(".bit_end. " downto " .bit_start. ") <= p_mcu_din;"
+		call setline(mylinenum, l:mytext)
+		call setline(mylinenum+1, l:mytext2)
+		let l:mylinenum = mylinenum + 2
+		let l:bit_start = bit_end+1
+		let l:bit_end = bit_end+8
+		let l:startnum = startnum + 1
+	endwhile
+endfunction
 "===============================================================
 "== Formatting
 "===============================================================
@@ -996,7 +1033,7 @@ nmap <A-F12> <Esc>:call Replace_GUI()<CR>
 "===============================================================
 nmap <F8>   :TrinityToggleAll<CR>
 nmap <F9>   :TrinityToggleSourceExplorer<CR>
-nmap <F10>  :TrinityToggleTagList<CR>
+"nmap <F10>  :TrinityToggleTagList<CR>
 nmap <F11>  :TrinityToggleNERDTree<CR>
 " // Set the window height of Source Explorer
 let g:SrcExpl_winHeight = 8
@@ -1155,10 +1192,17 @@ set completeopt=menuone,menu,longest
 "== Plugin: Bgrep
 "===============================================================
 map <A-F9> :execute "Bgrep /" . expand("<cword>") . "/" <CR>
+
+"===============================================================
+"== Plugin: YRShow
+"===============================================================
+"a to toggle autoclose of YRShow window;
+nnoremap <silent> <F10> :YRShow<CR>
 "+++++++++++++++++++++++++ colorscheme ++++++++++++++++++++++++++
 "map <leader>3 :set syntax=python<cr>
 "map <leader>4 :set ft=javascript<cr>
 "map <leader>$ :syntax sync fromstart<cr>
+nmap \1 :set ft=vhdl<CR>
 
 "===============================================================
 "== OS specific
