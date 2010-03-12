@@ -934,24 +934,26 @@ vnoremap <silent> # :call VisualSearch('b')<CR>
 "===============================================================
 "generate 2 lines in same pattern
 function! RepeatSmart2()
-	let l:mylinenum = 1
-	let l:startnum = 8
-	let l:bit_start = 64
+	let l:mylinenum = 0
+	let l:startnum = 0
+	let l:bit_start = 0
 	let l:bit_end = bit_start+7
-	let l:loopend= 32
+	let l:loopend= 6
+	"totalsetline = total of setline() called
+	let l:totalsetline = 1
 	while l:startnum < l:loopend
 		let l:mytext = "when C_RUNTIME_MSSID" . startnum . " =>"
-		let l:mytext2 = "s_mSsId(".bit_end. " downto " .bit_start. ") <= p_mcu_din;"
-		call setline(mylinenum, l:mytext)
+		let l:mytext2 = "p_mBssId(".bit_end. " downto " .bit_start. ") <= s_mib_reg(_RUNTIME_MBSSID".mylinenum.");"
+		"call setline(mylinenum, l:mytext)
 		call setline(mylinenum+1, l:mytext2)
-		let l:mylinenum = mylinenum + 2
+		let l:mylinenum = mylinenum + totalsetline
 		let l:bit_start = bit_end+1
 		let l:bit_end = bit_end+8
 		let l:startnum = startnum + 1
 	endwhile
 endfunction
 "===============================================================
-"== Formatting
+"== Function: Formatting
 "===============================================================
 ":[range]ce[nter] [width]     center lines     :.,+3 center 80
 ":[range]ri[ght] [width]     right alignment     :% right
@@ -967,7 +969,7 @@ endfunction
 
 "imap <c-tab> <Esc>:call GotoBrace()<CR>a
 "===============================================================
-"== Replace string
+"== Function: Replace string
 "===============================================================
 function! Replacestr()
     "e - don't issue error when search not found
@@ -982,7 +984,7 @@ endfunction
 
 
 "===============================================================
-"== Vimgrep with user key-in word
+"== Function: Vimgrep with user key-in word
 "===============================================================
 function! Vgrep()
     let m = inputdialog("search term")
@@ -1004,7 +1006,7 @@ endfunction
 nmap <A-F11> <Esc>:call Vgrep_with_userInput()<CR>
 
 "===============================================================
-"== user input new string to replace the word under cursor
+"== Function: user input new string to replace the word under cursor
 "===============================================================
 function! Replace_GUI()
 	let newStr=inputdialog("new string to replace word under cursor")
@@ -1013,6 +1015,19 @@ function! Replace_GUI()
 	endif
 endfunction
 nmap <A-F12> <Esc>:call Replace_GUI()<CR>
+
+"===============================================================
+"== Function: replace a list of item with similar prefix
+"===============================================================
+function! Replace_prefix() range
+	let lineNr = a:firstline
+	while (lineNr != a:lastline)
+		let words = split(getline(lineNr), '\W\+')
+		"echo "[". lineNr. "]word is " . words[1]
+		exe "%s/" . words[1]. "\\>/XA_" . words[1]. "/gc"
+		let lineNr = lineNr + 1
+	endwhile
+endfunction
 
 "===============================================================
 "== autocompletion for c programming
