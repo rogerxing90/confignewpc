@@ -313,7 +313,7 @@ nmap \bf /8[[:digit:]]\{6}[0-9a-zA-Z]<cr>
 "nmap \bd :%s#//\(\#define ENABLE_DEBUG\)#\1<CR>
 "nmap \bn :%s#^\\(\#define ENABLE_DEBUG\)#//\1<CR>
 nmap ,d :e main.c<bar>%s#//\(while(i);\)# \1<CR>
-nmap ,n :b main<bar>%s#[^/]\(while(i);\)#//\1<CR>
+"nmap ,n :b main<bar>%s#[^/]\(while(i);\)#//\1<CR>
 nmap ,p ?PROTOTYPES<CR>
 nmap ,v ?STATIC\\|GLOBAL<CR>
 nmap ,t :e global.h<bar>/TEST<CR>
@@ -938,13 +938,18 @@ function! RepeatSmart2()
 	let l:startnum = 0
 	let l:bit_start = 0
 	let l:bit_end = bit_start+7
-	let l:loopend= 6
+	let l:loopend= 66
 	"totalsetline = total of setline() called
 	let l:totalsetline = 1
 	while l:startnum < l:loopend
 		let l:mytext = "when C_RUNTIME_MSSID" . startnum . " =>"
-		let l:mytext2 = "p_mBssId(".bit_end. " downto " .bit_start. ") <= s_mib_reg(_RUNTIME_MBSSID".mylinenum.");"
+		"let l:mytext2 = "p_mBssId(".bit_end. " downto " .bit_start. ") <= s_mib_reg(_RUNTIME_MBSSID".mylinenum.");"
+		"let l:mytext2 = "when C_REMOTE_A_CWMIN" . startnum . " => p_mcu_dout <= s_a_cwmin(". bit_end." downto " . bit_start.");"
+		"let l:mytext2 = "when C_REMOTE_A_CWMAX" . startnum . " => s_a_cwmax(". bit_end." downto " . bit_start.") <= s_a_cwmin;"
+		let l:mytext3 = mylinenum + 0
 		"call setline(mylinenum, l:mytext)
+		"call setline(mylinenum+1, l:mytext2)
+		let l:mytext2 = printf("%x", l:mytext3)
 		call setline(mylinenum+1, l:mytext2)
 		let l:mylinenum = mylinenum + totalsetline
 		let l:bit_start = bit_end+1
@@ -952,6 +957,34 @@ function! RepeatSmart2()
 		let l:startnum = startnum + 1
 	endwhile
 endfunction
+
+"===============================================================
+"== Function: VHDL related functions
+"===============================================================
+function! ChangeVHDLConstantToDefine()
+	"constant C_DOxx  := X"00"; (change to =>) #define XA_ADDRESS0 0x00
+	%s/constant//g
+	%s/:.*:\=X"/0x/g
+	%s/";//g
+	%s/^.* C_/#define XA_/g
+	%s#--#//--#g
+endfunction
+
+"===============================================================
+"== Function: search partially (ignore the prefix and search for the word)
+"===============================================================
+"e.g. p_xxx , s_xxx ==> search xxx instead
+function! PartialSearch()
+	let l:wordUnderCursor = expand("<cword>")
+	let l:wordToSearch = strpart(l:wordUnderCursor, stridx(wordUnderCursor, "_")+1)
+	let @/=l:wordToSearch
+	exe "normal n"
+	"cursor(search(l:wordToSearch))
+	"echo "PartialSearch wordToSearch=" .l:wordToSearch
+endfunction
+
+nmap ,nn :call PartialSearch()<CR>
+
 "===============================================================
 "== Function: Formatting
 "===============================================================
