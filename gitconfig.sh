@@ -42,3 +42,6 @@ git config --global push.default "matching"
 
 #############  merge #############
 git config --global merge.tool meld
+
+#############  ignore #############
+git config --global core.excludesfile `echo $PWD`/.gitignore
