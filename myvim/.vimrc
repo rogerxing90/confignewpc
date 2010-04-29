@@ -1278,9 +1278,9 @@ else
     "--set tag to search current dir (and upto 4 level depth) then the /usr/include
     let $kernel_version=system('uname -r | tr -d "\n"')
     "set tags=./tags,tags,../tags,../../tags,../../../tags,../../../../tags,/lib/modules/$kernel_version/build/tags,/usr/include/tags,/media/f20GB/dsplink_1_60/dsplink/dsp/tags
-    set tags=./tags,../tags,../../tags,../../../tags,../../../../tags,/lib/modules/$kernel_version/build/tags,/usr/include/tags
+    set tags=./tags,../tags,../../tags,../../../tags,../../../../tags,
 	set tags+=../../../../../tags
-    set tags+=/media/f20GB/0MAC_crop/On_Target/branch/linux-davinci/include/tags
+	set tags+=~/tags,/lib/modules/$kernel_version/build/tags,/usr/include/tags
     "set tags+=$DSPLINK/**/tags
     "//---------------------------------- set colorscheme start //
     if &term =~ "xterm"
