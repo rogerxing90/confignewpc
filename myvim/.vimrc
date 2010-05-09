@@ -1063,6 +1063,16 @@ function! Replace_prefix() range
 endfunction
 
 "===============================================================
+"== Function: convert symbian .dm file to .sis file
+"===============================================================
+function! DmToSis()
+	:1, 4 d
+	:$ d
+	:w
+	:bw
+endfunction
+
+"===============================================================
 "== autocompletion for c programming
 "===============================================================
 "autocmd InsertEnter * call MyC_complete()
