@@ -2,6 +2,7 @@
 #############  core #############
 git config --global core.whitespace "fix,-indent-with-non-tab,trailing-space,cr-at-eol"
 git config --global core.editor "vim"
+#git config --global core.pager "cat"
 
 #############  color #############
 git config --global core.whitespace "fix,-indent-with-non-tab,trailing-space,cr-at-eol"
@@ -42,6 +43,15 @@ git config --global push.default "matching"
 
 #############  merge #############
 git config --global merge.tool meld
+#git config --global merge.tool bcompare
+#git config --global mergetool.bcompare.cmd 'bcompare \\\"$LOCAL\\\" \\\"$REMOTE\\\" \\\"$BASE\\\" \\\"$MERGED\\\"'
 
 #############  ignore #############
 git config --global core.excludesfile `echo $PWD`/.gitignore
+
+#############  sendemail #############
+#git config --global sendemail.smtpencryption "tls"
+#git config --global sendemail.smtpserver "smtp.gmail.com"
+#git config --global sendemail.smtpuser "insidepower2@gmail.com"
+#git config --global sendemail.to "mailingonly@gmail.com"
+#git config --global sendemail.smtpserverport "587"

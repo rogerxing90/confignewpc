@@ -117,16 +117,16 @@ filetype plugin indent on
 " Convert slashes to backslashes for Windows.
 if has('win32')
     "nmap ,cs :let @*=substitute(expand("%"), "/", "\\", g)<CR>
-    nmap ,cp :let @*=expand("%:t")<Bar>echo @*<CR>
+    nnoremap ,cp :let @*=expand("%:t")<Bar>echo @*<CR>
     "nmap ,cl :let @*=substitute(expand("%:p"), "/", "\\", g)<Bar>echo @*<CR>
-    nmap ,cl :let @*=expand("%:p")<Bar>echo @*<CR>
+    nnoremap ,cl :let @*=expand("%:p")<Bar>echo @*<CR>
     " This will copy the path in 8.3 short format, for DOS and Windows 9x
-    nmap ,c8 :let @*=substitute(expand("%:p:8"), "/", "\\", g)<Bar>echo @*<CR>
+    nnoremap ,c8 :let @*=substitute(expand("%:p:8"), "/", "\\", g)<Bar>echo @*<CR>
 else
     "nmap ,cs :let @+=expand("%")<CR>
-    nmap ,cp :let @+=expand("%:t")<Bar>echo @*<CR>
+    nnoremap ,cp :let @+=expand("%:t")<Bar>echo @*<CR>
     "or use * reg (+ and * is the same with slight difference)
-    nmap ,cl :let @+=expand("%:p")<Bar>echo @*<CR>
+    nnoremap ,cl :let @+=expand("%:p")<Bar>echo @*<CR>
     "nmap ,cs :let @*=expand("%")<CR>
     "nmap ,cl :let @*=expand("%:p")<CR>
 endif
@@ -1256,12 +1256,17 @@ map <A-F9> :execute "Bgrep /" . expand("<cword>") . "/" <CR>
 "===============================================================
 "a to toggle autoclose of YRShow window;
 nnoremap <silent> <F10> :YRShow<CR>
+
+"===============================================================
+"== Miscellaneous substitution
+"===============================================================
+nmap ,rs :%s/\_s*$//g
+
 "+++++++++++++++++++++++++ colorscheme ++++++++++++++++++++++++++
 "map <leader>3 :set syntax=python<cr>
 "map <leader>4 :set ft=javascript<cr>
 "map <leader>$ :syntax sync fromstart<cr>
 nmap \1 :set ft=vhdl<CR>
-
 "===============================================================
 "== OS specific
 "===============================================================
