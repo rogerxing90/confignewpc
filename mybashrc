@@ -29,6 +29,8 @@ alias bassh="source ~/.bashrc"
 alias ctagg="ctags -R --sort=foldcase --fields=+S *.h *.c *.cpp"
 alias grep="grep -nrEI --color"
 alias xc="tr '\n' ' ' | xclip -selection c"
+alias xx="xsel -b"
+alias xxx="| xsel -b"
 alias cdd="cd .."
 
 #essential ls
@@ -82,6 +84,7 @@ alias sd="svn diff --diff-cmd=/usr/bin/meld"
 # convenience
 alias acc="apt-cache search"
 alias aii="sudo apt-get -y install"
+alias ccc="cd ~/confignewpc/"
 
 #make
 alias ulimitt="ulimit -c unlimited"
@@ -106,7 +109,6 @@ alias mmm="cd $MY_PROJ_DIR/src && make"
 alias dddd="sudo ddd $MY_PROJ_DIR/obj/mac"
 alias ddda="sudo ddd $MY_PROJ_DIR/obj/mac --debugger arm-linux-gdb"
 alias runb="sudo $MY_PROJ_DIR/test/broadcast"
-export HTTP_PROXY=http://proxy.rb.de.conti.de:81
 
 #temp
 PATH=$PATH:$MYBASHRC_DIR
