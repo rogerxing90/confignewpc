@@ -94,6 +94,7 @@ alias mma="make CC=arm-linux-gcc"
 alias mmcp="make cpmac"
 
 #misc
+alias cdc="cd ~/confignewpc"
 alias vims="gvim -S kn.vim"
 alias binn="cd /usr/local/bin"
 MY_PROJ_DIR=~/project_powerline/newgpp
@@ -122,3 +123,6 @@ alias cdr="cd /root"
 ##PS1='${debian_chroot:+($debian_chroot)}\w\e[37m$(__git_ps1 "(%s)")\e[0m>\$ '
 #PS1='${debian_chroot:+($debian_chroot)}\w>\$ '
 #export PS1='[\u@\h \W]$(__git_ps1 "(%s)")\$ '
+
+# set bash to use vi in command line editing
+set -o vi
