@@ -125,6 +125,11 @@ alias cdr="cd /root"
 ##PS1='${debian_chroot:+($debian_chroot)}\w\e[37m$(__git_ps1 "(%s)")\e[0m>\$ '
 #PS1='${debian_chroot:+($debian_chroot)}\w>\$ '
 #export PS1='[\u@\h \W]$(__git_ps1 "(%s)")\$ '
+# COL_KN_BLUE="\033[3;34m" ; COL_KN_GREEN="\033[0;32m"
+export PS1='${debian_chroot}\u:\033[0;32m\w\033[3;34m$(__git_ps1 "(%s)")\033[0m\$ '
+[ -e "$HOME/confignewpc/.dircolors" ] && DIR_COLORS="$HOME/confignewpc/.dircolors"
+[ -e "$DIR_COLORS" ] || DIR_COLORS=""
+eval "`dircolors -b $DIR_COLORS`"
 
 # set bash to use vi in command line editing
-set -o vi
+#set -o vi

@@ -24,3 +24,18 @@ for FGs in '    m' '   1m' '  30m' '1;30m' '  31m' '1;31m' '  32m' \
   echo;
 done
 echo
+
+COL_RED="\033[0;31m"
+COL_GREEN="\033[0;32m"
+COL_BLUE="\033[0;34m"
+COL_YELLOW="\033[0;33m"
+COL_RESET="\033[0m"
+COL_UNDERLINE="\033[4m"
+COL_ULINE_BLUE="\033[5;34m"
+COL_NEW="\033[1;40m"
+COL_NEW2="\033[0;42m"
+
+echo -en $COL_YELLOW"test... "$COL_RESET" "
+echo -en $COL_ULINE_BLUE"test... "$COL_RESET" "
+echo -en $COL_NEW"test... "$COL_RESET" "
+echo -e $COL_NEW2"test... "$COL_RESET" "

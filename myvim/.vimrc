@@ -26,6 +26,7 @@ set tabstop=4       "after set to a new value, use retab to replace old to new t
 "set expandtab
 "set linebreak        "enable breakat
 set visualbell        "set vb t_vb=on "visual bell
+"set noerrorbells
 set nu            "display line
 set autoindent
 set smartindent
@@ -76,6 +77,11 @@ set wildchar=<Tab> wildmenu wildmode=full
 set sessionoptions-=options
 set sessionoptions=blank,buffers,curdir,tabpages,winsize,folds
 set ff=unix
+set matchpairs=(:),{:},[:],<:>
+set scrolloff=5
+set sidescrolloff=5
+set statusline=%F%m%r%h%w\ [FORMAT=%{&ff}]\ [TYPE=%Y]\ [ASCII=\%03.3b]\ [HEX=\%02.2B]\ [POS=%04l,%04v][%p%%]\ [LEN=%L]
+set statusline=2
 "set winaltkeys=yes "let window handle Alt key
 " Don't let Windows handle alt-cmds (menu access, etc.); let vim do it
 " Make Alt-F pop down the 'File' menu ['Edit','Tools','Syntax','Buffers','Window','Misc','Help']
@@ -149,7 +155,7 @@ syn on "syntax on
 "highlight RedundantSpaces term=standout ctermbg=red guibg=red
 "use :set list! to toggle visible whitespace on/off
 "use :nolist to toggle list off
-set listchars=tab:>-,trail:.,extends:>
+set listchars=tab:>-,trail:.,extends:>,eol:-,precedes:<,nbsp:%
 
 "highlight word over 80 columns
 highlight OverLength ctermbg=red ctermfg=white guibg=#592929
@@ -234,8 +240,8 @@ nmap <A-F3> :set filetype=c <cr>
 nmap <M-;> g;
 nmap <M-,> g,
 "move to the end of line
-nmap ,e $
-nmap ,b ^
+map ,e $
+map ,b ^
 nmap ,r $a;<ESC>
 "nmap ,r :s/$/;/<CR>
 "toggle &hls &wrap
@@ -302,7 +308,6 @@ vnoremap g/ y/<C-R>"<CR>
 vnoremap qq <Esc>`>a'<Esc>`<i'<Esc>
 "wrap <b></b> around visually selected text (use reg z, delete insert, paste
 vmap sb "zdi<b><C-R>z</b><Esc>
-vmap ,e $
 "reference --
 "<C-Q> I or A or c then <esc><esc>
 "//---------------------------------- pending mapping start //
