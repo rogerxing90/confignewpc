@@ -10,13 +10,14 @@
 #	2. do not search for whole word (no -w)
 
 set -x
+grep_cmd="fgrep -rIin --exclude-dir='.git'"
 if [ "$#" == "3" ]
 then
-   fgrep -rIin  "$1" * | fgrep -rIin  $2 --color=auto | fgrep -rIin  $3 --color=auto
+   $grep_cmd  "$1" * | fgrep -rIin  $2 | fgrep -rIin  $3 --color=auto
 elif [ "$#" == "2" ]
 then
-   fgrep -rIin  "$1" * | fgrep -rIin  $2 --color=auto 
+   $grep_cmd  "$1" * | fgrep -rIin  $2 --color=auto 
 else
-   fgrep -rIin  "$1" * --color=auto
+   $grep_cmd  "$1" * --color=auto
 fi
-
+set +x

@@ -100,13 +100,13 @@ alias mmcp="make cpmac"
 alias cdc="cd ~/confignewpc"
 alias vims="gvim -S kn.vim"
 alias binn="cd /usr/local/bin"
-MY_PROJ_DIR=~/project_powerline/newgpp
+MY_PROJ_DIR=~/git_wa/mydroid_autolinq-2.1/kernel_imx
 alias gppp="cd $MY_PROJ_DIR/src"
 alias gppr="cd $MY_PROJ_DIR/ref/mac_ref/modified/"
 alias gppt="cd $MY_PROJ_DIR/test"
 alias gppo="cd $MY_PROJ_DIR/obj"
 alias gppd="cd $MY_PROJ_DIR/../dsplink_1_60/dsplink"
-alias mmm="cd $MY_PROJ_DIR/src && make"
+alias mmm="cd $MY_PROJ_DIR && make uImage"
 alias dddd="sudo ddd $MY_PROJ_DIR/obj/mac"
 alias ddda="sudo ddd $MY_PROJ_DIR/obj/mac --debugger arm-linux-gdb"
 alias runb="sudo $MY_PROJ_DIR/test/broadcast"
@@ -126,7 +126,7 @@ alias cdr="cd /root"
 #PS1='${debian_chroot:+($debian_chroot)}\w>\$ '
 #export PS1='[\u@\h \W]$(__git_ps1 "(%s)")\$ '
 # COL_KN_BLUE="\033[3;34m" ; COL_KN_GREEN="\033[0;32m"
-export PS1='${debian_chroot}\u:\033[0;32m\w\033[3;34m$(__git_ps1 "(%s)")\033[0m\$ '
+export PS1='${debian_chroot}\u:\033[1;32m\w\033[1;34m$(__git_ps1 "(%s)")\033[0m\$ '
 [ -e "$HOME/confignewpc/.dircolors" ] && DIR_COLORS="$HOME/confignewpc/.dircolors"
 [ -e "$DIR_COLORS" ] || DIR_COLORS=""
 eval "`dircolors -b $DIR_COLORS`"

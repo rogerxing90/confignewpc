@@ -123,16 +123,16 @@ filetype plugin indent on
 " Convert slashes to backslashes for Windows.
 if has('win32')
     "nmap ,cs :let @*=substitute(expand("%"), "/", "\\", g)<CR>
-    nnoremap ,cp :let @*=expand("%:t")<Bar>echo @*<CR>
+    noremap ,as :let @*=expand("%:t")<Bar>echo @*<CR>
     "nmap ,cl :let @*=substitute(expand("%:p"), "/", "\\", g)<Bar>echo @*<CR>
-    nnoremap ,cl :let @*=expand("%:p")<Bar>echo @*<CR>
+    noremap ,al :let @*=expand("%:p")<Bar>echo @*<CR>
     " This will copy the path in 8.3 short format, for DOS and Windows 9x
-    nnoremap ,c8 :let @*=substitute(expand("%:p:8"), "/", "\\", g)<Bar>echo @*<CR>
+    noremap ,a8 :let @*=substitute(expand("%:p:8"), "/", "\\", g)<Bar>echo @*<CR>
 else
     "nmap ,cs :let @+=expand("%")<CR>
-    nnoremap ,cp :let @+=expand("%:t")<Bar>echo @*<CR>
+    noremap ,as :let @+=expand("%:t")<Bar>echo @*<CR>
     "or use * reg (+ and * is the same with slight difference)
-    nnoremap ,cl :let @+=expand("%:p")<Bar>echo @*<CR>
+    noremap ,al :let @+=expand("%:p")<Bar>echo @*<CR>
     "nmap ,cs :let @*=expand("%")<CR>
     "nmap ,cl :let @*=expand("%:p")<CR>
 endif
@@ -322,7 +322,7 @@ nmap ,d :e main.c<bar>%s#//\(while(i);\)# \1<CR>
 nmap ,p ?PROTOTYPES<CR>
 nmap ,v ?STATIC\\|GLOBAL<CR>
 nmap ,t :e global.h<bar>/TEST<CR>
-nmap ,c :%s/\r//g<CR>
+"nmap ,c :%s/\r//g<CR>
 "nmap \bh i/*<ESC>73A=<ESC>o<C-W>==  @  @<CR>==<CR>==  DESC:<CR>==  USAGE:<CR>==  INPUTS:<CR>==  OUTPUTS:<CR>==  RETURN:<CR>==  IMP NOTE:<CR><ESC>73A=<ESC>a*/<ESC>=8k
 "nmap \bi i/*<ESC>73A=<ESC>o<C-W>==  <CR><ESC>73A=<ESC>a*/<ESC>=1k
 nmap \bh i/*=<ESC>74A=<ESC>o<C-W>==  @  @<CR>==<CR>==  DESC:<CR>==  USAGE:<CR>==  INPUTS:<CR>==  OUTPUTS:<CR>==  RETURN:<CR>==  IMP NOTE:<CR><ESC>75A=<ESC>a*/<ESC>=8k

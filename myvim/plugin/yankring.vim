@@ -22,7 +22,7 @@ let loaded_yankring = 90
 
 let s:yr_has_voperator     = 0
 if v:version > 701 || ( v:version == 701 && has("patch205") )
-    let s:yr_has_voperator = 1
+    "kn: let s:yr_has_voperator = 1
 endif
 
 if !exists('g:yankring_history_dir')

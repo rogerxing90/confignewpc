@@ -1,7 +1,7 @@
 #!/bin/bash
 # usage: 
-# mmmgrep "FPGA_*"
-# mmmgrep "FPGA_*" "*LED" "*Set"
+# mmmfgrep "FPGA_*"
+# mmmfgrep "FPGA_*" "*LED" "*Set"
 # options: n(list number), i(ignorecase), I(no binary), r(recursive), 
 #	   E(regexp) 
 # change history
@@ -10,13 +10,13 @@
 #	2. do not search for whole word (no -w)
 
 set -x
-grep_cmd="grep -rIinE --include=*.cpp --include=*.[ch] --exclude-dir='.git'"
+grep_cmd="fgrep -rIin --include=*.cpp --include=*.[ch] --exclude-dir='.git'"
 if [ "$#" == "3" ]
 then
-   $grep_cmd "$1" * | grep -rIinE $2 | grep -rIinE --include=*.[ch] $3 --color=auto
+   $grep_cmd "$1" * | fgrep -rIin $2 | fgrep -rIin $3 --color=auto
 elif [ "$#" == "2" ]
 then
-   $grep_cmd "$1" * | grep -rIinE $2
+   $grep_cmd "$1" * | fgrep -rIin $2 --color=auto 
 else
    $grep_cmd "$1" * --color=auto
 fi

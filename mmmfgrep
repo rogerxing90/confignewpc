@@ -1,22 +1,89 @@
-#!/bin/bash
-# usage: 
-# mmmfgrep "FPGA_*"
-# mmmfgrep "FPGA_*" "*LED" "*Set"
-# options: n(list number), i(ignorecase), I(no binary), r(recursive), 
-#	   E(regexp) 
-# change history
-# 22-oct-2008
-#	1. support extend-regexp (-E)
-#	2. do not search for whole word (no -w)
+#!/usr/bin/python
+'''
+ usage:
+ mmmfgrep this will become one raw arg
+		= mmmfgrepaaa 'this will become one raw arg'
+'''
 
-set -x
-if [ "$#" == "3" ]
-then
-   fgrep -rIin --include=*.cpp --include=*.[ch] "$1" * | fgrep -rIin $2 | fgrep -rIin $3 --color=auto
-elif [ "$#" == "2" ]
-then
-   fgrep -rIin --include=*.cpp --include=*.[ch] "$1" * | fgrep -rIin $2 --color=auto 
-else
-   fgrep -rIin --include=*.cpp --include=*.[ch] "$1" * --color=auto
-fi
+import optparse
+import subprocess
+import re
+import os
+import sys
+from optparse import OptionParser
+#import re
 
+#----------------- global variable ----------------#
+file_compare_count = 0
+
+#----------------- parseCmd() ----------------#
+## parse the command line arguments
+def parseCmd():
+	usage = "usage: %prog [options] <startBranch>..<endBranch> <branch1> <branch2> [<branch3>]"
+	parser = OptionParser(usage)   #when --help is used or when wrong opt
+	parser.add_option("-l", "--list-file",
+			action="store_true", dest="list_file",
+			help="list all changed files")  # set options.verbose=True
+	#parse_args(arg) arg (default) = sys.argv[1:]
+	return parser.parse_args()  #options.filename, options.verbose..
+
+#----------------- execBash() ----------------#
+def execBash(cmd):
+	print cmd
+	p = subprocess.Popen(cmd, shell=True, stdout=subprocess.PIPE)
+	out = p.stdout.read()
+	#print out
+	return out
+
+#----------------- main() ----------------#
+def main():
+	my_arg=""
+	## parse command line options and arguments
+	(options, args) = parseCmd()
+	for i, arg in enumerate(args):
+		#print(r'%s' % (arg))
+		my_arg += r'%s' % (args[i])
+
+	#print(r'%s' % (my_arg))
+	cmd=r"fgrep -rIin --exclude-dir='.git' '%s' --color=always *" % (my_arg)
+	#print options
+	#print args
+
+	## split the output into lines
+	lines = execBash(cmd).splitlines()
+
+	## iterate the output
+	for i, line in enumerate(lines):
+		print("%d: %s" % (i,line))
+
+	input=raw_input("open file num : ")
+
+	# process user input
+	if input == "":
+		sys.exit(0)
+	else:
+		input = int(input)
+		'''
+		## e.g. input:     mmmfgrep:34:	out = p.stdout.read()
+		## note: filename "mmmfgrep" and line number "34" is colored
+		## note: actual color output:  [35m[Kmmmfgrep[m[K[36m[K:[m[K[32m[K34
+		## howto: (.*?\[.*?m.*?\[K) to extract [35m[K
+		## howto: (\S*?)(?=.\[m) to extract the filename
+		## note (?=..) is lookahead, i.e. is(?=As) will match is only in "isAs" form
+		'''
+		reg_obj = re.compile(r"(.*?\[.*?m.*?\[K)(\S*?)(?=.\[m).*?:(.*?\[.*?m.*?\[K){0,2}([0-9]*?)(?=.\[m)")
+		#reg_obj = re.compile(r"([^\\:]*)\\haha(.*)(.*)(.*)(.*)")
+		result = reg_obj.match(lines[input])
+		#result = reg_obj.match(r"a[35m delete.txt:1:")
+		#f = open("delete.txt", "w")
+		#print >> f, "%s \n %s \n %s \n %s" % (result.group(1), result.group(2), result.group(3), result.group(4))
+		cmd_open_file=r"/usr/bin/gvim %s +%s" % (result.group(2), result.group(4))
+		print cmd_open_file
+		#subprocess.Popen("/usr/bin/gvim mmmgrep", shell=True)
+		subprocess.Popen(cmd_open_file, shell=True)
+
+
+#----------------- standalone() ----------------#
+## if standalone, i.e. called directly from shell
+if __name__ == '__main__':
+	main()
