@@ -1078,6 +1078,38 @@ function! DmToSis()
 endfunction
 
 "===============================================================
+"== Function: save global search to register g
+"===============================================================
+function! SaveSearch(...)
+	"let list_len = len(a:000)
+	" note: a:0=len(a:000)
+	let list_len = a:0
+	let str=""
+	if list_len !=0
+		" if argument lis is not empty
+		let str=a:1
+	else
+		let str=expand("<cword>")
+	endif
+	" clear register g
+	let @g=""
+	" redirect global search output to register g
+	exe "redir @g>>"
+	exe "g /". str
+	exe "redir END"
+	" open a new buffer
+	exe "new"
+	" set this buffer attribute
+	setlocal buftype=nofile
+	setlocal bufhidden=wipe
+	setlocal noswapfile
+	setlocal nobuflisted
+	" paste the content of register g
+	exe "put g"
+endfunction
+
+
+"===============================================================
 "== autocompletion for c programming
 "===============================================================
 "autocmd InsertEnter * call MyC_complete()
