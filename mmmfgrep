@@ -21,9 +21,9 @@ file_compare_count = 0
 def parseCmd():
 	usage = "usage: %prog [options] <startBranch>..<endBranch> <branch1> <branch2> [<branch3>]"
 	parser = OptionParser(usage)   #when --help is used or when wrong opt
-	parser.add_option("-l", "--list-file",
-			action="store_true", dest="list_file",
-			help="list all changed files")  # set options.verbose=True
+	parser.add_option("-c", "--concatenate-string",
+			action="store_true", dest="join",
+			help="concatenate the arguments given")  # set options.verbose=True
 	#parse_args(arg) arg (default) = sys.argv[1:]
 	return parser.parse_args()  #options.filename, options.verbose..
 
@@ -40,12 +40,14 @@ def main():
 	my_arg=""
 	## parse command line options and arguments
 	(options, args) = parseCmd()
+
+	# concatenate all the arguments together as one argument
 	for i, arg in enumerate(args):
 		#print(r'%s' % (arg))
 		my_arg += r'%s' % (args[i])
+	cmd=r"fgrep -rIin --exclude-dir='.git' '%s' --color=always *" % (my_arg)
 
 	#print(r'%s' % (my_arg))
-	cmd=r"fgrep -rIin --exclude-dir='.git' '%s' --color=always *" % (my_arg)
 	#print options
 	#print args
 

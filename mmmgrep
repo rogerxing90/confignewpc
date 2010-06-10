@@ -16,7 +16,7 @@ then
    $grep_cmd "$1" * | grep -rIinE $2 | grep -rIinE --include=*.[ch] $3 --color=auto
 elif [ "$#" == "2" ]
 then
-   $grep_cmd "$1" * | grep -rIinE $2
+   $grep_cmd "$1" * | grep -rIinE $2 --color=auto
 else
    $grep_cmd "$1" * --color=auto
 fi

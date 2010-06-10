@@ -96,6 +96,10 @@ alias mmcl="make -f Makefile.local clean"
 alias mma="make CC=arm-linux-gcc"
 alias mmcp="make cpmac"
 
+#generate tags without prototype
+alias gentags="find . -name '*.cpp' -o -name '*.h' -o -name '*.c'  > filelist.tag && \
+ctags -R --sort=foldcase --c-types=-p --fields=-S -L filelist.tag"
+
 #misc
 alias cdc="cd ~/confignewpc"
 alias vims="gvim -S kn.vim"
