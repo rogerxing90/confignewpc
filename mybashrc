@@ -136,4 +136,9 @@ export PS1="\[\`if [[ \$? != "0" ]]; then echo '\e[1;31m(Error)\e[0m'; fi\`${MY_
 eval "`dircolors -b $DIR_COLORS`"
 
 # set bash to use vi in command line editing
-#set -o vi
+set -o vi
+
+# check if apparix (bookmark) exist
+if [ -n `which apparix` ]; then
+	source ~/confignewpc/apparix.sh
+fi
