@@ -131,11 +131,19 @@ alias cdr="cd /root"
 #PS1='${debian_chroot:+($debian_chroot)}\w>\$ '
 #export PS1='[\u@\h \W]$(__git_ps1 "(%s)")\$ '
 # COL_KN_BLUE="\033[3;34m" ; COL_KN_GREEN="\033[0;32m"
-#export PS1='${debian_chroot}\u:\033[1;32m\w\033[1;34m$(__git_ps1 "(%s)")\033[0m\$ '
+#export PS1='${debian_chroot}\u:\e[1;32m\w\e[34m$(__git_ps1 "(%s)")\e[1;0m \n\$ '
+export MY_PS1='${debian_chroot}\u:\e[1;32m\w\e[34m$(__git_ps1 "(%s)")\e[1;0m '
+#export PS1="\[\`if [[ \$? = "0" ]]; then echo '\e[32m\h\e[0m'; else echo '\e[31m\h\e[0m' ; fi\`:\w \$\n"
+export PS1="\[\`if [[ \$? != "0" ]]; then echo '\e[1;31m(Error)\e[0m'; fi\`${MY_PS1} \n\$ "
 #export PS2="> "
 [ -e "$HOME/confignewpc/.dircolors" ] && DIR_COLORS="$HOME/confignewpc/.dircolors"
 [ -e "$DIR_COLORS" ] || DIR_COLORS=""
 eval "`dircolors -b $DIR_COLORS`"
 
 # set bash to use vi in command line editing
-#set -o vi
+set -o vi
+
+# check if apparix (bookmark) exist
+if [ -n `which apparix` ]; then
+	source ~/confignewpc/apparix.sh
+fi
