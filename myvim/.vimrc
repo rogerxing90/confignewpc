@@ -348,6 +348,7 @@ cabbr mm make
 "abbr knp printk("%s:\r\n", __FILE__);<esc>F:
 "abbr knp printk("(%X) \n",);<esc>2F"
 abbr knp printk("(0x%lX) \n",);<esc>2F"
+abbr knn printk(" \n");<esc>2F"
 "abbr knp printf("(%d) \n");<esc>2F"
 "change (p_xxx : sdfdksf) to (p_xxx => s_mgt0_xxx,
 "cabbr vvv s/\(p_\)\([[:graph:]]*\).*/\1\2 => s_mgt0_\2,/g

@@ -9,3 +9,4 @@ sudo apt-get -y install subversion
 sudo apt-get -y install git-svn
 sudo apt-get -y install ddd
 sudo apt-get -y install doxygen
+sudo apt-get -y install apparix

@@ -147,3 +147,14 @@ set -o vi
 if [ -n `which apparix` ]; then
 	source ~/confignewpc/apparix.sh
 fi
+
+# copy file path to clipboard and output to stdout
+function cff() { echo $PWD"/"$1 | xsel -b && xsel -b
+}
+
+# use gvim to open the file and go to the line number provided
+function vv() {
+	echo ${ARG%:*} +${ARG##*:}
+	gvim ${ARG%:*} +${ARG##*:}
+}
+
