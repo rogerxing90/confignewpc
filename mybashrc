@@ -154,7 +154,7 @@ function cff() { echo $PWD"/"$1 | xsel -b && xsel -b
 
 # use gvim to open the file and go to the line number provided
 function vv() {
-	echo ${ARG%:*} +${ARG##*:}
-	gvim ${ARG%:*} +${ARG##*:}
+	echo ${*%:*} +${*##*:}
+	gvim ${*%:*} +${*##*:}
 }
 
