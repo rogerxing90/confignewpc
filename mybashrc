@@ -45,7 +45,7 @@ alias lsa5="ls -ctrla | grep -v 4096 | grep -v 65 | tail -n-5"
 alias vimm="gvim $(ls -ctr | tail -n-1)"
 
 #git
-source $MYBASHRC_DIR/git-completion.bash
+#source $MYBASHRC_DIR/git-completion.bash
 alias gits="git status"
 alias gita="git commit -a"
 alias gitam="git commit -a -m"
@@ -85,6 +85,7 @@ alias sd="svn diff --diff-cmd=/usr/bin/meld"
 # convenience
 alias acc="apt-cache search"
 alias aii="sudo apt-get -y install"
+alias ipp="/sbin/ifconfig -a | awk '/(cast)/ { print $2 }' | cut -d':' -f2 | head -1"
 alias ccc="cd ~/confignewpc/"
 
 #make
@@ -154,7 +155,7 @@ function cff() { echo $PWD"/"$1 | xsel -b && xsel -b
 
 # use gvim to open the file and go to the line number provided
 function vv() {
-	echo ${*%:*} +${*##*:}
+	echo gvim ${*%:*} +${*##*:}
 	gvim ${*%:*} +${*##*:}
 }
 
