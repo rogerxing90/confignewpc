@@ -30,8 +30,9 @@ alias ctagg="ctags -R --sort=foldcase --fields=+S *.h *.c *.cpp"
 alias grep="grep -nrEI --color"
 alias xc="tr '\n' ' ' | xclip -selection c"
 alias xx="xsel -b"
-alias xxx="| xsel -b"
+#alias xxx="| xsel -b"
 alias cdd="cd .."
+alias xxx="history | tail -2 | head -1 | cut -d' ' -f5- | xsel -b"
 
 #essential ls
 alias ll="ls -la --color=auto"
@@ -68,6 +69,7 @@ alias gitg="git tag"
 alias gitl="git log"
 alias gitls="git log --stat"
 alias gitll="git log -n1"
+alias gitlp="git log -p"
 alias gitl1="git log --pretty=oneline"
 alias gitpl="git pull origin master"
 alias gitrs="git reset HEAD~1 --soft"
@@ -81,6 +83,7 @@ alias gitno="git config --global core.pager cat"
 alias gitnoo="git config --global core.pager less"
 alias ra="repo forall -p -v -c"
 alias sd="svn diff --diff-cmd=/usr/bin/meld"
+alias gg='git ls-files | /bin/grep -w'
 
 # convenience
 alias acc="apt-cache search"
@@ -158,4 +161,7 @@ function vv() {
 	echo gvim ${*%:*} +${*##*:}
 	gvim ${*%:*} +${*##*:}
 }
+
+### usage ###
+# git log `gg filename`
 

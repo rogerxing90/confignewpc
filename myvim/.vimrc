@@ -1111,6 +1111,28 @@ function! SaveSearch(...)
 endfunction
 
 vmap <A-S-F10> :exe normal "y"<CR> :call SaveSearch(<C-R>")
+
+"===============================================================
+"== Function: increment last number on filename and open it
+"===============================================================
+function! NextFile()
+	let fn=expand("%:t")
+	let next_seq = matchstr(fn, '\d\+')+1
+	let new_fn=matchstr(fn, '\a\+').next_seq
+	:exe 'e '. new_fn
+	"echo next_seq." haha ".new_fn
+endfunction
+
+function! PrevFile()
+	let fn=expand("%:t")
+	let next_seq = matchstr(fn, '\d\+')-1
+	echo next_seq
+	let new_fn=matchstr(fn, '\a\+').next_seq
+	:exe 'e '. new_fn
+endfunction
+
+nmap ,an :call NextFile()<CR>
+nmap ,ap :call PrevFile()<CR>
 "===============================================================
 "== autocompletion for c programming
 "===============================================================
