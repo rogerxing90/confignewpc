@@ -34,6 +34,8 @@ alias xx="xsel -b"
 alias cdd="cd .."
 alias xxx="history | tail -2 | head -1 | cut -d' ' -f5- | xsel -b"
 alias pwdd="pwd | xsel -b && pwd"
+alias pp="popd"
+alias p="pushd"
 
 #essential ls
 alias ll="ls -la --color=auto"
@@ -73,6 +75,10 @@ alias gitls="git log --stat"
 alias gitll="git log -n1"
 alias gitlp="git log -p"
 alias gitl1="git log --pretty=oneline"
+alias gitllp="git log -p -n1"
+alias gitlls="git log --stat -n1"
+alias gitld="git log --decorate"
+alias gitlld="git log --decorate -n1"
 alias gitpl="git pull origin master"
 alias gitrs="git reset HEAD~1 --soft"
 alias gitrr="git reset HEAD~1"
@@ -140,9 +146,9 @@ alias cdr="cd /root"
 #export PS1='[\u@\h \W]$(__git_ps1 "(%s)")\$ '
 # COL_KN_BLUE="\033[3;34m" ; COL_KN_GREEN="\033[0;32m"
 #export PS1='${debian_chroot}\u:\e[1;32m\w\e[34m$(__git_ps1 "(%s)")\e[1;0m \n\$ '
-export MY_PS1='${debian_chroot}\u:\e[1;32m\w\e[34m$(__git_ps1 "(%s)")\e[1;0m '
+export MY_PS1='${debian_chroot}\u:\e[1;32m\w\e[34m$(__git_ps1 "(%s)")\e[1;0m'
 #export PS1="\[\`if [[ \$? = "0" ]]; then echo '\e[32m\h\e[0m'; else echo '\e[31m\h\e[0m' ; fi\`:\w \$\n"
-export PS1="\[\`if [[ \$? != "0" ]]; then echo '\e[1;31m(Error)\e[0m'; fi\`${MY_PS1} \n\$ "
+export PS1="\[\`if [[ \$? != "0" ]]; then echo '\e[1;31m(Error)\e[0m'; fi\`${MY_PS1}(`date +%T`) \n\$ "
 #export PS2="> "
 [ -e "$HOME/confignewpc/.dircolors" ] && DIR_COLORS="$HOME/confignewpc/.dircolors"
 [ -e "$DIR_COLORS" ] || DIR_COLORS=""
@@ -157,7 +163,14 @@ if [ -n `which apparix` ]; then
 fi
 
 # copy file path to clipboard and output to stdout
-function cff() { echo $PWD"/"$1 | xsel -b && xsel -b
+function cff() {
+	FILE_NAME=$PWD"/"$1
+	if [ -f $FILE_NAME ] ; then
+		echo $FILE_NAME | xsel -b && xsel -b
+	else
+		echo -n "file not exist: "
+		echo $FILE_NAME | xsel -b && xsel -b
+	fi
 }
 
 # use gvim to open the file and go to the line number provided
@@ -165,6 +178,11 @@ function vv() {
 	echo gvim ${*%:*} +${*##*:}
 	gvim ${*%:*} +${*##*:}
 }
+
+# change into another user and use the account
+function suu() {
+	sudo -u $1 bash
+	}
 
 ### usage ###
 # git log `gg filename`

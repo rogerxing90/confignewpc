@@ -391,7 +391,7 @@ map <C-F12> :execute "lgrep " . expand("<cword>") . " *" <Bar> lopen<CR>
 "double click
 "nnoremap <2-LeftMouse> :exe "tag ". expand("<cword>")<CR>
 "nnoremap <2-LeftMouse> :exe "/". expand("<cword>")<Bar>exe "normal mO"<CR>
-"nnoremap <2-LeftMouse> :exe "/". expand("<cword>")<CR>
+nnoremap <2-LeftMouse> :exe "/". expand("<cword>")<CR>
 "nnoremap <RightMouse> <C-O>
 "nnoremap <X2Mouse> <C-I>
 
@@ -962,6 +962,21 @@ function! RepeatSmart2()
 		let l:bit_start = bit_end+1
 		let l:bit_end = bit_end+8
 		let l:startnum = startnum + 1
+	endwhile
+endfunction
+
+function! FastPrint()
+	"a=97, use ga to check
+	let l:var1 = 97
+	let l:var2 = 19
+	let l:mylinenum = 0
+	while l:var2 > 0
+		"echo l:var1
+		let l:mytext = printf("%c=%d", l:var1, l:var2)
+		let l:var1 = l:var1+1
+		let l:var2 = l:var2-1
+		let l:mylinenum = mylinenum + 1
+		call setline(mylinenum, l:mytext)
 	endwhile
 endfunction
 
