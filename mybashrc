@@ -148,7 +148,7 @@ alias cdr="cd /root"
 #export PS1='${debian_chroot}\u:\e[1;32m\w\e[34m$(__git_ps1 "(%s)")\e[1;0m \n\$ '
 export MY_PS1='${debian_chroot}\u:\e[1;32m\w\e[34m$(__git_ps1 "(%s)")\e[1;0m'
 #export PS1="\[\`if [[ \$? = "0" ]]; then echo '\e[32m\h\e[0m'; else echo '\e[31m\h\e[0m' ; fi\`:\w \$\n"
-export PS1="\[\`if [[ \$? != "0" ]]; then echo '\e[1;31m(Error)\e[0m'; fi\`${MY_PS1}(`date +%T`) \n\$ "
+export PS1="\[\`if [[ \$? != "0" ]]; then echo '\e[1;31m(Error)\e[0m'; fi\`${MY_PS1}(\`date +%R\`) \n\$ "
 #export PS2="> "
 [ -e "$HOME/confignewpc/.dircolors" ] && DIR_COLORS="$HOME/confignewpc/.dircolors"
 [ -e "$DIR_COLORS" ] || DIR_COLORS=""
