@@ -32,6 +32,8 @@ alias xc="tr '\n' ' ' | xclip -selection c"
 alias xx="xsel -b"
 #alias xxx="| xsel -b"
 alias cdd="cd .."
+alias cddd="cd ../.."
+alias cdddd="cd ../../.."
 alias xxx="history | tail -2 | head -1 | cut -d' ' -f5- | xsel -b"
 alias pwdd="pwd | xsel -b && pwd"
 alias pp="popd"
@@ -91,6 +93,7 @@ alias gitno="git config --global core.pager cat"
 alias gitnoo="git config --global core.pager less"
 alias ra="repo forall -p -v -c"
 alias sd="svn diff --diff-cmd=/usr/bin/meld"
+# git log `gg filename`
 alias gg='git ls-files | /bin/grep -w'
 alias gitff="git ls-files"
 alias gitvv="git remote -v"
@@ -183,7 +186,3 @@ function vv() {
 function suu() {
 	sudo -u $1 bash
 	}
-
-### usage ###
-# git log `gg filename`
-
