@@ -275,6 +275,7 @@ imap <C-J> <ESC>ja
 imap <C-K> <ESC>ka
 imap <C-L> <ESC>la
 imap <A-;> <ESC>$a;
+imap <A-o> <ESC>o
 imap <C-E> <ESC>$a
 imap <C-B> <ESC>^i
 "NOTE: if only use <ESC>, they will be delay
