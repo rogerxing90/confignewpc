@@ -97,11 +97,14 @@ alias sd="svn diff --diff-cmd=/usr/bin/meld"
 alias gg='git ls-files | /bin/grep -w'
 alias gitff="git ls-files"
 alias gitvv="git remote -v"
+alias gitlf='git log --pretty=format:"%h:%Cblue%an   %Creset%s"'
 
 # convenience
 alias acc="apt-cache search"
 alias aii="sudo apt-get -y install"
 alias ipp="/sbin/ifconfig -a | awk '/(cast)/ { print $2 }' | cut -d':' -f2 | head -1"
+alias userlist="cut -d: -f1,3 /etc/passwd"
+alias grouplist="cat /etc/group"
 alias ccc="cd ~/confignewpc/"
 
 #make
