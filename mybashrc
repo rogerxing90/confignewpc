@@ -111,11 +111,11 @@ alias ccc="cd ~/confignewpc/"
 alias ulimitt="ulimit -c unlimited"
 alias ulimita="ulimit -a"
 alias mc="make clean"
-alias mm="make"
-alias mml="make -f Makefile.local"
-alias mmcl="make -f Makefile.local clean"
-alias mma="make CC=arm-linux-gcc"
-alias mmcp="make cpmac"
+#alias mm="make"
+#alias mml="make -f Makefile.local"
+#alias mmcl="make -f Makefile.local clean"
+#alias mma="make CC=arm-linux-gcc"
+#alias mmcp="make cpmac"
 
 #generate tags without prototype
 alias gentags="find . -name '*.cpp' -o -name '*.h' -o -name '*.c'  > filelist.tag && \
@@ -168,14 +168,16 @@ if [ -n `which apparix` ]; then
 	source ~/confignewpc/apparix.sh
 fi
 
-# copy file path to clipboard and output to stdout
+# copy file path to clipboard and output to stdout (no newline)
 function cff() {
 	FILE_NAME=$PWD"/"$1
 	if [ -f $FILE_NAME ] ; then
-		echo $FILE_NAME | xsel -b && xsel -b
+		echo -n $FILE_NAME | xsel -b && xsel -b
+		echo
 	else
 		echo -n "file not exist: "
-		echo $FILE_NAME | xsel -b && xsel -b
+		echo -n $FILE_NAME | xsel -b && xsel -b
+		echo
 	fi
 }
 
