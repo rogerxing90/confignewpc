@@ -37,6 +37,7 @@ git config --global alias.br "branch"
 git config --global alias.co "checkout"
 git config --global alias.df "diff"
 git config --global alias.lg "log -p"
+git config --global alias.lp "log -p"
 
 #############  push #############
 git config --global push.default "matching"
