@@ -1,0 +1,23 @@
+#!/bin/bash
+# usage: 
+# mmmfgrep "FPGA_*"
+# mmmfgrep "FPGA_*" "*LED" "*Set"
+# options: n(list number), i(ignorecase), I(no binary), r(recursive), 
+#	   E(regexp) 
+# change history
+# 22-oct-2008
+#	1. support extend-regexp (-E)
+#	2. do not search for whole word (no -w)
+
+set -x
+grep_cmd="fgrep -rIin --exclude-dir=\.git --include=*.mk"
+if [ "$#" == "3" ]
+then
+   $grep_cmd  "$1" . | fgrep -rIin  $2 | fgrep -rIin  $3 --color=auto
+elif [ "$#" == "2" ]
+then
+   $grep_cmd  "$1" * | fgrep -rIin  $2 --color=auto 
+else
+   $grep_cmd  "$1" * --color=auto
+fi
+set +x
