@@ -34,11 +34,13 @@ COL_UNDERLINE="\033[4m"
 COL_ULINE_BLUE="\033[5;34m"
 COL_NEW="\033[1;40m"
 COL_NEW2="\033[0;42m"
+COL_NEW3="\033[1;30;40m"
 
 echo -en $COL_YELLOW"test... "$COL_RESET" "
 echo -en $COL_ULINE_BLUE"test... "$COL_RESET" "
 echo -en $COL_NEW"test... "$COL_RESET" "
 echo -e $COL_NEW2"test... "$COL_RESET" "
+echo -e $COL_NEW3"test... "$COL_RESET" "
 
 
 # ANSI color codes

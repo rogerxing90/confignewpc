@@ -32,6 +32,10 @@ if [ $# -ge 1 ]; then
 
 	## -- u-boot -- ##
 	echo "checking for bootable/bootloader/uboot-imx/"
+	pushd bootable/bootloader/uboot-imx/
+	make nissan_ev_config
+	make all
+	popd
 	ls -l bootable/bootloader/uboot-imx/u-boot.bin
 	cp -rf bootable/bootloader/uboot-imx/u-boot.bin /opt/tftpboot/u-boot.bin.${SUFFIX}
 	echo ""
@@ -49,6 +53,10 @@ if [ $# -ge 1 ]; then
 	popd
 	ls -l ~/Desktop/${SUFFIX}.zip
 
+	chown uidc1325:ccm_root /opt/tftpboot/android*${SUFFIX}
+	chown uidc1325:ccm_root /opt/tftpboot/zImage*${SUFFIX}
+	chown uidc1325:ccm_root /opt/tftpboot/uImage*${SUFFIX}
+	chown uidc1325:ccm_root ~/Desktop/${SUFFIX}.zip
 else
 	echo ""
 	echo "Please provide one parameter for the suffix extension"
