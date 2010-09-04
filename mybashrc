@@ -42,7 +42,7 @@ alias p="pushd"
 #essential ls
 alias ll="ls -la --color=auto"
 alias lsd="ls -d */ --color=auto"
-alias lsct="ls -ct | head -n 1"
+alias lsh="ls -ct | head -n 1"
 alias lsa="ls -ctrla"
 alias lsaa="ls -ctrla | grep -v 4096 | grep -v 65 | tail -n-1"
 alias lsa5="ls -ctrla | grep -v 4096 | grep -v 65 | tail -n-5"
@@ -139,12 +139,11 @@ alias runb="sudo $MY_PROJ_DIR/test/broadcast"
 
 #temp
 PATH=$PATH:$MYBASHRC_DIR
-alias rrrunmac="cd $MY_PROJ_DIR/obj && sudo ./mac && cd $MY_PROJ_DIR/src"
-alias vim72u="cd /usr/share/vim/vim72"
 
-#mmwave
-alias mmw="cd /root/mmwave/1myDesign/src"
-alias cdr="cd /root"
+## vim ##
+alias vim72u="cd /usr/share/vim/vim72"
+alias gvims="gvim --servername server"
+alias gvimm="gvim --servername server --remote-tab-silent"
 
 #ref-note
 #PS1='${debian_chroot:+($debian_chroot)}\u@\h:\w\$ '
@@ -191,4 +190,4 @@ function vv() {
 # change into another user and use the account
 function suu() {
 	sudo -u $1 bash
-	}
+}

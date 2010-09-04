@@ -25,6 +25,7 @@ set ignorecase
 set smartcase          "overrides ignorecase if uppercase used, ignorecase need to be on
 set guioptions+=b      "show bottom scrollbar
 "set guioptions+=l      "show long straight scrollbar on the left
+set guioptions-=T     "hide toolbar
 set confirm        "Raise a confirm dialog for changed buffer
 set shiftwidth=4
 set tabstop=4       "after set to a new value, use retab to replace old to new tabstop value
@@ -142,6 +143,9 @@ else
     "nmap ,cl :let @*=expand("%:p")<CR>
 endif
 
+" all ,ax mapping
+noremap ,aww :set wrap! <Bar> echo &wrap ? 'wrap': 'nowrap'<CR>
+noremap ,aws :w !sudo tee %<CR>
 
 "===============================================================
 "== autoread
@@ -230,6 +234,7 @@ inoremap <A-j> <C-X><C-O>
 "== Ungrouped Mapping
 "===============================================================
 "//---------------------------------- normal mapping start //
+nmap :W :w
 nmap <A-0> :only<cr>
 "save file
 nmap <C-s> :w<cr>
@@ -254,7 +259,7 @@ nmap ,r $a;<ESC>
 "set option!|set option? (invert and show value)
 "if has('win32')
    nmap <C-H> :set hls!<Bar>set hls?<CR>
-   nmap <A-F2> :set wrap!<Bar>set wrap?<CR>
+   "nmap <A-F2> :set wrap!<Bar>set wrap?<CR>
    "create one empty line and back to normal
    nmap <C-J> o<ESC><ESC>
 "else
@@ -268,7 +273,11 @@ nmap ,r $a;<ESC>
 "nnoremap ,s :grep <C-R><C-W> *<CR>
 "recursive map, replace emacs with vi in all the files (\s recursive)
 "nmap \s  :%s/emacs/vi/g \| update \| n<CR>\s
-"//---------------------------------- insert mapping start //
+"//---------------------------------- [ insert ] mapping start //
+"note: 	gi  	-   last insert position
+"note: 	'0		-	where file was last edited
+"note:	^oI		-	edit from start
+"note:	^oA		-	edit from end
 imap <C-S> <esc>:w<CR>a
 "imap <down> <esc>g<down>i
 imap <down> <esc>g<down>
@@ -307,19 +316,41 @@ imap <C-space> <ESC>`^
 "inoremap <Enter> <Enter><C-G>u
 "<C-G>u to start a new change, can undo the bs key effect
 ":inoremap <C-H> <C-G>u<C-H>
-"//---------------------------------- visual mapping start //
+
+"//---------------------------------- [ visual ] mapping start //
 "search for the yanked text (select then g/)
 vnoremap g/ y/<C-R>"<CR>
 "insert single quote around selected block of text. < beginning of visual, > end of visual
 vnoremap qq <Esc>`>a'<Esc>`<i'<Esc>
 "wrap <b></b> around visually selected text (use reg z, delete insert, paste
 vmap sb "zdi<b><C-R>z</b><Esc>
-"reference --
-"<C-Q> I or A or c then <esc><esc>
-"//---------------------------------- pending mapping start //
-"select the inner block
-onoremap <F6> iB
+"onoremap <F6> iB
+"note:	<C-Q> I or A or c then <esc><esc>
+"note: 	da<			-		delete <xxx> tag
+
+"//---------------------------------- [ global ] mapping start //
+"note:	:g /searchTerm/y A		-		yanked searched to reg A
+
+"//---------------------------------- [ ex mode ] mapping start //
+"note:	.!date		-		write date (same as :r!date)
+
+"//---------------------------------- [ misc ] note
+"note: 	^R=(2*3)+5<CR>			-		math
+"note:	=%			-		indentation
+"note:	[I			-		search current and include files
+"note:  %j			- 		join all lines
+"note: 	gj, gk		-		wrapped move
+"note: 	map m* *#	-		don't go to next search yet
+"note: 	for i in range(1,255) | .put='10.0.0.'.i | endfor
+"note: 	gvim --servername server --remote-tab xxx.file
+"note: 	gvim --servername GVIM --remote-send '<Esc>:wqa<CR>'
+"note: 	command DiffOrig vert new | set bt=nofile | r # | 0d_ | diffthis
+"        \ | wincmd p | diffthis
+"		Then after recover the file, type :DiffOrig
+"note: 	:set paste		-		to prevent messy paste
+
 "//---------------------------------- temporary mapping start //
+iabbr nnn "note:<Tab>
 nmap \bf /8[[:digit:]]\{6}[0-9a-zA-Z]<cr>
 "nmap \bd :%s#//\(\#define ENABLE_DEBUG\)#\1<CR>
 "nmap \bn :%s#^\\(\#define ENABLE_DEBUG\)#//\1<CR>
@@ -336,7 +367,6 @@ nmap \bi i/*=<ESC>74A=<ESC>o<C-W>==  <CR><ESC>75A=<ESC>a*/<ESC>=1k
 nmap \bj i/*+++++++++++++++++++++++++++++++++<  >++++++++++++++++++++++++++++++++*/<ESC>F<l
 nmap \bk i// -------------------------------------------  //<ESC>==F-3l
 
-"map <C-A-z> :source ~/kn/myscript/savePaper.vim
 "//---------------------------------- title comment start //
 "nmap ;/ i// --  -- //<esc>2F-hi
 "single line
@@ -419,11 +449,11 @@ map <C-F3> [I:let nr = input("Which one: ")<Bar>exe "normal " . nr ."[\t"<CR>
 "nmap <C-J> :2wincmd w<CR>
 "nmap <C-H> :1wincmd w<CR> "conflicts with toggle highlight
 "if has('win32')
-nmap <M-z> :call SwitchWin()<CR>
-imap <M-z> <ESC>:call SwitchWin()<CR>
+nmap <M-z> :call SwitchPrevWin()<CR>
+imap <M-z> <ESC>:call SwitchPrevWin()<CR>
 "else
-"nmap <C-M-z> :call SwitchWin()<CR>
-"imap <C-M-z> <ESC>:call SwitchWin()<CR>
+"nmap <C-M-z> :call SwitchPrevWin()<CR>
+"imap <C-M-z> <ESC>:call SwitchPrevWin()<CR>
 "endif
 nmap <C-z> :wincmd w<CR>
 imap <C-z> <ESC>:wincmd w<CR>
@@ -446,7 +476,7 @@ imap <C-z> <ESC>:wincmd w<CR>
 "   endif
 "endfunction
 
-function! SwitchWin()
+function! SwitchPrevWin()
     let l:winnr_index = winnr()
     "echo l:winnr_index
     if l:winnr_index > 1
@@ -645,15 +675,15 @@ endfunction
 function! MyToggleDiff()
     if g:diff_on == "1"
     call MyDiffOff()
-    call SwitchWin()
+    call SwitchPrevWin()
     call MyDiffOff()
-    call SwitchWin()
+    call SwitchPrevWin()
     let g:diff_on=0
     else
     call MySetDiffEnviron()
-    call SwitchWin()
+    call SwitchPrevWin()
     call MySetDiffEnviron()
-    call SwitchWin()
+    call SwitchPrevWin()
     let g:diff_on=1
     endif
 endfunction
@@ -671,15 +701,15 @@ endfunction
 function! MyToglleScrollBind()
     if g:scroll_bind == "1"
     call MySetScrollNoBind()
-    call SwitchWin()
+    call SwitchPrevWin()
     call MySetScrollNoBind()
-    call SwitchWin()
+    call SwitchPrevWin()
     let g:scroll_bind = 0
     else
     call MySetScrollBind()
-    call SwitchWin()
+    call SwitchPrevWin()
     call MySetScrollBind()
-    call SwitchWin()
+    call SwitchPrevWin()
     let g:scroll_bind = 1
     endif
 endfunction
@@ -1010,8 +1040,6 @@ function! PartialSearch()
 	"cursor(search(l:wordToSearch))
 	"echo "PartialSearch wordToSearch=" .l:wordToSearch
 endfunction
-
-nmap ,nn :call PartialSearch()<CR>
 
 "===============================================================
 "== Function: Formatting
