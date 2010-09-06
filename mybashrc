@@ -103,6 +103,8 @@ alias gitlf='git log --pretty=format:"%h:%Cblue%an   %Creset%s"'
 # convenience
 alias acc="apt-cache search"
 alias aii="sudo apt-get -y install"
+alias auu="sudo apt-get update"
+#sudo add-apt-repository "deb http://ftp.science.nus.edu.sg/ubuntu/ jaunty multiverse"
 alias ipp="/sbin/ifconfig -a | awk '/(cast)/ { print $2 }' | cut -d':' -f2 | head -1"
 alias userlist="cut -d: -f1,3 /etc/passwd"
 alias grouplist="cat /etc/group"
