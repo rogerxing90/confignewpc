@@ -7,6 +7,7 @@
 "so D:\kn\1confignewpc\myvim\.vimrc
 "nmap ,rr :e D:\kn\1confignewpc\myvim\.vimrc<CR>
 "set rtp+=D:\kn\1confignewpc\myvim
+"set path+=D:\kn\1confignewpc\myvim
 
 "===============================================================
 " function DESC

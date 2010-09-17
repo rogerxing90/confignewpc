@@ -19,17 +19,6 @@ if [ $# -ge 1 ]; then
 	popd
 
 	echo "****************************************************************************"
-	echo "******************************  KERNEL  ************************************"
-	echo "****************************************************************************"
-
-	## -- kernel -- ##
-	pushd ./kernel_imx/conti-tools/ >> /dev/null
-	set -x
-	./build_kernel.sh nand install $SUFFIX
-	set +x
-	popd
-
-	echo "****************************************************************************"
 	echo "******************************  U-BOOT  ************************************"
 	echo "****************************************************************************"
 
@@ -46,6 +35,17 @@ if [ $# -ge 1 ]; then
 	ls -l /opt/tftpboot/u-boot.bin.*
 
 	echo "****************************************************************************"
+	echo "******************************  KERNEL  ************************************"
+	echo "****************************************************************************"
+
+	## -- kernel -- ##
+	pushd ./kernel_imx/conti-tools/ >> /dev/null
+	set -x
+	./build_kernel.sh nand install $SUFFIX
+	set +x
+	popd
+
+	echo "****************************************************************************"
 	echo "******************************  ZIPPING  ***********************************"
 	echo "****************************************************************************"
 
@@ -54,11 +54,15 @@ if [ $# -ge 1 ]; then
 	rm -rf ~/Desktop/${SUFFIX}.zip
 	zip ~/Desktop/${SUFFIX}.zip *${SUFFIX}
 	popd
-	ls -l ~/Desktop/${SUFFIX}.zip
+
+	## -- generating md5sum -- ##
+	md5sum ~/Desktop/${SUFFIX}.zip > ~/Desktop/${SUFFIX}.md5
+	ls -l ~/Desktop/${SUFFIX}.zip ~/Desktop/${SUFFIX}.md5
 
 	chown uidc1325:ccm_root /opt/tftpboot/android*${SUFFIX}
 	chown uidc1325:ccm_root /opt/tftpboot/zImage*${SUFFIX}
 	chown uidc1325:ccm_root /opt/tftpboot/uImage*${SUFFIX}
+	chown uidc1325:ccm_root /opt/tftpboot/u-boot.bin*${SUFFIX}
 	chown uidc1325:ccm_root ~/Desktop/${SUFFIX}.zip
 else
 	echo ""
