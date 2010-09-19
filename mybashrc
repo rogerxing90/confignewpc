@@ -113,7 +113,7 @@ alias ccc="cd ~/confignewpc/"
 #make
 alias ulimitt="ulimit -c unlimited"
 alias ulimita="ulimit -a"
-alias mc="make clean"
+#alias mc="make clean"
 #alias mm="make"
 #alias mml="make -f Makefile.local"
 #alias mmcl="make -f Makefile.local clean"
@@ -192,4 +192,16 @@ function vv() {
 # change into another user and use the account
 function suu() {
 	sudo -u $1 bash
+}
+
+# move dirA/dirA to dirA (execute this inside dirA/dirA)
+function mvdir()
+{
+	MY_DIR=`basename $PWD`
+	echo $MY_DIR
+	mv $MY_DIR ../${MY_DIR}_2
+	cd ..
+	rmdir $MY_DIR
+	mv ${MY_DIR}_2 ${MY_DIR}
+	cd $MY_DIR
 }

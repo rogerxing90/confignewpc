@@ -371,8 +371,8 @@ nmap \bk i// -------------------------------------------  //<ESC>==F-3l
 "//---------------------------------- title comment start //
 "nmap ;/ i// --  -- //<esc>2F-hi
 "single line
-map // ^i//<esc>
-map ,// :s/\/\///<CR>
+map ,// ^i//<esc>
+map ,./ :s/\/\///<CR>
 "--,*--wrapping comment--"
 "map ;; :s/^\(.*\)$/\/\* \1 \*\//<CR>
 "map ,;; :s/^\([/(]\*\\|<!--\) \(.*\) \(\*[/)]\\|-->\)$/\2/<CR>
@@ -411,7 +411,7 @@ cabbr aa arg *c *h
 "== Programming : make, error window, diff
 "===============================================================
 "use set makeprg=make xxx.Makefile to make custom Makefile
-map <F7> <esc>:make -s debug<CR>
+map <F7> <esc>:!g++ func.cpp<CR>
 "map <F7> <esc>:make<CR>
 map <c-F7> <esc> :call QFixToggle(0)<CR>
 map <c-F5> <esc>:make run <CR>
