@@ -1,0 +1,101 @@
+"set filetype=c
+set cot+=menuone
+"set clipboard+=unnamed       "set yank, paste, delete content into clipboards
+:set wildmode=list:longest    "This is really something you want! Tab-completion the right way!
+"set nowrap             "no line break
+set ignorecase
+set smartcase          "overrides ignorecase if uppercase used, ignorecase need to be on
+set guioptions+=b      "show bottom scrollbar
+"set guioptions+=l      "show long straight scrollbar on the left
+set confirm        "Raise a confirm dialog for changed buffer
+set shiftwidth=4
+set tabstop=4       "after set to a new value, use retab to replace old to new tabstop value
+"set expandtab
+"set linebreak        "enable breakat
+set visualbell        "set vb t_vb=on "visual bell
+"set noerrorbells
+set nu            "display line
+set autoindent
+set smartindent
+set hlsearch        "highlight search
+set incsearch        "highlight when typing
+set nocompatible    "no backward compatible with vi
+set bs=2        "backspace=2
+set smarttab        "make <tab> and <backspace> smarter
+set backspace=eol,start,indent "allow backspacing over indent, eol, & start
+set wildmenu        "Show menu with possible completions
+set hidden                     "can change buffer without saving
+set nostartofline " leave my cursor where it was
+"set more                       "the 'more' prompt
+"set backup                     "produce *~ backup files
+"set backupext=~                "add ~ to the end of backup files
+"set scrolloff=5                "keep at least 5 lines above/below cursor
+"set sidescrolloff=5            "keep at least 5 columns left/right of cursor
+set showcmd            "display incomplete command
+set showmode
+set ruler              "display cursor position
+"set iskeyword +=-        "make hyper-active considered as a word
+"set mousehide                  "hide the mouse when typing text
+"autowrap(t),allow gq(q), wrap@blankSpace b4(b), autowrap comment(c)
+"set formatoptions=tqbcwan
+"set formatoptions +=2           "paragraph format(start with xx....)g`
+"set guitablabel
+"set completeopt=menu, preview
+" normally don't automatically format `text' as it is typed, i.e. only do this
+" with comments, at 79 characters:
+"set formatoptions+=tcroqn      "auto formatting, t=linebreak at textwidth
+"set formatoptions=tcrqnwa      "auto formatting, t=linebreak at textwidth
+"set fo+=a is convenient, but can be a pain too
+set formatoptions=lqnw      "auto formatting, t=linebreak at textwidth
+"default: set formatoptions=tcrqol
+"set textwidth=79 wrap linebreak
+"set textwidth=79
+set nowrap
+"set textwidth=79 linebreak
+"set wrapwidth=60
+"set comments-=s1:/*,mb:*,ex:*/
+"set comments+=s:/*,mb:**,ex:*/
+"Only first line has comment string, don't repeat on next line
+"set comments+=fb:*
+"set comments=sl:/*,mb:==,elx:*/
+"Original:set wildchar=<Tab>
+set wildchar=<Tab> wildmenu wildmode=full
+"to avoid mksession error E228 makemap
+set sessionoptions-=options
+set sessionoptions=blank,buffers,curdir,tabpages,winsize,folds
+set ff=unix
+set matchpairs=(:),{:},[:],<:>
+set scrolloff=5
+set sidescrolloff=5
+set statusline=%F%m%r%h%w\ [FORMAT=%{&ff}]\ [TYPE=%Y]\ [ASCII=\%03.3b]\ [HEX=\%02.2B]\ [POS=%04l,%04v][%p%%]\ [LEN=%L]
+set statusline=2
+"set winaltkeys=yes "let window handle Alt key
+" Don't let Windows handle alt-cmds (menu access, etc.); let vim do it
+" Make Alt-F pop down the 'File' menu ['Edit','Tools','Syntax','Buffers','Window','Misc','Help']
+"set winaltkeys=no
+"map <M-f> :simalt f<CR>
+"map <M-e> :simalt e<CR>
+"map <M-t> :simalt t<CR>
+"map <M-s> :simalt s<CR>
+"map <M-b> :simalt b<CR>
+"map <M-w> :simalt w<CR>
+"map <M-m> :simalt m<CR>
+"map <M-h> :simalt h<CR>
+" System menu (leader): follow with any normal Windows Menu letter
+"noremap <M-Space> :simalt ~<CR>
+"inoremap <M-Space> <C-O>:simalt ~<CR>
+"cnoremap <M-Space> <C-C>:simalt ~<CR>
+
+""Set mapleader
+"let mapleader = ","
+"let g:mapleader = ","
+
+vnoremap <C-X> "+d
+vnoremap <C-C> "+y
+"nnoremap <C-V> "+gPl
+nnoremap <C-V> "+gp
+vnoremap <C-V> :<C-U>:normal `^"+gP<CR>
+inoremap <C-V> <C-O>:normal `^"+gP<CR>
+"select all
+map <c-a> <esc>ggVG
+
