@@ -3,8 +3,10 @@ export ARCH=arm
 export CROSS_COMPILE=/opt/gcc-4.1.2-glibc-2.5-nptl-3/arm-none-linux-gnueabi/bin/arm-none-linux-gnueabi-
 
 if [ $# -ge 1 ]; then
-	SUFFIX=nlev_soc_r${1}
-	echo "suffix = "$SUFFIX
+	SOC_SUFFIX=nlev_soc_r${1}
+	NEC_SUFFIX=nlev_nec_r${1}
+	ZIP_FILENAME=nlev_r${1}
+	echo "suffix = "$SOC_SUFFIX
 	echo ""
 
 	echo "****************************************************************************"
@@ -14,7 +16,7 @@ if [ $# -ge 1 ]; then
 	## -- android -- ##
 	pushd ./conti-tools/ >> /dev/null
 	set -x
-	./build_android.sh install $SUFFIX
+	./build_android.sh install $SOC_SUFFIX
 	set +x
 	popd
 
@@ -29,7 +31,7 @@ if [ $# -ge 1 ]; then
 	make all
 	popd
 	ls -l bootable/bootloader/uboot-imx/u-boot.bin
-	cp -rf bootable/bootloader/uboot-imx/u-boot.bin /opt/tftpboot/u-boot.bin.${SUFFIX}
+	cp -rf bootable/bootloader/uboot-imx/u-boot.bin /opt/tftpboot/u-boot.bin.${SOC_SUFFIX}
 	echo ""
 	echo "checking for /opt/tftpboot"
 	ls -l /opt/tftpboot/u-boot.bin.*
@@ -41,7 +43,7 @@ if [ $# -ge 1 ]; then
 	## -- kernel -- ##
 	pushd ./kernel_imx/conti-tools/ >> /dev/null
 	set -x
-	./build_kernel.sh nand install $SUFFIX
+	./build_kernel.sh nand install $SOC_SUFFIX
 	set +x
 	popd
 
@@ -50,20 +52,21 @@ if [ $# -ge 1 ]; then
 	echo "****************************************************************************"
 
 	## -- packing -- ##
-	pushd /opt/tftpboot/
-	rm -rf ~/Desktop/${SUFFIX}.zip
-	zip ~/Desktop/${SUFFIX}.zip *${SUFFIX}
-	popd
+	#pushd /opt/tftpboot/
+	rm -rf ~/Desktop/${ZIP_FILENAME}.zip
+	sudo rm -rf /opt/tftpboot/zImage*${SOC_SUFFIX}
+	zip ~/Desktop/${ZIP_FILENAME}.zip /opt/tftpboot/*${SOC_SUFFIX} ./vuc*${NEC_SUFFIX}*
+	#popd
 
 	## -- generating md5sum -- ##
-	md5sum ~/Desktop/${SUFFIX}.zip > ~/Desktop/${SUFFIX}.md5
-	ls -l ~/Desktop/${SUFFIX}.zip ~/Desktop/${SUFFIX}.md5
+	md5sum ~/Desktop/${ZIP_FILENAME}.zip > ~/Desktop/${ZIP_FILENAME}.md5
+	ls -l ~/Desktop/${ZIP_FILENAME}.zip ~/Desktop/${ZIP_FILENAME}.md5
 
-	chown uidc1325:ccm_root /opt/tftpboot/android*${SUFFIX}
-	chown uidc1325:ccm_root /opt/tftpboot/zImage*${SUFFIX}
-	chown uidc1325:ccm_root /opt/tftpboot/uImage*${SUFFIX}
-	chown uidc1325:ccm_root /opt/tftpboot/u-boot.bin*${SUFFIX}
-	chown uidc1325:ccm_root ~/Desktop/${SUFFIX}.zip
+	chown uidc1325:uidc1325 /opt/tftpboot/android*${SOC_SUFFIX}
+	#chown uidc1325:uidc1325 /opt/tftpboot/zImage*${SOC_SUFFIX}
+	chown uidc1325:uidc1325 /opt/tftpboot/uImage*${SOC_SUFFIX}
+	chown uidc1325:uidc1325 /opt/tftpboot/u-boot.bin*${SOC_SUFFIX}
+	chown uidc1325:uidc1325 ~/Desktop/${SOC_SUFFIX}.zip
 else
 	echo ""
 	echo "Please provide one parameter for the suffix extension"
