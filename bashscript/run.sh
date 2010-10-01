@@ -6,4 +6,5 @@ if [ $# -ne 1 ]; then
 	exit 2
 fi
 
-~/confignewpc/bashscript/integrator_script.sh $1 | tee integrator_build.log
+echo "################ `date ` ##############" | tee -a integrator_build.log
+~/confignewpc/bashscript/integrator_script.sh $1 | tee -a integrator_build.log
