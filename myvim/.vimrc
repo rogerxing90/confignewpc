@@ -560,13 +560,13 @@ map <c-a> <esc>ggVG
 
 function! Paste(mode)
     if a:mode == "v"
-    normal gv
-    normal "+P
-    normal l
+    	normal gv
+    	normal "+P
+    	normal l
     elseif a:mode == "i"
-    set virtualedit=all
-    normal `^"+gP
-    let &virtualedit = ""
+    	set virtualedit=all
+    	normal `^"+gP
+    	let &virtualedit = ""
     endif
 endfunction
 

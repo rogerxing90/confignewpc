@@ -29,6 +29,10 @@ $ a\
 /PS1=/ s#\\\$ #\$(__git_ps1 "(%s)")\\\$ #' \
 < ~/.bashrc > tmp && /bin/mv tmp ~/.bashrc
 
+if [ $1 == "ssh" ]; then
+	echo "Host ssh.github.com" >> ~/.ssh/config
+	echo "port 443" >> ~/.ssh/config
+fi
 
 ## config git global
 sh ./gitconfig.sh

@@ -16,7 +16,7 @@ if [ $# -ge 1 ]; then
 	echo ""
 
 	echo "removing files in /opt/tftpboot/"
-	rm -f -v /opt/tftpboot/*${SOC_SUFFIX} /opt/tftpboot/vuc*${NEC_SUFFIX}*
+	rm -f -v /opt/tftpboot/*${SOC_SUFFIX} /opt/tftpboot/vuc*
 	echo ""
 
 	echo "****************************************************************************"
@@ -66,11 +66,11 @@ if [ $# -ge 1 ]; then
 	echo "****************************************************************************"
 
 	## -- packing -- ##
-	/bin/cp -f ./vuc*${NEC_SUFFIX}* /opt/tftpboot/
+	/bin/cp -f ./vuc* /opt/tftpboot/
 	pushd /opt/tftpboot/
 	rm -rf ~/Desktop/${ZIP_FILENAME}.zip
 	rm -rf /opt/tftpboot/zImage*${SOC_SUFFIX}
-	zip ~/Desktop/${ZIP_FILENAME}.zip *${SOC_SUFFIX} vuc*${NEC_SUFFIX}*
+	zip ~/Desktop/${ZIP_FILENAME}.zip *${SOC_SUFFIX} vuc*
 	popd
 
 	## -- generating md5sum -- ##

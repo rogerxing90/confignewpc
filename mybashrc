@@ -146,7 +146,7 @@ PATH=$PATH:$MYBASHRC_DIR
 alias vim72u="cd /usr/share/vim/vim72"
 alias gvims="gvim --servername server"
 alias gvimm="gvim --servername server --remote-tab-silent"
-alias g="gvim --servername server"
+alias g="gvim --servername server --remote"
 
 #ref-note
 #PS1='${debian_chroot:+($debian_chroot)}\u@\h:\w\$ '
