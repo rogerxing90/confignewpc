@@ -102,7 +102,7 @@ alias gitlf='git log --pretty=format:"%h:%Cblue%an   %Creset%s"'
 
 # convenience
 alias acc="apt-cache search"
-alias aii="sudo apt-get -y install"
+alias aii="sudo apt-get --force-yes install"
 alias auu="sudo apt-get update"
 #sudo add-apt-repository "deb http://ftp.science.nus.edu.sg/ubuntu/ jaunty multiverse"
 alias ipp="/sbin/ifconfig -a | awk '/(cast)/ { print $2 }' | cut -d':' -f2 | head -1"
@@ -146,6 +146,7 @@ PATH=$PATH:$MYBASHRC_DIR
 alias vim72u="cd /usr/share/vim/vim72"
 alias gvims="gvim --servername server"
 alias gvimm="gvim --servername server --remote-tab-silent"
+alias g="gvim --servername server"
 
 #ref-note
 #PS1='${debian_chroot:+($debian_chroot)}\u@\h:\w\$ '

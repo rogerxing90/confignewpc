@@ -1,6 +1,11 @@
 #!/bin/bash
 export ARCH=arm
 export CROSS_COMPILE=/opt/gcc-4.1.2-glibc-2.5-nptl-3/arm-none-linux-gnueabi/bin/arm-none-linux-gnueabi-
+export INIT_BOOTCHART=true
+
+if [ $# -ge 2 ]; then
+	PLATFORM_VERSION="-v ${2}"
+fi
 
 if [ $# -ge 1 ]; then
 	SOC_SUFFIX=nlev_soc_r${1}
@@ -21,7 +26,10 @@ if [ $# -ge 1 ]; then
 	## -- android -- ##
 	pushd ./conti-tools/ >> /dev/null
 	set -x
-	./build_android.sh install $SOC_SUFFIX no-nfs
+	BUILD_CMD="./build_android.sh install $SOC_SUFFIX no-nfs $PLATFORM_VERSION"
+	echo "integrator_script.sh: "$BUILD_CMD
+	$BUILD_CMD
+	#./build_android.sh install $SOC_SUFFIX no-nfs $PLATFORM_VERSION
 	set +x
 	popd
 
@@ -73,7 +81,7 @@ if [ $# -ge 1 ]; then
 	#chown uidc1325:uidc1325 /opt/tftpboot/zImage*${SOC_SUFFIX}
 	chown uidc1325:uidc1325 /opt/tftpboot/uImage*${SOC_SUFFIX}
 	chown uidc1325:uidc1325 /opt/tftpboot/u-boot.bin*${SOC_SUFFIX}
-	chown uidc1325:uidc1325 ~/Desktop/${SOC_SUFFIX}.zip
+	chown uidc1325:uidc1325 ~/Desktop/${ZIP_FILENAME}.zip
 else
 	echo ""
 	echo "Please provide one parameter for the suffix extension"
