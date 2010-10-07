@@ -1,5 +1,17 @@
 #!/bin/bash
 
+if [ "$1" == "inc" ]; then
+	if [ $# -lt 2 ]; then
+		echo "usage: ./run inc <tag-name>"
+		echo "e.g.: ./run inc 0.5.0"
+		exit 2
+	fi
+	echo "incrementing kernel local version..."
+	~/confignewpc/bashscript/inc-rel.sh $2
+	echo "done..."
+	exit 0
+fi
+
 if [ $# -lt 1 ]; then
 	echo "usage: sudo ./run.sh <tag-name> PLATFORM_VERSION"
 	echo "e.g.: sudo ./run.sh 0.5.0 Éclair-2.1"

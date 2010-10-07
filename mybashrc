@@ -21,8 +21,8 @@ alias nn="nautilus . &"
 alias nns="gksudo nautilus . &"
 alias chmodd="chmod 777"
 alias findd="find . -name"
-alias bashh="gvim gvim --servername server --remote-tab-silent $MYBASHRC_DIR/mybashrc"
-alias bashhh="gvim --servername server --remote-tab-silent ~/.bashrc"
+alias bashh="gvim gvim --servername $VIM_SERVER --remote-tab-silent $MYBASHRC_DIR/mybashrc"
+alias bashhh="gvim --servername $VIM_SERVER --remote-tab-silent ~/.bashrc"
 alias bassh="source ~/.bashrc"
 #alias ctagg="ctags -R --sort=foldcase --c-types=+p --fields=+S *.h *.c"
 #alias ctagg="ctags -R --sort=foldcase --c-kinds=f *.h *.c"
@@ -142,11 +142,15 @@ alias runb="sudo $MY_PROJ_DIR/test/broadcast"
 #temp
 PATH=$PATH:$MYBASHRC_DIR
 
+if [ -z $VIM_SERVER ]; then
+	$VIM_SERVER=vimserver
+fi
+
 ## vim ##
 alias vim72u="cd /usr/share/vim/vim72"
-alias gvims="gvim --servername server"
-alias gvimm="gvim --servername server --remote-tab-silent"
-alias g="gvim --servername server --remote"
+alias gvims="gvim --servername $VIM_SERVER"
+alias gvimm="gvim --servername $VIM_SERVER --remote-tab-silent"
+alias g="gvim --servername $VIM_SERVER --remote"
 
 #ref-note
 #PS1='${debian_chroot:+($debian_chroot)}\u@\h:\w\$ '
@@ -205,4 +209,15 @@ function mvdir()
 	rmdir $MY_DIR
 	mv ${MY_DIR}_2 ${MY_DIR}
 	cd $MY_DIR
+}
+
+# git fetch $1; git rebase $1
+function gitfr()
+{
+	if [ $# -lt 1 ]; then
+		echo "usage: gitfc <remote-ref>"
+		exit 2
+	fi
+	git fetch $1
+	git rebase $1
 }
