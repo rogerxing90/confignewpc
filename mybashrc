@@ -155,6 +155,7 @@ alias vim72u="cd /usr/share/vim/vim72"
 alias gvims="gvim --servername $VIM_SERVER"
 alias gvimm="gvim --servername $VIM_SERVER --remote-tab-silent"
 alias g="gvim --servername $VIM_SERVER --remote"
+alias gs="gvim --servername $VIM_SERVER -S"
 
 #ref-note
 #PS1='${debian_chroot:+($debian_chroot)}\u@\h:\w\$ '
