@@ -225,3 +225,23 @@ function gitfr()
 	git fetch $1
 	git rebase $1
 }
+
+# scp
+function sscp()
+{
+	if [ $# -lt 1 ]; then
+		echo "usage: sscp <file-to-copy> [destination]"
+		exit 2
+	fi
+
+	if [ $# -ge 2 ]; then
+		DEST=$2
+	fi
+
+	if [ -z $DEST_HOST_IP ]; then
+		echo "DEST_HOST_IP is not defined"
+		exit 2
+	fi
+	echo "scp $1 $DEST_HOST_IP:$DEST"
+	scp $1 $DEST_HOST_IP:$DEST
+}

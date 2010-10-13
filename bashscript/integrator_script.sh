@@ -7,17 +7,38 @@ if [ $# -ge 2 ]; then
 	PLATFORM_VERSION="-v ${2}"
 fi
 
+if [ $# -ge 3 ]; then
+	CLEAN_BUILD="y"
+fi
+
 if [ $# -ge 1 ]; then
 	SOC_SUFFIX=nlev_soc_r${1}
 	NEC_SUFFIX=nlev_nec_r${1}
 	ZIP_FILENAME=nlev_r${1}
 	TOTAL_PROC=`grep -c processor /proc/cpuinfo`
+	RELEASE_FOLDER="release/`date +%F`"
 	echo "suffix = "$SOC_SUFFIX
 	echo ""
 
+	if [ $CLEAN_BUILD != "y" ]; then
+		if [ -f kernel_imx/arch/arm/boot/uImage* ]; then
+			read "kernel_imx image exist, delete it?" YESNO
+			if [ $YESNO == "y" ]; then
+				rm -rf kernel_imx/arch/arm/boot/uImage*
+			fi
+		fi
+		if [ -d out ]; then
+			read "android out folder exist, delete it? " YESNO
+			if [ $YESNO == 'y' ]; then
+				rm -rf out
+			fi
+		fi
+
+	fi
 	echo "removing files in /opt/tftpboot/ ~/Desktop/${ZIP_FILENAME}"
 	rm -f -v /opt/tftpboot/*${SOC_SUFFIX} /opt/tftpboot/vuc*
-	rm -rf ~/Desktop/${ZIP_FILENAME}.zip
+	rm -rf ~/Desktop/${ZIP_FILENAME}.zip ~/Desktop/${ZIP_FILENAME}.md5
+	rm -rf ~/${RELEASE_FOLDER}
 	echo ""
 
 	echo "****************************************************************************"
@@ -59,6 +80,13 @@ if [ $# -ge 1 ]; then
 	pushd ./kernel_imx/conti-tools/ >> /dev/null
 	set -x
 	./build_kernel.sh nand install $SOC_SUFFIX
+	rm ../arch/arm/boot/uImage*
+	./build_kernel.sh nand vga install vga_${SOC_SUFFIX}
+	rm ../arch/arm/boot/uImage*
+	./build_kernel.sh nfs install ${SOC_SUFFIX}
+	rm ../arch/arm/boot/uImage*
+	./build_kernel.sh nfs vga install vga_${SOC_SUFFIX}
+	rm ../arch/arm/boot/uImage*
 	set +x
 	popd
 
@@ -70,18 +98,19 @@ if [ $# -ge 1 ]; then
 	/bin/cp -f ./vuc* /opt/tftpboot/
 	pushd /opt/tftpboot/
 	rm -rf /opt/tftpboot/zImage*${SOC_SUFFIX}
-	zip ~/Desktop/${ZIP_FILENAME}.zip *${SOC_SUFFIX} vuc*
+	mkdir -p ~/${RELEASE_FOLDER}
+	zip ~/${RELEASE_FOLDER}/${ZIP_FILENAME}.zip *${SOC_SUFFIX} vuc*
 	popd
 
 	## -- generating md5sum -- ##
-	md5sum ~/Desktop/${ZIP_FILENAME}.zip > ~/Desktop/${ZIP_FILENAME}.md5
-	ls -l ~/Desktop/${ZIP_FILENAME}.zip ~/Desktop/${ZIP_FILENAME}.md5
+	md5sum ~/${RELEASE_FOLDER}/${ZIP_FILENAME}.zip > ~/${RELEASE_FOLDER}/${ZIP_FILENAME}.md5
+	ls -l ~/${RELEASE_FOLDER}/${ZIP_FILENAME}.zip ~/${RELEASE_FOLDER}/${ZIP_FILENAME}.md5
 
 	chown uidc1325:uidc1325 /opt/tftpboot/android*${SOC_SUFFIX}
 	#chown uidc1325:uidc1325 /opt/tftpboot/zImage*${SOC_SUFFIX}
 	chown uidc1325:uidc1325 /opt/tftpboot/uImage*${SOC_SUFFIX}
 	chown uidc1325:uidc1325 /opt/tftpboot/u-boot.bin*${SOC_SUFFIX}
-	chown uidc1325:uidc1325 ~/Desktop/${ZIP_FILENAME}.zip
+	chown uidc1325:uidc1325 ~/${RELEASE_FOLDER}/${ZIP_FILENAME}.zip
 else
 	echo ""
 	echo "Please provide one parameter for the suffix extension"

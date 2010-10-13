@@ -21,6 +21,8 @@ $ a\
 ## config bash (copy from mybashrc) _start_server\
 export MY_PS1="${debian_chroot}\\e[1;33m'$SERVER_NAME'\\e[0m:\\e[1;32m\\w\\e[34m$\(__git_ps1 "\(%s\)"\)\\e[1;0m"\
 export PS1="\\[\\`if [[ \\$? != "0" ]]; then echo '\''\\e[1;31m\(Error\)\\e[0m'\''; fi\\`${MY_PS1}\(\\`date +%R\\`\) \\n\\$ "\
+export DISPLAY=localhost:10\
+export DEST_HOST_IP=10.219.37.213\
 ## config bash _end_server' \
 < ~/.bashrc > tmp && /bin/mv tmp ~/.bashrc
 else

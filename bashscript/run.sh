@@ -40,6 +40,9 @@ SUFFIX=$1
 if [ $# -ge 2 ]; then
 	PLATFORM_VERSION="${2}-nlev_r${SUFFIX}"
 	echo "run: PLATFORM_VERSION="$PLATFORM_VERSION
+else
+	PLATFORM_VERSION="Éclair-2.1-nlev_r${SUFFIX}"
+	echo "run: PLATFORM_VERSION="$PLATFORM_VERSION
 fi
 echo $PLATFORM_VERSION
 echo "################ `date ` ##############" | tee -a integrator_build_`date +%F`.log
