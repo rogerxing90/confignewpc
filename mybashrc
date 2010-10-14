@@ -230,19 +230,29 @@ function gitfr()
 # scp
 function sscp()
 {
+	declare last_index=$#
+	PARAMS=
+	for arg in "$*"; do
+		PARAMS="$PARAMS $arg"
+		#echo $PARAMS
+	done
+
 	if [ $# -lt 1 ]; then
 		echo "usage: sscp <file-to-copy> [destination]"
 		exit 2
 	fi
 
 	if [ $# -ge 2 ]; then
-		DEST=$2
+		eval DEST=\$$last_index
+	else
+		DEST="~/Desktop"
 	fi
+	#echo "DEST=" $DEST
 
 	if [ -z $DEST_HOST_IP ]; then
 		echo "DEST_HOST_IP is not defined"
 		exit 2
 	fi
-	echo "scp $1 $DEST_HOST_IP:$DEST"
+	echo "scp $PARAMS $DEST_HOST_IP:$DEST"
 	scp $1 $DEST_HOST_IP:$DEST
 }
