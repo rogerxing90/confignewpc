@@ -13,6 +13,8 @@
 #   fi
 #	PATH=$PATH:./
 
+VIM_SERVER=`hostname`
+
 #essential
 alias rm="rm -i"
 alias cp="cp -i"
@@ -22,7 +24,7 @@ alias nns="gksudo nautilus . &"
 alias chmodd="chmod 777"
 alias findd="find . -name"
 alias bashh="gvim --servername $VIM_SERVER --remote $MYBASHRC_DIR/mybashrc"
-alias bashhh="gvim --servername $VIM_SERVER --remote ~/.bashrc"
+alias bashhh="gvim --servername $VIM_SERVER --remote ~/scripts-kn/local-bashrc.sh"
 alias bassh="source ~/.bashrc"
 #alias ctagg="ctags -R --sort=foldcase --c-types=+p --fields=+S *.h *.c"
 #alias ctagg="ctags -R --sort=foldcase --c-kinds=f *.h *.c"
@@ -97,7 +99,6 @@ alias gitlc="git --no-pager log"
 alias gitno="git config --global core.pager cat"
 alias gitnoo="git config --global core.pager less"
 alias gitka="gitk --all"
-alias ra="repo forall -p -v -c"
 alias sd="svn diff --diff-cmd=/usr/bin/meld"
 # git log `gg filename`
 alias gg='git ls-files | /bin/grep -w'
@@ -146,10 +147,6 @@ alias runb="sudo $MY_PROJ_DIR/test/broadcast"
 
 #temp
 PATH=$PATH:$MYBASHRC_DIR
-
-if [ -z $VIM_SERVER ]; then
-	VIM_SERVER="vimserver"
-fi
 
 ## vim ##
 alias vim72u="cd /usr/share/vim/vim72"
