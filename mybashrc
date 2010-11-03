@@ -51,6 +51,7 @@ alias lsaa="ls -ctrla | grep -v 4096 | grep -v 65 | tail -n-1"
 alias lsa5="ls -ctrla | grep -v 4096 | grep -v 65 | tail -n-5"
 # maybe need to modified
 #alias vimm="gvim $(ls -ctr | grep -v 4096 | tail -n-1)"
+alias clss="cd `ls -ctr | tail -n 1`"
 alias vimm="gvim $(ls -ctr | tail -n-1)"
 
 #git
@@ -115,6 +116,7 @@ alias ipp="/sbin/ifconfig -a | awk '/(cast)/ { print $2 }' | cut -d':' -f2 | hea
 alias userlist="cut -d: -f1,3 /etc/passwd"
 alias grouplist="cat /etc/group"
 alias ccc="cd ~/confignewpc/"
+alias ccd="cd ~/Desktop/"
 
 #make
 alias ulimitt="ulimit -c unlimited"
@@ -225,32 +227,12 @@ function gitfr()
 	git rebase $1
 }
 
-# scp
-function sscp()
+function znote()
 {
-	declare last_index=$#
-	PARAMS=
-	for arg in "$*"; do
-		PARAMS="$PARAMS $arg"
-		#echo $PARAMS
-	done
-
 	if [ $# -lt 1 ]; then
-		echo "usage: sscp <file-to-copy> [destination]"
+		echo "need to give zip parameter"
 		exit 2
 	fi
-
-	if [ $# -ge 2 ]; then
-		eval DEST=\$$last_index
-	else
-		DEST="~/Desktop"
-	fi
-	#echo "DEST=" $DEST
-
-	if [ -z $DEST_HOST_IP ]; then
-		echo "DEST_HOST_IP is not defined"
-		exit 2
-	fi
-	echo "scp $PARAMS $DEST_HOST_IP:$DEST"
-	scp $1 $DEST_HOST_IP:$DEST
+	zipnote $1 | /bin/grep -v comment | cut -d" " -f 2 | cut -d"/" -f2
 }
+
