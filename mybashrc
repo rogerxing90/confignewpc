@@ -51,7 +51,6 @@ alias lsaa="ls -ctrla | grep -v 4096 | grep -v 65 | tail -n-1"
 alias lsa5="ls -ctrla | grep -v 4096 | grep -v 65 | tail -n-5"
 # maybe need to modified
 #alias vimm="gvim $(ls -ctr | grep -v 4096 | tail -n-1)"
-alias clss="cd `ls -ctr | tail -n 1`"
 alias vimm="gvim $(ls -ctr | tail -n-1)"
 
 #git
@@ -146,6 +145,12 @@ alias mmm="cd $MY_PROJ_DIR && make uImage"
 alias dddd="sudo ddd $MY_PROJ_DIR/obj/mac"
 alias ddda="sudo ddd $MY_PROJ_DIR/obj/mac --debugger arm-linux-gdb"
 alias runb="sudo $MY_PROJ_DIR/test/broadcast"
+alias dirf='find . -type d | sed -e "s#[^-][^\/]*\/#  |#g" -e "s#|\([^ ]\)#|-\1#"'
+# list all files in this directory, sort by size
+alias sizes="du --max-depth=1 -k | sort -nr | cut -f2 | xargs -d '\n' du -sh"
+alias psg='ps aux|grep '
+# also can check version in /etc/issue or /etc/apt/sources.list
+alias ubuntu_version="cat /etc/lsb-release"
 
 #temp
 PATH=$PATH:$MYBASHRC_DIR
@@ -187,7 +192,9 @@ function cff() {
 		echo -n $FILE_NAME | xsel -b && xsel -b
 		echo
 	else
-		echo -n "file not exist: "
+		if [ ! -d $FILE_NAME ] ; then
+			echo -n "file/directory not exist: "
+		fi
 		echo -n $FILE_NAME | xsel -b && xsel -b
 		echo
 	fi
@@ -227,6 +234,7 @@ function gitfr()
 	git rebase $1
 }
 
+# extract the filename inside the zip
 function znote()
 {
 	if [ $# -lt 1 ]; then
@@ -235,4 +243,35 @@ function znote()
 	fi
 	zipnote $1 | /bin/grep -v comment | cut -d" " -f 2 | cut -d"/" -f2
 }
+
+# create directory and cd into it
+function mcd() { mkdir $1 && cd $1; }
+# cd into most recently modified directory
+function clss() { cd `ls -ctr | tail -n 1`; }
+
+# regular expression search
+# e.g. EFind 'mo*use' -name '*.java' -or -name '*.c'
+EFind() {
+    if [ -n "$1" ] ; then
+        if [ -n "$2" ] ; then
+            local testVar="$1"
+            shift
+            find . -type f \
+                -and '(' -not -path '*.git*' ')' \
+                -and '(' "$@" ')' \
+                -exec grep --color=always -I -i -E -H -n -m 1 "${testVar}" {} ';'
+        else
+            find . -type f \
+                -and '(' -not -path '*.git*' ')' -and '(' -not -path '*.svn*' ')' \
+                -exec grep --color=always -I -i -E -H -n -m 1 "$1" {} ';'
+        fi
+    fi
+}
+
+# ubuntu
+#gconftool --set /apps/nautilus/preferences/default_folder_viewer --type=string list_view
+#gconftool --set /desktop/gnome/interface/can_change_accels --type=bool True
+
+# for reference 
+function zugzug() { ssh -A -p <non_standard_port> -t <proxy_server> ssh $1; }
 
