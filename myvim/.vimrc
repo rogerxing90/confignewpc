@@ -382,6 +382,7 @@ abbr kne //--<kn end>--
 cabbr knm mks! kn.vim
 cabbr mc make clean
 cabbr mm make
+cabbr replaceblank '<,'> s/\_s*$//gc
 "abbr knp printk("%s:\r\n", __FILE__);<esc>F:
 "abbr knp printk("(%X) \n",);<esc>2F"
 abbr knp printk("(0x%lX) \n",);<esc>2F"

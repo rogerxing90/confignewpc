@@ -245,9 +245,11 @@ function znote()
 }
 
 # create directory and cd into it
-function mcd() { mkdir $1 && cd $1; }
+function mkcd() { mkdir $1 && cd $1; }
 # cd into most recently modified directory
-function clss() { cd `ls -ctr | tail -n 1`; }
+function clss() { cd `ls -ctrd */ | tail -n 1`; }
+# git log oneline = (hash commit) (author-name) (commit-summary)
+function gll(){ git log ${1}.. --pretty="%H %an %s "; }
 
 # regular expression search
 # e.g. EFind 'mo*use' -name '*.java' -or -name '*.c'
@@ -272,6 +274,6 @@ EFind() {
 #gconftool --set /apps/nautilus/preferences/default_folder_viewer --type=string list_view
 #gconftool --set /desktop/gnome/interface/can_change_accels --type=bool True
 
-# for reference 
-function zugzug() { ssh -A -p <non_standard_port> -t <proxy_server> ssh $1; }
+# for reference
+#function zugzug() { ssh -A -p <non_standard_port> -t <proxy_server> ssh $1; }
 
