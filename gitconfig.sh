@@ -26,7 +26,7 @@ git config --global color.status.added "yellow"
 git config --global color.status.changed "green"
 git config --global color.status.untracked "cyan"
 git config --global color.interactive auto
-git config --global format.pretty "%C(yellow)%H%Creset %an %Cgreen%s%Creset "
+#git config --global format.pretty "%C(yellow)%H%Creset %an %Cgreen%s%Creset "
 
 #############  branch #############
 git config --global branch.autosetupmerge "true"
@@ -44,7 +44,7 @@ git config --global alias.lp "log -p"
 git config --global push.default "matching"
 
 #############  merge #############
-git config --global merge.tool meld
+#git config --global merge.tool meld
 #git config --global merge.tool bcompare
 #git config --global mergetool.bcompare.cmd 'bcompare \\\"$LOCAL\\\" \\\"$REMOTE\\\" \\\"$BASE\\\" \\\"$MERGED\\\"'
 
