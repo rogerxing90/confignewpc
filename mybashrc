@@ -155,6 +155,8 @@ alias ubuntu_version="cat /etc/lsb-release"
 
 #temp
 PATH=$PATH:$MYBASHRC_DIR
+nir='repo forall -p -c git log nlev_soc_r1.2.5-hc28.. --pretty="[%an] - %s"'
+#vim:  %s/^\[\(.........\).\{-}-/[\1]\t/
 
 ## vim ##
 alias vim72u="cd /usr/share/vim/vim72"
@@ -250,7 +252,7 @@ function mkcd() { mkdir $1 && cd $1; }
 # cd into most recently modified directory
 function clss() { cd `ls -ctrd */ | tail -n 1`; }
 # git log oneline = (hash commit) (author-name) (commit-summary)
-function gllf(){ 	if [ $# -ge 1 ]; then PARAM1="${1}.." ; fi;
+function gllf(){ 	if [ $# -ge 1 ]; then PARAM1="${1}" ; fi;
 	if [ $# -ge 2 ]; then PARAM2="-n${2}"; fi;
 	git log $PARAM1 --pretty="%Cred%H%Creset %an %Cgreen%s%Creset " ${PARAM2} --color; }
 function gll(){ if [ $# -ge 1 ]; then PARAM1="-n${1}"; fi;
