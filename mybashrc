@@ -251,7 +251,10 @@ function znote()
 function mkcd() { mkdir $1 && cd $1; }
 # cd into most recently modified directory
 function clss() { cd `ls -ctrd */ | tail -n 1`; }
+# cd into previous n last created n directory; e.g. clssn 1=clss; clss 2=second last created dir
+function clssn() { cd `ls -ctrd */ | tail -n $1 | head -n 1`; }
 # git log oneline = (hash commit) (author-name) (commit-summary)
+# usage: gllf "conti_dev/nissan_ev_delete -n6"
 function gllf(){ 	if [ $# -ge 1 ]; then PARAM1="${1}" ; fi;
 	if [ $# -ge 2 ]; then PARAM2="-n${2}"; fi;
 	git log $PARAM1 --pretty="%Cred%H%Creset %an %Cgreen%s%Creset " ${PARAM2} --color; }
