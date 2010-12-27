@@ -257,9 +257,10 @@ function clssn() { cd `ls -ctrd */ | tail -n $1 | head -n 1`; }
 # usage: gllf "conti_dev/nissan_ev_delete -n6"
 function gllf(){ 	if [ $# -ge 1 ]; then PARAM1="${1}" ; fi;
 	if [ $# -ge 2 ]; then PARAM2="-n${2}"; fi;
-	git log $PARAM1 --pretty="%Cred%H%Creset %an %Cgreen%s%Creset " ${PARAM2} --color; }
+	git log $PARAM1 --pretty="%C(yellow)%H%Creset %an %Cgreen%s%Creset " ${PARAM2} --color; }
+# gll 5        - show 5 commits
 function gll(){ if [ $# -ge 1 ]; then PARAM1="-n${1}"; fi;
-	git log --pretty="%Cred%H%Creset %an %Cgreen%s%Creset " ${PARAM1} --color;}
+	git log --pretty="%C(yellow)%H%Creset %an %Cgreen%s%Creset " ${PARAM1} --color;}
 
 # regular expression search
 # e.g. EFind 'mo*use' -name '*.java' -or -name '*.c'
