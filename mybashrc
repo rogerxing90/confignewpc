@@ -13,6 +13,7 @@
 #   fi
 #	PATH=$PATH:./
 #	export PATH
+#	source ~/scripts-kn/local-bashrc.sh
 
 VIM_SERVER=`hostname`
 
