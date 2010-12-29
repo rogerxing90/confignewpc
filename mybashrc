@@ -12,6 +12,7 @@
 #   	echo not found $MYBASHRC
 #   fi
 #	PATH=$PATH:./
+#	export PATH
 
 VIM_SERVER=`hostname`
 
@@ -288,3 +289,4 @@ EFind() {
 # for reference
 #function zugzug() { ssh -A -p <non_standard_port> -t <proxy_server> ssh $1; }
 
+export PATH=$PATH:~/bin
