@@ -266,7 +266,14 @@ function gll(){ if [ $# -ge 1 ]; then PARAM1="-n${1}"; fi;
 
 ## open all the files found in gvim
 ## usage: gall find . -name "*.java" --> find . -name "*.java" | xargs -I {} gvim --servername `hostname` --remote {}
-function gall(){ $* & $* | xargs -I {} gvim --servername `hostname` --remote {}
+function galll(){ $* & $* | xargs -I {} gvim --servername `hostname` --remote {}
+}
+## function the same as galll, but will used last executed command as parameter
+function gall(){
+LAST_COMMAND=`history | tail -2 | head -1 | cut -d' ' -f3-`
+echo $LAST_COMMAND
+eval $LAST_COMMAND
+eval ${LAST_COMMAND} | xargs -I {} gvim --servername `hostname` --remote {}
 }
 
 # regular expression search
