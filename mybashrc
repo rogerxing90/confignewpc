@@ -60,6 +60,7 @@ alias vimm="gvim $(ls -ctr | tail -n-1)"
 alias gits="git status"
 alias gita="git commit -a"
 alias gitam="git commit -a -m"
+alias gitau="git add -u"
 alias gitca="git commit --amend"
 alias gitb="git branch"
 alias gitbr="git branch -r"
@@ -274,6 +275,12 @@ LAST_COMMAND=`history | tail -2 | head -1 | cut -d' ' -f3-`
 echo $LAST_COMMAND
 eval $LAST_COMMAND
 eval ${LAST_COMMAND} | xargs -I {} gvim --servername `hostname` --remote {}
+}
+## show full-name of git tracked files
+## usage: gls java
+function gls(){
+if [ $# -ge 1 ]; then export PARAM='| /bin/grep $*'; fi
+eval git ls-files --full-name $PARAM
 }
 
 # regular expression search
