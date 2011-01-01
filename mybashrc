@@ -44,7 +44,7 @@ alias pp="popd"
 alias p="pushd"
 
 #essential ls
-alias ll="ls -la --color=auto"
+alias ll="ls -lah --color=auto"
 alias lsd="ls -d */ --color=auto"
 alias lsh="ls -ct | head -n 1"
 alias lss="ls -ctrl"
@@ -263,6 +263,11 @@ function gllf(){ 	if [ $# -ge 1 ]; then PARAM1="${1}" ; fi;
 # gll 5        - show 5 commits
 function gll(){ if [ $# -ge 1 ]; then PARAM1="-n${1}"; fi;
 	git log --pretty="%C(yellow)%H%Creset %an %Cgreen%s%Creset " ${PARAM1} --color;}
+
+## open all the files found in gvim
+## usage: gall find . -name "*.java" --> find . -name "*.java" | xargs -I {} gvim --servername `hostname` --remote {}
+function gall(){ $* & $* | xargs -I {} gvim --servername `hostname` --remote {}
+}
 
 # regular expression search
 # e.g. EFind 'mo*use' -name '*.java' -or -name '*.c'
