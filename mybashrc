@@ -277,9 +277,9 @@ eval $LAST_COMMAND
 eval ${LAST_COMMAND} | xargs -I {} gvim --servername `hostname` --remote {}
 }
 ## show full-name of git tracked files
-## usage: gls java
+## usage: gls java ; e.g 2: gls Android.*xml 
 function gls(){
-if [ $# -ge 1 ]; then export PARAM='| /bin/grep $*'; fi
+if [ $# -ge 1 ]; then export PARAM='| /bin/grep -E $*'; fi
 eval git ls-files --full-name $PARAM
 }
 
