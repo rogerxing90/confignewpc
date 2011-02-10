@@ -4,10 +4,10 @@
 "so ~/confignewpc/myvim/.vimrc
 "nmap ,rr	:e ~/confignewpc/myvim/.vimrc<CR>
 "-- win --
-"so D:\kn\1confignewpc\myvim\.vimrc
-"nmap ,rr :e D:\kn\1confignewpc\myvim\.vimrc<CR>
 "set rtp+=D:\kn\1confignewpc\myvim
 "set path+=D:\kn\1confignewpc\myvim
+"so D:\kn\1confignewpc\myvim\.vimrc
+"nmap ,rr :e D:\kn\1confignewpc\myvim\.vimrc<CR>
 
 "===============================================================
 " function DESC
