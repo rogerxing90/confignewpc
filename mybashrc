@@ -206,6 +206,8 @@ function cff() {
 	fi
 }
 
+function cffv(){ echo -n $* | xsel -b && xsel -b ; echo ; }
+
 # use gvim to open the file and go to the line number provided
 function vv() {
 	echo gvim --servername $VIM_SERVER --remote ${*%:*} +${*##*:}
@@ -252,6 +254,10 @@ function znote()
 
 # create directory and cd into it
 function mkcd() { mkdir $1 && cd $1; }
+# create a directory with date append to the filename
+function mkdd() { DIR_NAME="`date +%d%b%Y-%H%M%p`"
+					if [ $# -eq 1 ] ; then
+						DIR_NAME=${1}-${DIR_NAME}; fi; mkdir ${DIR_NAME} && cd ${DIR_NAME};}
 # cd into most recently modified directory
 function clss() { cd `ls -ctrd */ | tail -n 1`; }
 # cd into previous n last created n directory; e.g. clssn 1=clss; clss 2=second last created dir
