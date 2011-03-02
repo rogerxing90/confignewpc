@@ -137,11 +137,12 @@ if has('win32')
     noremap ,a8 :let @*=substitute(expand("%:p:8"), "/", "\\", g)<Bar>echo @*<CR>
 else
     "nmap ,cs :let @+=expand("%")<CR>
-    noremap ,as :let @+=expand("%:t")<Bar>echo @*<CR>
+    noremap ,as :let @+=expand("%:t")<Bar>echo @+<CR>
     "or use * reg (+ and * is the same with slight difference)
-    noremap ,al :let @+=expand("%:p")<Bar>echo @*<CR>
+    noremap ,al :let @+=expand("%:p")<Bar>echo @+<CR>
     "nmap ,cs :let @*=expand("%")<CR>
     "nmap ,cl :let @*=expand("%:p")<CR>
+    noremap ,a8 :let @+=expand("%:p:8")<Bar>echo @+<CR>
 endif
 
 " all ,ax mapping

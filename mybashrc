@@ -53,7 +53,6 @@ alias lsaa="ls -ctrla | grep -v 4096 | grep -v 65 | tail -n-1"
 alias lsa5="ls -ctrla | grep -v 4096 | grep -v 65 | tail -n-5"
 # maybe need to modified
 #alias vimm="gvim $(ls -ctr | grep -v 4096 | tail -n-1)"
-alias vimm="gvim $(ls -ctr | tail -n-1)"
 
 #git
 #source $MYBASHRC_DIR/git-completion.bash
@@ -166,7 +165,9 @@ alias vim72u="cd /usr/share/vim/vim72"
 alias gvims="gvim --servername $VIM_SERVER"
 alias gvimm="gvim --servername $VIM_SERVER --remote-tab-silent"
 alias g="gvim --servername $VIM_SERVER --remote"
+## -S to source the file after read (main use for vim session file)
 alias gs="gvim --servername $VIM_SERVER -S"
+alias glast="gvim $(ls -ctr | tail -n-1)"
 
 #ref-note
 #PS1='${debian_chroot:+($debian_chroot)}\u@\h:\w\$ '
@@ -272,11 +273,11 @@ function gll(){ if [ $# -ge 1 ]; then PARAM1="-n${1}"; fi;
 	git log --pretty="%C(yellow)%H%Creset %an %Cgreen%s%Creset " ${PARAM1} --color;}
 
 ## open all the files found in gvim
-## usage: gall find . -name "*.java" --> find . -name "*.java" | xargs -I {} gvim --servername `hostname` --remote {}
-function galll(){ $* & $* | xargs -I {} gvim --servername `hostname` --remote {}
+## usage: gfind find . -name "*.java" --> find . -name "*.java" | xargs -I {} gvim --servername `hostname` --remote {}
+function gfind(){ $* & $* | xargs -I {} gvim --servername `hostname` --remote {}
 }
-## function the same as galll, but will used last executed command as parameter
-function gall(){
+## function the same as gfind, but will used last executed command as parameter
+function gfin(){
 LAST_COMMAND=`history | tail -2 | head -1 | cut -d' ' -f3-`
 echo $LAST_COMMAND
 eval $LAST_COMMAND
@@ -288,6 +289,40 @@ function gls(){
 if [ $# -ge 1 ]; then export PARAM='| /bin/grep -E $*'; fi
 eval git ls-files --full-name $PARAM
 }
+
+## grep, fgrep function
+grep_option="-rIin --include=*.cpp --include=*.[ch] --exclude-dir='.git' --exclude-dir=out"
+function mygrep(){
+	set -x
+	GREP=$1
+	if [ $# -ge 2 ]; then GREP_OPT=$2; else GREP_OPT=${grep_option}; fi
+	PATTERN=$3
+	$GREP $GREP_OPT "$PATTERN" * --color=auto
+	shift; shift; shift;
+	while [ "$1" != "" ] ; do
+		echo $1
+		shift
+	done
+	set +x
+}
+
+## find and save the result to clipboard
+function findx(){
+	find . -name "$1" | xsel -b
+	let i=1
+	for file in `xsel -b`; do
+		echo "$i: $file"
+		let i=i+1
+	done
+}
+
+## open the file save to clipboard
+function gx(){
+	FILE_NAME=`xsel -b | sed -n ${1}'p'`
+	#echo $FILE_NAME
+	set -x ; gvim --servername $VIM_SERVER --remote $FILE_NAME; set +x
+}
+
 
 # regular expression search
 # e.g. EFind 'mo*use' -name '*.java' -or -name '*.c'
