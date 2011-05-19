@@ -1185,6 +1185,31 @@ endfunction
 
 nmap ,an :call NextFile()<CR>
 nmap ,ap :call PrevFile()<CR>
+
+
+"===============================================================
+"== Function: increment last number on filename and open it
+"===============================================================
+function Vgrep_listed_Buffer()
+  let all = range(0, bufnr('$'))
+  let res = []
+  for b in all
+    if buflisted(b)
+      call add(res, bufname(b))
+    endif
+  endfor
+  "return res
+	let m = inputdialog("search term")
+    if m != ""
+		exe "vimgrep/". m ."/ ".join(res,' ')
+		":exe 'vimgrep/pattern/ '.join(BuffersList(),' ')
+        exec "cw"
+    endif
+endfunction
+"cabbrev ,vg :call Vgrep_listed_Buffer<CR>
+
+
+
 "===============================================================
 "== autocompletion for c programming
 "===============================================================
@@ -1369,6 +1394,11 @@ map <A-F9> :execute "Bgrep /" . expand("<cword>") . "/" <CR>
 "===============================================================
 "a to toggle autoclose of YRShow window;
 nnoremap <silent> <F10> :YRShow<CR>
+
+"===============================================================
+"== Plugin: FuzzyFinder
+"===============================================================
+nnoremap <silent> ,af     :FufBuffer<CR>
 
 "===============================================================
 "== Miscellaneous substitution
