@@ -1190,7 +1190,7 @@ nmap ,ap :call PrevFile()<CR>
 "===============================================================
 "== Function: increment last number on filename and open it
 "===============================================================
-function Vgrep_listed_Buffer()
+function! Vgrep_listed_Buffer()
   let all = range(0, bufnr('$'))
   let res = []
   for b in all
@@ -1355,6 +1355,42 @@ endfunction
 "endif
 
 "===============================================================
+"== FUNCTION: ProjectFuzzyFind
+"===============================================================
+" inside <.fuzzyfinder_cfg> can have
+" mydir/**
+" *
+function! ProjectFuzzyFind()
+  let origcurdir = getcwd()
+  let curdir = origcurdir
+  let prevdir = ""
+
+  while curdir != prevdir
+    if filereadable(".fuzzyfinder_cfg")
+      break
+    endif
+    cd ..
+    let prevdir = curdir
+    let curdir = getcwd()
+  endwhile
+
+  if filereadable(".fuzzyfinder_cfg")
+    let items = readfile(".fuzzyfinder_cfg")
+    let files = []
+    for n in items
+      let files += split(glob(curdir . "/" . n), "\n")
+    endfor
+
+    call fuf#givenfile#launch('', 0, '>', files)
+  endif
+endfunction
+
+map ,ap :call ProjectFuzzyFind()<CR>
+let g:fuf_maxMenuWidth = 150
+
+
+
+"===============================================================
 "== Plugin: bufexplr
 "===============================================================
 let g:TTrCodeAssistor_AutoStart=1
@@ -1398,7 +1434,9 @@ nnoremap <silent> <F10> :YRShow<CR>
 "===============================================================
 "== Plugin: FuzzyFinder
 "===============================================================
-nnoremap <silent> ,af     :FufBuffer<CR>
+nnoremap <silent> ,af     :FufFile<CR>
+nnoremap <silent> ,ab     :FufBuffer<CR>
+nnoremap <silent> ,ad     :FufDir<CR>
 
 "===============================================================
 "== Miscellaneous substitution
