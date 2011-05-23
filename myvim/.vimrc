@@ -443,7 +443,7 @@ map <C-F3> [I:let nr = input("Which one: ")<Bar>exe "normal " . nr ."[\t"<CR>
 
 "+++++++++++++++++++++++++ FUNCTION +++++++++++++++++++++++++++
 "===============================================================
-"== Function: Multiple Windows
+"== [ Function ]: Multiple Windows
 "===============================================================
 "window are count from left-right, top-down
 "now we have 3 windows (two on top (1, 2), one bottom (3)
@@ -493,7 +493,7 @@ function! SwitchPrevWin()
 endfunction
 
 "===============================================================
-"== Function: Quick Fix
+"== [ Function ]: Quick Fix
 "===============================================================
 "command -bang -nargs=? QFix call QFixToggle(<bang>0)
 function! QFixToggle(forced)
@@ -509,7 +509,7 @@ endfunction
 
 
 "===============================================================
-"== Function: Home / End
+"== [ Function ]: Home / End
 "===============================================================
 "<home> toggles between start of line and start of text
 imap <khome> <home>
@@ -548,7 +548,7 @@ function! End()
 endfunction
 
 "===============================================================
-"== Function: Copy and Paste
+"== [ Function ]: Copy and Paste
 "===============================================================
 "cut/copy/paste
 vnoremap <C-X> "+d
@@ -573,7 +573,7 @@ function! Paste(mode)
 endfunction
 
 "===============================================================
-"== Function: MatchSpace & match after column 80
+"== [ Function ]: MatchSpace & match after column 80
 "===============================================================
 "if has('win32')
 "   nmap <silent> <M-S> <Esc>:call MatchSpace() <CR>
@@ -605,7 +605,7 @@ endif
 endfunction
 
 "===============================================================
-"== Function: InsertTabWrapper
+"== [ Function ]: InsertTabWrapper
 "===============================================================
 function! InsertTabWrapper(direction)
     let col = col('.') - 1
@@ -619,7 +619,7 @@ function! InsertTabWrapper(direction)
 endfunction
 
 "===============================================================
-"== Function: No Mapping Required
+"== [ Function ]: No Mapping Required
 "===============================================================
 "find local variable(gd), global(gD), or function (:tag)
 "function! GoDefinition()
@@ -718,7 +718,7 @@ function! MyToglleScrollBind()
 endfunction
 
 "===============================================================
-"== Function: toggle line break
+"== [ Function ]: toggle line break
 "===============================================================
 nmap <C-M-T> :call MyToglleScrollBind()<CR>
 let g:line_break_on = "1"
@@ -738,7 +738,7 @@ function! MyToglleScrollBind()
 	endif
 endfunction
 "===============================================================
-"== Function: GUI FONT
+"== [ Function ]: GUI FONT
 "===============================================================
 "nmap <C-M-f> :set guifont=Fixedsys:h9:cGB2312<CR>
 "guifont
@@ -752,11 +752,12 @@ if has("gui_running")
     elseif has("gui_win32")
     "set guifont=Courier_New:h10:cANSI
     ":set guifont=Fixedsys:h9:cGB2312
+	cabbr pathescape s#\\#/#g
     endif
 endif
 
 "===============================================================
-"== Function: windo / bufdo
+"== [ Function ]: windo / bufdo
 "===============================================================
 "Usage::Windo set nu
 " Just like windo, but restore the current window when done.
@@ -777,7 +778,7 @@ endfunction
 com! -nargs=+ -complete=command Bufdo call BufDo(<q-args>)
 
 "===============================================================
-"== Function: Show current function name
+"== [ Function ]: Show current function name
 "===============================================================
 fun! ShowFuncName()
   let lnum = line(".")
@@ -850,7 +851,7 @@ nmap <C-M-n> :let name = FunctionName()<CR> :echo name<CR>
 "endif
 
 "===============================================================
-"== Function: Folding the whole function
+"== [ Function ]: Folding the whole function
 "===============================================================
 function! FoldBrace()
   if getline(v:lnum+1)[0] == '{'
@@ -879,7 +880,7 @@ function! KnFold()
 endfunction
 "
 "===============================================================
-"== Function: Folding inside the function [knng]
+"== [ Function ]: Folding inside the function [knng]
 "== Desc: fold {..} inside a function, but not the function itself
 "== Usage: execute "normal vi}" at the most outer {..},
 "==        then :'<,'> call FoldInside()
@@ -900,10 +901,11 @@ endfunction
 
 vmap <C-A-F> :call FoldInside()<CR>
 "===============================================================
-"== Function: Search visually
+"== [ Function ]: Search visually
 "===============================================================
 "[+Shift+i
 "to go to Nth search result, n+[+Tab
+"desc: same as :g /xxx ; but with also selection
 nmap <silent>[I :<C-u>cal OSearch("nl")<CR>
 nmap <silent>[<Tab> :<C-u>cal OSearch("nj")<CR>
 vmap <silent>[I :<C-u>cal OSearch("vl")<CR>
@@ -954,7 +956,7 @@ function! OSearch(action)
 endfunction
 
 "===============================================================
-"== Function: Search visually (* or #)
+"== [ Function ]: Search visually (* or #)
 "===============================================================
 " From an idea by Michael Naumann
 function! VisualSearch(direction) range
@@ -976,7 +978,7 @@ vnoremap <silent> * :call VisualSearch('f')<CR>
 vnoremap <silent> # :call VisualSearch('b')<CR>
 
 "===============================================================
-"== Function: repeat repetitive task in a smart way
+"== [ Function ]: repeat repetitive task in a smart way
 "===============================================================
 "generate 2 lines in same pattern
 function! RepeatSmart2()
@@ -1004,6 +1006,11 @@ function! RepeatSmart2()
 	endwhile
 endfunction
 
+"===============================================================
+"== [ Function ]: FastPrint
+"===============================================================
+"usage: print var1(char)=var2(num)
+"e.g.  a=19 b=18 c=17
 function! FastPrint()
 	"a=97, use ga to check
 	let l:var1 = 97
@@ -1020,7 +1027,7 @@ function! FastPrint()
 endfunction
 
 "===============================================================
-"== Function: VHDL related functions
+"== [ Function ]: VHDL related functions
 "===============================================================
 function! ChangeVHDLConstantToDefine()
 	"constant C_DOxx  := X"00"; (change to =>) #define XA_ADDRESS0 0x00
@@ -1032,8 +1039,9 @@ function! ChangeVHDLConstantToDefine()
 endfunction
 
 "===============================================================
-"== Function: search partially (ignore the prefix and search for the word)
+"== [ Function ]: search partially (ignore the prefix and search for the word)
 "===============================================================
+"usage: put cursor under word with yyy_xxx; search will look for xxx only
 "e.g. p_xxx , s_xxx ==> search xxx instead
 function! PartialSearch()
 	let l:wordUnderCursor = expand("<cword>")
@@ -1045,14 +1053,17 @@ function! PartialSearch()
 endfunction
 
 "===============================================================
-"== Function: Formatting
+"== [ Function ]: Formatting
 "===============================================================
 ":[range]ce[nter] [width]     center lines     :.,+3 center 80
 ":[range]ri[ght] [width]     right alignment     :% right
 ":[range]le[ft] [indent]     left alignment.(Unit of identation is space)     :left 4
 
-"put cursor after "(" of above line, for use in long function
-function! GotoBrace()
+"===============================================================
+"== [ Function ]: IndentLineToBraceAbove
+"===============================================================
+"obj: indent current line after "(" of above line, for use in long function
+function! IndentLineToBraceAbove()
    let start = line(".") - 1
    let afBraceCol = match(getline(start), '(') + 1
    "echo afBraceCol . " start=" . start
@@ -1061,7 +1072,7 @@ endfunction
 
 "imap <c-tab> <Esc>:call GotoBrace()<CR>a
 "===============================================================
-"== Function: Replace string
+"== [ Function ]: Replace string
 "===============================================================
 function! Replacestr()
     "e - don't issue error when search not found
@@ -1076,7 +1087,7 @@ endfunction
 
 
 "===============================================================
-"== Function: Vimgrep with user key-in word
+"== [ Function ]: Vimgrep with user key-in word
 "===============================================================
 function! Vgrep()
     let m = inputdialog("search term")
@@ -1088,18 +1099,19 @@ endfunction
 
 cabbrev vg call Vgrep()
 
-function! Vgrep_with_userInput()
+function! Vgrep_for_specific_ext()
     let m = inputdialog("search term")
     if m != ""
         exec "vimgrep /" . m . "/j *.c *.h *.cpp **/*.vhd"
         exec "cw"
     endif
 endfunction
-nmap <A-F11> <Esc>:call Vgrep_with_userInput()<CR>
+nmap <A-F11> <Esc>:call Vgrep_for_specific_ext()<CR>
 
 "===============================================================
-"== Function: user input new string to replace the word under cursor
+"== [ Function ]: user input new string to replace the word under cursor
 "===============================================================
+"[ replace ]
 function! Replace_GUI()
 	let newStr=inputdialog("new string to replace word under cursor")
 	if newStr != ""
@@ -1109,12 +1121,14 @@ endfunction
 nmap <A-F12> <Esc>:call Replace_GUI()<CR>
 
 "===============================================================
-"== Function: replace a list of item with similar prefix
+"== [ Function ]: replace a list of item with similar prefix
 "===============================================================
+"note: must be visually selected, or a range is given
 function! Replace_prefix() range
 	let lineNr = a:firstline
+	let match_pattern = '\W\+'
 	while (lineNr != a:lastline)
-		let words = split(getline(lineNr), '\W\+')
+		let words = split(getline(lineNr), match_pattern)
 		"echo "[". lineNr. "]word is " . words[1]
 		exe "%s/" . words[1]. "\\>/XA_" . words[1]. "/gc"
 		let lineNr = lineNr + 1
@@ -1122,7 +1136,7 @@ function! Replace_prefix() range
 endfunction
 
 "===============================================================
-"== Function: convert symbian .dm file to .sis file
+"== [ Function ]: convert symbian .dm file to .sis file
 "===============================================================
 function! DmToSis()
 	:1, 4 d
@@ -1132,7 +1146,7 @@ function! DmToSis()
 endfunction
 
 "===============================================================
-"== Function: save global search to register g
+"== [ Function ]: save global search to register g
 "===============================================================
 function! SaveSearch(...)
 	"let list_len = len(a:000)
@@ -1165,7 +1179,7 @@ endfunction
 vmap <A-S-F10> :exe normal "y"<CR> :call SaveSearch(<C-R>")
 
 "===============================================================
-"== Function: increment last number on filename and open it
+"== [ Function ]: increment last number on filename and open it
 "===============================================================
 function! NextFile()
 	let fn=expand("%:t")
@@ -1188,7 +1202,7 @@ nmap ,ap :call PrevFile()<CR>
 
 
 "===============================================================
-"== Function: increment last number on filename and open it
+"== [ Function ]: Vgrep_listed_Buffer
 "===============================================================
 function! Vgrep_listed_Buffer()
   let all = range(0, bufnr('$'))
@@ -1206,7 +1220,7 @@ function! Vgrep_listed_Buffer()
         exec "cw"
     endif
 endfunction
-"cabbrev ,vg :call Vgrep_listed_Buffer<CR>
+nmap ,gb :call Vgrep_listed_Buffer()<CR>
 
 
 
@@ -1385,7 +1399,7 @@ function! ProjectFuzzyFind()
   endif
 endfunction
 
-map ,ap :call ProjectFuzzyFind()<CR>
+map ,p :call ProjectFuzzyFind()<CR>
 let g:fuf_maxMenuWidth = 150
 
 
@@ -1434,9 +1448,9 @@ nnoremap <silent> <F10> :YRShow<CR>
 "===============================================================
 "== Plugin: FuzzyFinder
 "===============================================================
-nnoremap <silent> ,af     :FufFile<CR>
-nnoremap <silent> ,ab     :FufBuffer<CR>
-nnoremap <silent> ,ad     :FufDir<CR>
+nnoremap <silent> ,f     :FufFile<CR>
+nnoremap <silent> ,ob     :FufBuffer<CR>
+nnoremap <silent> ,od     :FufDir<CR>
 
 "===============================================================
 "== Miscellaneous substitution
