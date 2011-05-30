@@ -359,7 +359,7 @@ nmap \bf /8[[:digit:]]\{6}[0-9a-zA-Z]<cr>
 nmap ,d :e main.c<bar>%s#//\(while(i);\)# \1<CR>
 "nmap ,n :b main<bar>%s#[^/]\(while(i);\)#//\1<CR>
 nmap ,p ?PROTOTYPES<CR>
-nmap ,p :%s/.*EV (\(.\{-}\),\(.\{-}\)).*/\1_\2/g<CR>
+nmap ,u :%s/.*EV (\(.\{-}\),\(.\{-}\)).*/const UWord16 \1_\2 = 0x000;/g<CR>
 nmap ,v ?STATIC\\|GLOBAL<CR>
 nmap ,t :e global.h<bar>/TEST<CR>
 "nmap ,c :%s/\r//g<CR>
@@ -1077,14 +1077,25 @@ endfunction
 "===============================================================
 function! Replacestr()
     "e - don't issue error when search not found
-    execute "%s/String/char */ge"
-    execute "%s/Uint32/unsigned int/ge"
-    execute "%s/Uint16/unsigned short/ge"
-    execute "%s/Int/int/ge"
-    execute "%s/Void/void/ge"
-    execute "%s/Ptr/void */ge"
-    execute "%s/Uns/unsigned int/ge"
+    "execute "%s/String/char */ge"
+    "execute "%s/Uint32/unsigned int/ge"
+    "execute "%s/Uint16/unsigned short/ge"
+    "execute "%s/Int/int/ge"
+    "execute "%s/Void/void/ge"
+    "execute "%s/Ptr/void */ge"
+    "execute "%s/Uns/unsigned int/ge"
+	let lineNr = 1
+	let @h = lineNr 
+	" loop from first to last line
+	while (lineNr != line('$')+1)
+		call cursor(lineNr, 0)
+		execute 's/.*EV (\(.\{-}\),\(.\{-}\)).*/const UWord16 \1_\2 = 0x000'.getreg('h')';/g'
+		let lineNr = lineNr + 1
+		let @h = lineNr 
+	endwhile
 endfunction
+
+nmap ,u :call Replacestr()<CR>
 
 
 "===============================================================
@@ -1403,6 +1414,11 @@ endfunction
 map ,p :call ProjectFuzzyFind()<CR>
 let g:fuf_maxMenuWidth = 150
 
+let g:clang_complete_auto = 1
+"let g:clang_use_library = 1
+let g:clang_library_path="C:\z\installed\llvm-2.9-mingw32-i386\llvm\lib\gcc"
+let g:clang_complete_copen = 1
+let g:clang_user_options='|| exit 0'
 
 
 "===============================================================
