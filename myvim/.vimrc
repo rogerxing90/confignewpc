@@ -291,7 +291,7 @@ imap <C-J> <ESC>ja
 imap <C-K> <ESC>ka
 imap <C-L> <ESC>la
 imap <A-;> <ESC>$a;
-imap <A-o> <ESC>o
+imap <A-o> <ESC>o{<CR>}<ESC>ka
 imap <C-E> <ESC>$a
 imap <C-B> <ESC>^i
 "NOTE: if only use <ESC>, they will be delay
@@ -359,6 +359,7 @@ nmap \bf /8[[:digit:]]\{6}[0-9a-zA-Z]<cr>
 nmap ,d :e main.c<bar>%s#//\(while(i);\)# \1<CR>
 "nmap ,n :b main<bar>%s#[^/]\(while(i);\)#//\1<CR>
 nmap ,p ?PROTOTYPES<CR>
+nmap ,p :%s/.*EV (\(.\{-}\),\(.\{-}\)).*/\1_\2/g<CR>
 nmap ,v ?STATIC\\|GLOBAL<CR>
 nmap ,t :e global.h<bar>/TEST<CR>
 "nmap ,c :%s/\r//g<CR>

@@ -1,7 +1,7 @@
+alias nn="explorer ."
 alias cdd="cd .."
 alias cdc="cd d: && cd /D/kn/1confignewpc"
 alias findcpp='find . -name "*.cpp" -o -name "*.h"'
-alias gentag='find . -name "*.cpp" -o -name "*.h > temp && D:\\kn\\uservar\\ctags.exe --sort=foldcase -R -L temp'
 alias bassh='source  D:\\kn\\1confignewpc\\mybashrc_for_win.sh'
 alias bashh='gvim D:\\kn\\1confignewpc\\mybashrc_for_win.sh &'
 alias pp="popd"
@@ -16,6 +16,7 @@ alias lsa5="ls -ctrla | grep -v 4096 | grep -v 65 | tail -n-5"
 
 
 ## copied from mybashrc
+alias ignore="gvim .gitignore &"
 alias gits="git status"
 alias gita="git commit -a"
 alias gitam="git commit -a -m"
@@ -26,6 +27,7 @@ alias gitbr="git branch -r"
 alias gitc="git checkout"
 alias gitcH="git checkout -f HEAD"
 alias gitd="git diff"
+alias gitdi="git diff --ignore-space-change"
 alias gitdc="git diff --cached"
 alias gitds="git diff --stat"
 alias gitdh="git diff HEAD~1.."
@@ -69,4 +71,14 @@ alias gitff="git ls-files"
 alias gitvv="git remote -v"
 alias gitlf='git log --pretty=format:"%h:%Cblue%an   %Creset%s"'
 
-PATH=$PATH:/C/z/installed/Vim/vim73
+PATH=$PATH:/C/z/installed/Vim/vim73:/C/z/installed/llvm-2.9-mingw32-i386/llvm/bin
+PATH=$PATH:/C/z/installed/Python32
+PATH=$PATH:/C/z/installed/Python27
+
+
+function gentags(){
+find . -name "*.cpp" -o -name "*.h" > filelist.txt && \
+ctags --sort=foldcase -R -L filelist.txt
+}
+
+#set -o vi
