@@ -82,4 +82,20 @@ find . -name "*.cpp" -o -name "*.h" > filelist.txt && \
 ctags --sort=foldcase -R -L filelist.txt
 }
 
+function igg(){
+ls .gitignore
+RETURN=$?
+while [ $RETURN = 1 -a `pwd` -ne '/' ]; do
+	#echo "return is bad"
+	cd ..
+done
+
+ls .gitignore
+RETURN=$?
+if [ $RETURN = 0 ]; then
+	#echo "return is good"
+	gvim .gitignore &
+fi
+}
+
 #set -o vi

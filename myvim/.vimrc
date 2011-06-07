@@ -360,7 +360,7 @@ nmap ,d :e main.c<bar>%s#//\(while(i);\)# \1<CR>
 "nmap ,n :b main<bar>%s#[^/]\(while(i);\)#//\1<CR>
 nmap ,p ?PROTOTYPES<CR>
 nmap ,u :%s/.*EV (\(.\{-}\),\(.\{-}\)).*/const UWord16 \1_\2 = 0x000;/g<CR>
-nmap ,v ?STATIC\\|GLOBAL<CR>
+nmap ,vv ?STATIC\\|GLOBAL<CR>
 nmap ,t :e global.h<bar>/TEST<CR>
 "nmap ,c :%s/\r//g<CR>
 "nmap \bh i/*<ESC>73A=<ESC>o<C-W>==  @  @<CR>==<CR>==  DESC:<CR>==  USAGE:<CR>==  INPUTS:<CR>==  OUTPUTS:<CR>==  RETURN:<CR>==  IMP NOTE:<CR><ESC>73A=<ESC>a*/<ESC>=8k
@@ -1232,7 +1232,7 @@ function! Vgrep_listed_Buffer()
         exec "cw"
     endif
 endfunction
-nmap ,gb :call Vgrep_listed_Buffer()<CR>
+nmap ,vb :call Vgrep_listed_Buffer()<CR>
 
 
 
