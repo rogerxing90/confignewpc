@@ -8,6 +8,9 @@
 "set path+=D:\kn\1confignewpc\myvim
 "so D:\kn\1confignewpc\myvim\.vimrc
 "nmap ,rr :e D:\kn\1confignewpc\myvim\.vimrc<CR>
+"if filereadable("D:\\kn\\mylocal_vimrc.vim") 
+"	so D:\kn\mylocal_vimrc.vim
+"endif
 
 "===============================================================
 " function DESC
