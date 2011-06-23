@@ -2,8 +2,9 @@ alias nn="explorer ."
 alias cdd="cd .."
 alias cdc="cd d: && cd /D/kn/1confignewpc"
 alias findcpp='find . -name "*.cpp" -o -name "*.h"'
-alias bassh='source  D:\\kn\\1confignewpc\\mybashrc_for_win.sh'
+alias bassh='source  ~/.bashrc'
 alias bashh='gvim D:\\kn\\1confignewpc\\mybashrc_for_win.sh &'
+alias bashhh='gvim D:\\kn\\mylocal_bashrc.sh &'
 alias pp="popd"
 alias p="pushd"
 alias ll="ls -lah --color=auto"
@@ -79,22 +80,33 @@ PATH=$PATH:/C/z/installed/Python27
 
 function gentags(){
 find . -name "*.cpp" -o -name "*.h" > filelist.txt && \
-ctags --sort=foldcase -R -L filelist.txt
+ctags --sort=foldcase --sort=yes --c++-kinds=+p --fields=+iaS \
+	--extra=+q --language-force=C++ -R -L filelist.txt && \
+rm -rf ./filelist.txt
 }
 
 function igg(){
-ls .gitignore
+CURRENT_DIR=`pwd`
+ls .gitignore > /dev/null 2>&1
 RETURN=$?
-while [ $RETURN = 1 -a `pwd` -ne '/' ]; do
-	#echo "return is bad"
+while [ $RETURN -eq 1 ] ; do
+	if [ `pwd` == 'c:/' -o `pwd` == '/' ]; then
+		break
+	fi
+	echo "file not found, we are at : " `pwd`
 	cd ..
+	ls .gitignore
+	RETURN=$?
 done
 
-ls .gitignore
+ls .gitignore > /dev/null 2>&1
 RETURN=$?
 if [ $RETURN = 0 ]; then
 	#echo "return is good"
 	gvim .gitignore &
+else
+	echo ".gitignore not found"
+	cd $CURRENT_DIR
 fi
 }
 
