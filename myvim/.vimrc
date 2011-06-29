@@ -91,7 +91,12 @@ set matchpairs=(:),{:},[:],<:>
 set scrolloff=5
 set sidescrolloff=5
 set statusline=%F%m%r%h%w\ [FORMAT=%{&ff}]\ [TYPE=%Y]\ [ASCII=\%03.3b]\ [HEX=\%02.2B]\ [POS=%04l,%04v][%p%%]\ [LEN=%L]
-set statusline=2
+"set statusline=2
+"set columns=80
+set colorcolumn=80
+"based on textwidth, highlight column after textwidth
+"set textwidth=80
+"set colorcolumn=+1
 "set winaltkeys=yes "let window handle Alt key
 " Don't let Windows handle alt-cmds (menu access, etc.); let vim do it
 " Make Alt-F pop down the 'File' menu ['Edit','Tools','Syntax','Buffers','Window','Misc','Help']
@@ -117,7 +122,7 @@ set statusline=2
 "== Autocmd / Filetype
 "===============================================================
 autocmd BufRead *.out %!xxd
-autocmd filetype c set omnifunc+=ccomplete#Complete
+"autocmd filetype c set omnifunc+=ccomplete#Complete
 "autocmd filetype c,cpp set cindent
 autocmd FileType php set omnifunc=phpcomplete#CompletePHP
 autocmd FileType html set omnifunc=htmlcomplete#CompleteTags
@@ -1237,6 +1242,57 @@ function! Vgrep_listed_Buffer()
 endfunction
 nmap ,vb :call Vgrep_listed_Buffer()<CR>
 
+"===============================================================
+"== [ Function ]: escape \ in the path
+"===============================================================
+"used in win32 app
+function! Replace_path() range
+	exe a:firstline. ",".a:lastline.'s#\\#\\\\#g'
+endfunction
+
+"===============================================================
+"== [ Function ]: reformat comments so that each line < 80v
+"===============================================================
+" format comment like
+"*	xxx
+"*		yyy
+" become
+"*	xxx yyy
+function! Format_comment() range
+	let lineNum = a:firstline
+	exe a:firstline+1. ",".a:lastline.'s#\* \+##'
+	exe a:firstline. ",".a:lastline.'j'
+	normal gqq
+endfunction
+
+function! Format_comment2()
+	:s# \+:\(.\)#\r*\t\1#
+endfunction
+noremap ,cf	:call Format_comment2()<CR>;
+
+"===============================================================
+"== [ Function ]: alternating header/source of c/cpp file
+"===============================================================
+function! TryOpenFile(dest_ext)
+	let dest_filename = expand("%:t:r") . a:dest_ext
+	let found=findfile(dest_filename, expand("%:p:h")."\\..\\**")
+	if found != ""
+		exe ":e " . found
+	endif
+endfunction
+
+function! AlternateHeaderSource()
+	let ori_ext=expand("%:e")
+	if  ori_ext == "cpp"
+		let dest_ext = ".h"
+		call TryOpenFile(dest_ext)
+	elseif ori_ext == "h"
+		let dest_ext = ".cpp"
+		call TryOpenFile(dest_ext)
+	endif
+endfunction
+
+comm! -nargs=? -bang Z call AlternateHeaderSource()
 
 
 "===============================================================
@@ -1388,6 +1444,7 @@ endfunction
 "===============================================================
 " inside <.fuzzyfinder_cfg> can have
 " mydir/**
+" .\Framework\*cpp
 " *
 function! ProjectFuzzyFind()
   let origcurdir = getcwd()
@@ -1416,6 +1473,19 @@ endfunction
 
 map ,p :call ProjectFuzzyFind()<CR>
 let g:fuf_maxMenuWidth = 150
+
+" OmniCppComplete
+let OmniCpp_NamespaceSearch = 1
+let OmniCpp_GlobalScopeSearch = 1
+let OmniCpp_ShowAccess = 1
+let OmniCpp_ShowPrototypeInAbbr = 1 " show function parameters
+let OmniCpp_MayCompleteDot = 1 " autocomplete after .
+let OmniCpp_MayCompleteArrow = 1 " autocomplete after ->
+let OmniCpp_MayCompleteScope = 1 " autocomplete after ::
+let OmniCpp_DefaultNamespaces = ["std", "_GLIBCXX_STD"]
+" automatically open and close the popup menu / preview window
+"au CursorMovedI,InsertLeave * if pumvisible() == 0|silent! pclose|endif
+"set completeopt=menuone,menu,longest,preview
 
 let g:clang_complete_auto = 1
 "let g:clang_use_library = 1
