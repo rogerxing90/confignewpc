@@ -431,7 +431,8 @@ map <s-F4> <esc>:cl <CR>
 map <F3> <esc>:copen<CR>/error<CR>
 "see next diff
 map <C-A-q> ]c<CR>
-map <C-F11> :execute "vimgrep /" . expand("<cword>") . "/j *.c *.h *.cpp **/*.vhd" <Bar> cw<CR>
+"map <C-F11> :execute "vimgrep /" . expand("<cword>") . "/j *.c *.h *.cpp **/*.vhd" <Bar> cw<CR>
+map <C-F11> :execute "vimgrep /" . expand("<cword>") . "/j **/*.c **/*.h **/*.cpp" <Bar> cw<CR>
 map <C-F12> :execute "lgrep " . expand("<cword>") . " *" <Bar> lopen<CR>
 "forces (re)indentation of a block of code
 "nmap <C-J> vip=
@@ -1122,7 +1123,8 @@ cabbrev vg call Vgrep()
 function! Vgrep_for_specific_ext()
     let m = inputdialog("search term")
     if m != ""
-        exec "vimgrep /" . m . "/j *.c *.h *.cpp **/*.vhd"
+        "exec "vimgrep /" . m . "/j *.c *.h *.cpp **/*.vhd"
+        exec "vimgrep /" . m . "/j **/*.c **/*.h **/*.cpp"
         exec "cw"
     endif
 endfunction
@@ -1278,6 +1280,8 @@ function! TryOpenFile(dest_ext)
 	let found=findfile(dest_filename, expand("%:p:h")."\\..\\**")
 	if found != ""
 		exe ":e " . found
+	else
+		echo "Error: " . dest_filename . " not found!"
 	endif
 endfunction
 
@@ -1294,6 +1298,68 @@ endfunction
 
 comm! -nargs=? -bang Z call AlternateHeaderSource()
 
+"===============================================================
+"== [ Function ]: alternating header/source of c/cpp file
+"===============================================================
+"b4:TRANS      (EV (LC,evReqDown),  Down,      down
+"af:#define LC_evReqDown                ( LifecycleSubmitterId | )
+function! ExtractAndSaveReg()
+	exe 'v /EV/ d'
+	exe '%s/.*EV (\(\w\+\),\(\w\+\)), *\(\w\+\).*/#define \1_\2\t\t( | eUserState_\2 )/g'
+	exe '1,$ Align ('
+	call cursor('$',1)
+	normal o
+	exe '1,$ y p'
+endfunction
+
+"af: enum PowerStateEventID{
+		"PowerState_Root = 0,
+		"PowerState_Idle,
+	"};
+function! ExtractAndSaveReg2()
+	exe 'v /EV/ d'
+	"exe '%s/STATE \+(\(\w\+\).*/PowerState_\1/g'
+	"exe '%s/.*EV (\(\w\+\),\(\w\+\)), *\(\w\+\).*/PowerState_\2/g'
+	exe '%s/.*EV (\(\w\+\),\(\w\+\)), *\(\w\+\).*/eUserState_\2/g'
+	sort
+	exe 'g/\%(^\1\>.*$\n\)\@<=\(\k\+\).*$/d'
+	let firstline = getline('1')
+	call setline(1, firstline." = 0")
+	exe '%s/$/,/g'
+	call cursor(1,1)
+	normal O
+	"let l:currentline=1
+	"while l:currentline <= line('$')
+	"	let l:currentline = l:currentline + 1
+	"endwhile
+	"call setline(1, 'enum PowerStateEventID{')
+	call setline(1, 'enum UserStateEventID{')
+	call cursor('$',1)
+	normal o
+	"call setline('$', 'PowerState_Event_MAX,')
+	call setline('$', 'eUserState_Event_MAX,')
+	normal o
+	call setline('$', '};')
+	exe '/{'
+	normal =%
+	call cursor('$',1)
+	normal o
+	exe '1,$ y p'
+endfunction
+
+function! ExtractAndSaveMain()
+	exe '1,$ y x'
+	call ExtractAndSaveReg2()
+	exe 'g /./ d'
+	let @g=@p
+	exe 'put x'
+	call ExtractAndSaveReg()
+	let @g=@g.@p
+	exe 'g /./ d'
+	exe 'put g'
+	"exe 'g /./ d'
+	"exe '"x g'
+endfunction
 
 "===============================================================
 "== autocompletion for c programming
