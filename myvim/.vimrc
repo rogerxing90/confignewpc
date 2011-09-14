@@ -81,6 +81,10 @@ set nowrap
 "Only first line has comment string, don't repeat on next line
 "set comments+=fb:*
 "set comments=sl:/*,mb:==,elx:*/
+" no continuous of comment marker in subsequent line
+"set comments=s0:" -,m0:"   ,e0:""",:"
+set comments=s1:/*,mb:*,ex:*/,://,b:#,:%,:XCOMMM,n:>,fb:-
+
 "Original:set wildchar=<Tab>
 set wildchar=<Tab> wildmenu wildmode=full
 "to avoid mksession error E228 makemap
@@ -452,6 +456,12 @@ nnoremap <2-LeftMouse> :exe "/". expand("<cword>")<CR>
 map <C-F3> [I:let nr = input("Which one: ")<Bar>exe "normal " . nr ."[\t"<CR>
 
 "+++++++++++++++++++++++++ FUNCTION +++++++++++++++++++++++++++
+"===============================================================
+"== [ Function ]: Insert Comment
+"===============================================================
+nnoremap ,ai <Esc>i/**<CR>* \brief<CR>*<CR>* \param None<CR>*<CR>* \return None<CR>*/<Esc>?brief<CR>
+nnoremap ,ak <Esc>i/**  */<Esc>F i
+
 "===============================================================
 "== [ Function ]: Multiple Windows
 "===============================================================
@@ -1130,6 +1140,29 @@ function! Vgrep_for_specific_ext()
 endfunction
 nmap <A-F11> <Esc>:call Vgrep_for_specific_ext()<CR>
 
+function! KnGrep(search_term)
+	let dest_src="D:\\CASDEV\\CCM_WA\\DPCARSgp\\IMX\\DPCA_iMX\\Delivery\\MMP_GENERIC\\GEN_SYS\\src"
+	let dest_inc="D:\\CASDEV\\CCM_WA\\DPCARSgp\\IMX\\DPCA_iMX\\Delivery\\MMP_GENERIC\\GEN_PUBLIC"
+	"echo a:search_term . ": " dest_src .": " . dest_inc
+	exec "vimgrep /".a:search_term ."/j ".dest_src."/**/*.cpp "
+	"exec "vimgrep /".a:search_term ."/j ".dest_src."/**/*.cpp ".dest_src."**/*.h?? ".dest_inc."**/*.h??"
+	exec "cw"
+endfunction
+
+function! DpcaGrep()
+    let m = inputdialog("search term")
+	call KnGrep(m)
+endfunction
+nmap <A-F11> <ESC>:call DpcaGrep()<CR>
+
+function! DpcaGrepCurWord()
+	let m = expand("<cword>")
+	call KnGrep(m)
+endfunction
+nmap <A-F12> <ESC>:call DpcaGrepCurWord()<CR>
+
+
+
 "===============================================================
 "== [ Function ]: user input new string to replace the word under cursor
 "===============================================================
@@ -1140,7 +1173,7 @@ function! Replace_GUI()
 		exec "%s/".expand("<cword>")."/".newStr."/gc"
 	endif
 endfunction
-nmap <A-F12> <Esc>:call Replace_GUI()<CR>
+"nmap <A-F12> <Esc>:call Replace_GUI()<CR>
 
 "===============================================================
 "== [ Function ]: replace a list of item with similar prefix
@@ -1278,10 +1311,15 @@ noremap ,cf	:call Format_comment2()<CR>;
 function! TryOpenFile(dest_ext)
 	let dest_filename = expand("%:t:r") . a:dest_ext
 	let found=findfile(dest_filename, expand("%:p:h")."\\..\\**")
+	if found == ""
+		let found=findfile(dest_filename, "D:\\CASDEV\\CCM_WA\\DPCARSgp\\IMX\\DPCA_iMX\\Delivery\\MMP_GENERIC\\GEN_PUBLIC\\**")
+	endif
 	if found != ""
 		exe ":e " . found
+		return 1
 	else
 		echo "Error: " . dest_filename . " not found!"
+		return 0
 	endif
 endfunction
 
@@ -1289,14 +1327,19 @@ function! AlternateHeaderSource()
 	let ori_ext=expand("%:e")
 	if  ori_ext == "cpp"
 		let dest_ext = ".h"
-		call TryOpenFile(dest_ext)
-	elseif ori_ext == "h"
+		let result = TryOpenFile(dest_ext)
+		if result == 0
+			let dest_ext = ".hpp"
+			let result = TryOpenFile(dest_ext)
+		endif
+	elseif ori_ext == "h" || ori_ext == "hpp"
 		let dest_ext = ".cpp"
 		call TryOpenFile(dest_ext)
 	endif
 endfunction
 
 comm! -nargs=? -bang Z call AlternateHeaderSource()
+nmap <A-i> :call AlternateHeaderSource()<CR>
 
 "===============================================================
 "== [ Function ]: alternating header/source of c/cpp file
@@ -1359,6 +1402,15 @@ function! ExtractAndSaveMain()
 	exe 'put g'
 	"exe 'g /./ d'
 	"exe '"x g'
+endfunction
+
+"===============================================================
+"== [ Function ]: little script for rhapsody
+"===============================================================
+"convert multiple #include \"xxx\" to xxx, yyy, zzz for property
+function! ConvertHeader()
+	%s/#include//g
+	%s/$\n/, /g
 endfunction
 
 "===============================================================
@@ -1511,6 +1563,10 @@ endfunction
 " inside <.fuzzyfinder_cfg> can have
 " mydir/**
 " .\Framework\*cpp
+"**/*cpp            ## cpp in all sub-directories
+"**/*h
+"**/sources
+"
 " *
 function! ProjectFuzzyFind()
   let origcurdir = getcwd()
@@ -1537,7 +1593,7 @@ function! ProjectFuzzyFind()
   endif
 endfunction
 
-map ,p :call ProjectFuzzyFind()<CR>
+map <A-p> :call ProjectFuzzyFind()<CR>
 let g:fuf_maxMenuWidth = 150
 
 " OmniCppComplete

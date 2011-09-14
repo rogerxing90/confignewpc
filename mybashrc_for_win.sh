@@ -14,6 +14,8 @@ alias lss="ls -ctrl"
 alias lsa="ls -ctrla"
 alias lsaa="ls -ctrla | grep -v 4096 | grep -v 65 | tail -n-1"
 alias lsa5="ls -ctrla | grep -v 4096 | grep -v 65 | tail -n-5"
+VIM_SERVER="hp"
+alias g="gvim --servername $VIM_SERVER --remote --remote-silent"
 
 
 ## copied from mybashrc
@@ -79,7 +81,31 @@ PATH=$PATH:/C/z/installed/Python27
 
 
 function gentags(){
-find . -name "*.cpp" -o -name "*.h" > filelist.txt && \
+if [ $# -eq 1 ]; then
+	echo "extra path = $1"
+	find $1 -name "*.cpp" -o -name "*.h" -o -name "*.hpp" > filelist.txt
+else
+	echo "search for current path only"
+	echo "" > filelist.txt
+fi
+
+find . -name "*.cpp" -o -name "*.h" >> filelist.txt && \
+ctags --sort=foldcase --sort=yes --c++-kinds=+p --fields=+iaS \
+	--extra=+q --language-force=C++ -R -L filelist.txt && \
+rm -rf ./filelist.txt
+}
+
+function gentagsdpca(){
+EXTRA_PATH=D:\\CASDEV\\CCM_WA\\DPCARSgp\\IMX\\DPCA_iMX\\Delivery\\MMP_GENERIC\\GEN_PUBLIC
+gentags "$EXTRA_PATH"
+}
+
+function gentagspath(){
+if [ $# -lt 2 ]; then 
+	echo "Please provide path. Application exited."
+	exit
+fi
+find "$1" -name "*.cpp" -o -name "*.h" > filelist.txt && \
 ctags --sort=foldcase --sort=yes --c++-kinds=+p --fields=+iaS \
 	--extra=+q --language-force=C++ -R -L filelist.txt && \
 rm -rf ./filelist.txt
