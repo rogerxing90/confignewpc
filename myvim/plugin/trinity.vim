@@ -453,9 +453,9 @@ function! <SID>Trinity_Toggle()
         call <SID>Trinity_InitSourceExplorer()
         SrcExpl
         let s:source_explorer_switch = 1
-        "call <SID>Trinity_InitNERDTree()
-        "NERDTree
-        "let s:nerd_tree_switch = 1
+        call <SID>Trinity_InitNERDTree()
+        NERDTree
+        let s:nerd_tree_switch = 1
         let s:Trinity_switch = 1
     endif
 

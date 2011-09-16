@@ -89,7 +89,7 @@ else
 	echo "" > filelist.txt
 fi
 
-find . -name "*.cpp" -o -name "*.h" >> filelist.txt && \
+find . -name "*.cpp" -o -name "*.h" -o -name "*.hpp" >> filelist.txt && \
 ctags --sort=foldcase --sort=yes --c++-kinds=+p --fields=+iaS \
 	--extra=+q --language-force=C++ -R -L filelist.txt && \
 rm -rf ./filelist.txt

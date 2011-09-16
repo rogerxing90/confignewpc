@@ -444,7 +444,8 @@ map <C-F12> :execute "lgrep " . expand("<cword>") . " *" <Bar> lopen<CR>
 "double click
 "nnoremap <2-LeftMouse> :exe "tag ". expand("<cword>")<CR>
 "nnoremap <2-LeftMouse> :exe "/". expand("<cword>")<Bar>exe "normal mO"<CR>
-nnoremap <2-LeftMouse> :exe "/". expand("<cword>")<CR>
+nnoremap <MiddleMouse> :exe "/". expand("<cword>")<CR>
+"nnoremap <2-LeftMouse> :<Enter>
 "nnoremap <RightMouse> <C-O>
 "nnoremap <X2Mouse> <C-I>
 
@@ -459,8 +460,11 @@ map <C-F3> [I:let nr = input("Which one: ")<Bar>exe "normal " . nr ."[\t"<CR>
 "===============================================================
 "== [ Function ]: Insert Comment
 "===============================================================
-nnoremap ,ai <Esc>i/**<CR>* \brief<CR>*<CR>* \param None<CR>*<CR>* \return None<CR>*/<Esc>?brief<CR>
-nnoremap ,ak <Esc>i/**  */<Esc>F i
+"nnoremap ,ai <Esc>i/**<CR>* \brief<CR>*<CR>* \param None<CR>*<CR>* \return None<CR>*/<Esc>==?brief<CR>
+inoremap ,ai /**<CR>\brief<CR><CR>\param None<CR><CR>\return None<CR>*/<Esc>==?brief<CR>
+"nnoremap ,ak <Esc>i/**  */<Esc>==F i
+inoremap ,ak /**  */<Esc>F i
+
 
 "===============================================================
 "== [ Function ]: Multiple Windows
@@ -484,7 +488,7 @@ imap <C-z> <ESC>:wincmd w<CR>
 "map - <C-w>-
 
 "autocmd BufNewFile * call s:SetupBuffer()
-"autocmd BufWinEnter *
+"autocmd BufWinEn>er *
 "    \ if exists("b:doopenfold") |
 "    \   unlet b:doopenfold |
 "    \   exe "normal zv" |
