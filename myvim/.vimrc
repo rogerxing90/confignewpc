@@ -30,6 +30,7 @@ set smartcase          "overrides ignorecase if uppercase used, ignorecase need 
 set guioptions+=b      "show bottom scrollbar
 "set guioptions+=l      "show long straight scrollbar on the left
 set guioptions-=T     "hide toolbar
+set guioptions-=m     "hide menubar
 set confirm        "Raise a confirm dialog for changed buffer
 set shiftwidth=4
 set tabstop=4       "after set to a new value, use retab to replace old to new tabstop value
@@ -370,10 +371,11 @@ nmap \bf /8[[:digit:]]\{6}[0-9a-zA-Z]<cr>
 "nmap \bn :%s#^\\(\#define ENABLE_DEBUG\)#//\1<CR>
 nmap ,d :e main.c<bar>%s#//\(while(i);\)# \1<CR>
 "nmap ,n :b main<bar>%s#[^/]\(while(i);\)#//\1<CR>
-nmap ,p ?PROTOTYPES<CR>
 nmap ,u :%s/.*EV (\(.\{-}\),\(.\{-}\)).*/const UWord16 \1_\2 = 0x000;/g<CR>
 nmap ,vv ?STATIC\\|GLOBAL<CR>
-nmap ,t :e global.h<bar>/TEST<CR>
+nmap ,amm :mksession! D:\kn\vim_dpca_session.vim<CR>
+"delete extra space
+nmap ,arr <ESC>:%s/\s\+$\\| \+\ze\t//gc<CR>
 "nmap ,c :%s/\r//g<CR>
 "nmap \bh i/*<ESC>73A=<ESC>o<C-W>==  @  @<CR>==<CR>==  DESC:<CR>==  USAGE:<CR>==  INPUTS:<CR>==  OUTPUTS:<CR>==  RETURN:<CR>==  IMP NOTE:<CR><ESC>73A=<ESC>a*/<ESC>=8k
 "nmap \bi i/*<ESC>73A=<ESC>o<C-W>==  <CR><ESC>73A=<ESC>a*/<ESC>=1k
@@ -458,12 +460,64 @@ map <C-F3> [I:let nr = input("Which one: ")<Bar>exe "normal " . nr ."[\t"<CR>
 
 "+++++++++++++++++++++++++ FUNCTION +++++++++++++++++++++++++++
 "===============================================================
+"== [ Function ]: KnSaveLog
+"===============================================================
+function! KnSaveLog()
+    let name = inputdialog("filename")
+	if name != ""
+		let filename = "D:\\kn\\00_project\\02_dpca_new\\00_output_log\\".name
+		exe 'w '.filename."_".strftime("%d%b%Y_%H%M%p").".txt"
+	endif
+endfunction
+map <A-h> :call KnSaveLog()<CR>
+"===============================================================
+"== [ Function ]: KnSetFunctionComment
+"===============================================================
+"example: AAA:AAA (BBB CCC* DDD) ===> //#[ operation AAA (BBB ...*)
+function! KnSetFunctionComment()
+	let curline = getline('.')
+	let substr = matchlist(curline, '\S\+::\(\S\+\) *\((*[^)]\{-}\) *\S*)\{-}')
+	let mytext = "//#[ operation "
+	for n in substr[1:]
+		if n !=""
+			let mytext = mytext.n
+		endif
+	endfor
+	let mytext = mytext.")"
+	let @+="\n\t".mytext."\n\t//#]"
+	echo mytext
+	"echo substr
+endfunction
+map <A-g> :call KnSetFunctionComment()<CR>
+
+"===============================================================
+"== [ Function ]: TempDelete
+"===============================================================
+function! TempReplacePrototype()
+	let linenum = line(".")
+	:s/\w\+:://
+	:s/ *{/;/
+endfunction
+map <A-q> :call TempReplacePrototype()<CR>
+
+"===============================================================
+"== [ Function ]: TempDelete
+"===============================================================
+function! TempDelete()
+	exe 'g /OLG\:ModuleLoad/ d'
+	exe 'g /SID/ d'
+	exe 'g /CAN RX/ d'
+	exe 'g /CAN/ d'
+endfunction
+"map <A-q> :call TempDelete()<CR>
+"===============================================================
 "== [ Function ]: Insert Comment
 "===============================================================
 "nnoremap ,ai <Esc>i/**<CR>* \brief<CR>*<CR>* \param None<CR>*<CR>* \return None<CR>*/<Esc>==?brief<CR>
 inoremap ,ai /**<CR>\brief<CR><CR>\param None<CR><CR>\return None<CR>*/<Esc>==?brief<CR>
 "nnoremap ,ak <Esc>i/**  */<Esc>==F i
 inoremap ,ak /**  */<Esc>F i
+inoremap ,ag //#[ ignore<CR>//#]<ESC>k
 
 
 "===============================================================
@@ -707,6 +761,7 @@ function! MyToggleDiff()
     call SwitchPrevWin()
     let g:diff_on=0
     else
+		echo "on"
     call MySetDiffEnviron()
     call SwitchPrevWin()
     call MySetDiffEnviron()
@@ -1144,12 +1199,33 @@ function! Vgrep_for_specific_ext()
 endfunction
 nmap <A-F11> <Esc>:call Vgrep_for_specific_ext()<CR>
 
+function! KnGrepLifeCycleOnly()
+    let search_term = inputdialog("search term")
+	if (search_term == "" )
+		let search_term = expand("<cword>")
+	endif
+	let dest_src1="D:\\CASDEV\\CCM_WA\\DPCARSgp\\IMX\\DPCA_iMX\\Delivery\\MMP_GENERIC\\GEN_SYS\\src\\Lifecycle/**/*.cpp"
+	let dest_src2="D:\\CASDEV\\CCM_WA\\DPCARSgp\\IMX\\DPCA_iMX\\Delivery\\MMP_GENERIC\\GEN_SYS\\src\\SysMost/**/*.cpp"
+	let dest_src3="D:\\CASDEV\\CCM_WA\\DPCARSgp\\IMX\\DPCA_iMX\\Delivery\\MMP_GENERIC\\GEN_SYS\\src\\Main/**/*.cpp"
+	"echo a:search_term . ": " dest_src .": " . dest_inc
+	exec "vimgrep /".search_term ."/j ".dest_src1." ".dest_src2." ".dest_src3
+	exec "cw"
+endfunction
+nmap <A-F10> <ESC>:call KnGrepLifeCycleOnly()<CR>
+
 function! KnGrep(search_term)
 	let dest_src="D:\\CASDEV\\CCM_WA\\DPCARSgp\\IMX\\DPCA_iMX\\Delivery\\MMP_GENERIC\\GEN_SYS\\src"
 	let dest_inc="D:\\CASDEV\\CCM_WA\\DPCARSgp\\IMX\\DPCA_iMX\\Delivery\\MMP_GENERIC\\GEN_PUBLIC"
 	"echo a:search_term . ": " dest_src .": " . dest_inc
 	exec "vimgrep /".a:search_term ."/j ".dest_src."/**/*.cpp "
 	"exec "vimgrep /".a:search_term ."/j ".dest_src."/**/*.cpp ".dest_src."**/*.h?? ".dest_inc."**/*.h??"
+	exec "cw"
+endfunction
+
+function! KnGrep2(search_term)
+	let dest_src="D:\\CASDEV\\CCM_WA\\DPCARSgp\\IMX\\DPCA_iMX\\Delivery\\MMP_GENERIC\\GEN_SYS\\src"
+	let dest_inc="D:\\CASDEV\\CCM_WA\\DPCARSgp\\IMX\\DPCA_iMX\\Delivery\\MMP_GENERIC\\GEN_PUBLIC"
+	exec "vimgrep /".a:search_term ."/j ".dest_src."/**/*.cpp ".dest_src."**/*.h?? ".dest_inc."**/*.h??"
 	exec "cw"
 endfunction
 
@@ -1163,7 +1239,7 @@ function! DpcaGrepCurWord()
 	let m = expand("<cword>")
 	call KnGrep(m)
 endfunction
-nmap <A-F12> <ESC>:call DpcaGrepCurWord()<CR>
+"nmap <A-F12> <ESC>:call DpcaGrepCurWord()<CR>
 
 
 
@@ -1172,12 +1248,13 @@ nmap <A-F12> <ESC>:call DpcaGrepCurWord()<CR>
 "===============================================================
 "[ replace ]
 function! Replace_GUI()
-	let newStr=inputdialog("new string to replace word under cursor")
+	let newStr = expand("<cword>")
+	let newStr=inputdialog("new string to replace word under cursor", newStr)
 	if newStr != ""
 		exec "%s/".expand("<cword>")."/".newStr."/gc"
 	endif
 endfunction
-"nmap <A-F12> <Esc>:call Replace_GUI()<CR>
+nmap <A-F12> <Esc>:call Replace_GUI()<CR>
 
 "===============================================================
 "== [ Function ]: replace a list of item with similar prefix
@@ -1437,7 +1514,10 @@ endfunction
 nmap <F8>   :TrinityToggleAll<CR>
 nmap <F9>   :TrinityToggleSourceExplorer<CR>
 "nmap <F10>  :TrinityToggleTagList<CR>
-nmap <F11>  :TrinityToggleNERDTree<CR>
+"nmap <F11>  :TrinityToggleNERDTree<CR>
+nmap <F11>  :NERDTreeToggle<CR>
+let NERDTreeWinPos="right"
+let NERDTreeIgnore=['\.obj', '\~$']
 " // Set the window height of Source Explorer
 let g:SrcExpl_winHeight = 8
 " // Set 100 ms for refreshing the Source Explorer

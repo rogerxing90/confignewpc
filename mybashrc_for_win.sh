@@ -90,8 +90,10 @@ else
 fi
 
 find . -name "*.cpp" -o -name "*.h" -o -name "*.hpp" >> filelist.txt && \
-ctags --sort=foldcase --sort=yes --c++-kinds=+p --fields=+iaS \
-	--extra=+q --language-force=C++ -R -L filelist.txt && \
+#ctags --sort=foldcase --sort=yes --c++-kinds=+p --fields=+iaS \
+#	--extra=+q --language-force=C++ -R -L filelist.txt && \
+ctags --sort=foldcase --sort=yes --fields=+iaS \
+	--language-force=C++ -R -L filelist.txt && \
 rm -rf ./filelist.txt
 }
 
@@ -101,9 +103,9 @@ gentags "$EXTRA_PATH"
 }
 
 function gentagspath(){
-if [ $# -lt 2 ]; then 
+if [ $# -lt 1 ]; then 
 	echo "Please provide path. Application exited."
-	exit
+	return
 fi
 find "$1" -name "*.cpp" -o -name "*.h" > filelist.txt && \
 ctags --sort=foldcase --sort=yes --c++-kinds=+p --fields=+iaS \
