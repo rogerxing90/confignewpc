@@ -93,6 +93,7 @@ class AutoTag:
 			#self.__diag('tagsFile "%s"' % tagsFile)
 			if os.path.isfile(tagsFile):
 				st = os.stat(tagsFile)
+				tagsFile = os.path.normpath(tagsFile)
 				if st:
 					size = getattr(st, 'st_size', None)
 					if size is None:
@@ -123,7 +124,11 @@ class AutoTag:
 			return
 		tagsFile = self.findTagFile(source)
 		if tagsFile:
+			self.__diag("tags files found")
 			relativeSource = source[len(os.path.dirname(tagsFile)):]
+			self.__diag("len=%d", len(os.path.dirname(tagsFile)))
+			self.__diag("Source = %s", source )
+			self.__diag("relativeSource = %s", relativeSource )
 			if relativeSource[0] == os.sep:
 				relativeSource = relativeSource[1:]
 			if os.sep != self.sep_used_by_ctags:
@@ -146,10 +151,10 @@ class AutoTag:
 					print l
 		finally:
 			input.close()
-			try:
-				os.unlink(tagsFile + backup)
-			except StandardError:
-				pass
+			##try:
+			##	os.unlink(tagsFile + backup)
+			##except StandardError:
+			##	pass
 
 	def updateTagsFile(self, tagsFile, sources):
 		tagsDir = os.path.dirname(tagsFile)

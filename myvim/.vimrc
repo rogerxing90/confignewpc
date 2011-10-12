@@ -13,11 +13,6 @@
 "endif
 
 "===============================================================
-" function DESC
-"===============================================================
-"function! SaveSearch(...)     #save global search to register g
-
-"===============================================================
 "== Miscellaneous Set (:h options)
 "===============================================================
 "set filetype=c
@@ -376,6 +371,19 @@ nmap ,vv ?STATIC\\|GLOBAL<CR>
 nmap ,amm :mksession! D:\kn\vim_dpca_session.vim<CR>
 "delete extra space
 nmap ,arr <ESC>:%s/\s\+$\\| \+\ze\t//gc<CR>
+let g:menu_on=0
+function! ToggleMenu()
+	if g:menu_on == 0
+		echo g:menu_on
+		let g:menu_on = 1
+		set guioptions +=m
+	elseif g:menu_on == 1
+		echo g:menu_on
+		let g:menu_on = 0
+		set guioptions -=m
+	endif
+endfunction
+nmap ,agg <ESC>:call ToggleMenu()<CR>
 "nmap ,c :%s/\r//g<CR>
 "nmap \bh i/*<ESC>73A=<ESC>o<C-W>==  @  @<CR>==<CR>==  DESC:<CR>==  USAGE:<CR>==  INPUTS:<CR>==  OUTPUTS:<CR>==  RETURN:<CR>==  IMP NOTE:<CR><ESC>73A=<ESC>a*/<ESC>=8k
 "nmap \bi i/*<ESC>73A=<ESC>o<C-W>==  <CR><ESC>73A=<ESC>a*/<ESC>=1k
@@ -1312,7 +1320,7 @@ function! SaveSearch(...)
 	exe "put g"
 endfunction
 
-vmap <A-S-F10> :exe normal "y"<CR> :call SaveSearch(<C-R>")
+vmap <A-F10> <ESC>:exe "normal! gvy"<CR> :call SaveSearch("<C-R>"")
 
 "===============================================================
 "== [ Function ]: increment last number on filename and open it
@@ -1518,6 +1526,7 @@ nmap <F9>   :TrinityToggleSourceExplorer<CR>
 nmap <F11>  :NERDTreeToggle<CR>
 let NERDTreeWinPos="right"
 let NERDTreeIgnore=['\.obj', '\~$']
+let NERDTreeShowBookmarks="1"
 " // Set the window height of Source Explorer
 let g:SrcExpl_winHeight = 8
 " // Set 100 ms for refreshing the Source Explorer
