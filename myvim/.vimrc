@@ -177,7 +177,7 @@ syn on "syntax on
 set listchars=tab:>-,trail:.,extends:>,eol:-,precedes:<,nbsp:%
 
 "highlight word over 80 columns
-highlight OverLength ctermbg=red ctermfg=white guibg=#592929
+"highlight OverLength ctermbg=red ctermfg=white guibg=#592929
 "match OverLength /\%81v.*/
 
 
@@ -468,6 +468,21 @@ map <C-F3> [I:let nr = input("Which one: ")<Bar>exe "normal " . nr ."[\t"<CR>
 
 "+++++++++++++++++++++++++ FUNCTION +++++++++++++++++++++++++++
 "===============================================================
+"== [ Function ]: KnPrintEnum
+"===============================================================
+function! KnPrintEnum() range
+	let my_num = 0
+	let lineNr = a:firstline
+	while (lineNr <= a:lastline)
+		"echoerr lineNr
+		let curline = "(".my_num.")".getline(lineNr)
+		let my_num = my_num +1
+		call setline(lineNr, curline)
+		let lineNr = lineNr + 1
+	endwhile
+	exe a:firstline.','.a:lastline.' Align )'
+endfunction
+"===============================================================
 "== [ Function ]: KnSaveLog
 "===============================================================
 function! KnSaveLog()
@@ -499,8 +514,9 @@ endfunction
 map <A-g> :call KnSetFunctionComment()<CR>
 
 "===============================================================
-"== [ Function ]: TempDelete
+"== [ Function ]: TempReplacePrototype
 "===============================================================
+"uint16_t aaa::bbb(uint32_t param) { --> uint16_t bbb(uint32_t param);
 function! TempReplacePrototype()
 	let linenum = line(".")
 	:s/\w\+:://
@@ -511,13 +527,16 @@ map <A-q> :call TempReplacePrototype()<CR>
 "===============================================================
 "== [ Function ]: TempDelete
 "===============================================================
-function! TempDelete()
+function! KnTempDelete()
 	exe 'g /OLG\:ModuleLoad/ d'
 	exe 'g /SID/ d'
 	exe 'g /CAN RX/ d'
-	exe 'g /CAN/ d'
+	exe 'g /Module not found/ d'
+	exe 'g /Loaded symbols/ d'
+	exe 'g /.ERR..MSG..HS..TSD/ d'
+	exe 'g /LTPROF:/ d'
 endfunction
-"map <A-q> :call TempDelete()<CR>
+map <A-w> :call KnTempDelete()<CR>
 "===============================================================
 "== [ Function ]: Insert Comment
 "===============================================================
@@ -657,6 +676,41 @@ function! Paste(mode)
     	let &virtualedit = ""
     endif
 endfunction
+
+"===============================================================
+"== [ Function ]: KnLogHighLightToggle
+"===============================================================
+let g:KnLogHighLightToggle = 0
+let g:id1 = 0
+let g:id2 = 0
+function! KnLogHighLight()
+	call KnTempDelete()
+	match Normal /\s\+$\| \+\ze\t \|\%>80v/
+	" clear column 80 highligh
+	set colorcolumn=0
+	if g:KnLogHighLightToggle == 0
+		let g:KnLogHighLightToggle = 1
+		hi OOM   guifg=black  guibg=lightblue   gui=NONE  ctermfg=NONE  ctermbg=NONE  cterm=NONE
+		hi POW   guifg=black  guibg=lightcyan   gui=NONE  ctermfg=NONE  ctermbg=NONE  cterm=NONE
+		hi USR   guifg=black  guibg=lightyellow   gui=NONE  ctermfg=NONE  ctermbg=NONE  cterm=NONE
+		hi SYS   guifg=black  guibg=lightgray   gui=NONE  ctermfg=NONE  ctermbg=NONE  cterm=NONE
+		hi MSG   guifg=black  guibg=lightgreen   gui=NONE  ctermfg=NONE  ctermbg=NONE  cterm=NONE
+		let g:id1 = matchadd("OOM","\\[OOM]")
+		let g:id2 = matchadd("ErrorMsg", "\\[ERR]")
+		let g:id3 = matchadd("POW", "\\[POW]")
+		let g:id4 = matchadd("USR", "\\[USR]")
+		let g:id5 = matchadd("SYS", "\\[SYS]")
+		let g:id6 = matchadd("MSG", "\\(OOM].\\{-}:\\)\\@<=.*")
+	else
+		let g:KnLogHighLightToggle = 0
+		"call matchdelete(g:id1)
+		"call matchdelete(g:id2)
+		call clearmatches()
+	endif
+	exe "normal gg"
+	exe "/POW]"
+endfunction
+nmap <a-l> :call KnLogHighLight()<CR>
 
 "===============================================================
 "== [ Function ]: MatchSpace & match after column 80
@@ -1686,7 +1740,20 @@ function! ProjectFuzzyFind()
   endif
 endfunction
 
-map <A-p> :call ProjectFuzzyFind()<CR>
+function! KnProjectFileFind()
+	if filereadable("D:\\CASDEV\\CCM_WA\\DPCARSgp\\IMX\\DPCA_iMX\\Delivery\\MMP_GENERIC\\allfilelist.txt")
+		let items = readfile("D:\\CASDEV\\CCM_WA\\DPCARSgp\\IMX\\DPCA_iMX\\Delivery\\MMP_GENERIC\\allfilelist.txt")
+		let files = []
+		for n in items
+			call add(files, n)
+		endfor
+	else
+		echoerr "file is not readable, please generate the filelist first"
+	endif
+    call fuf#givenfile#launch('', 0, '>', files)
+endfunction
+
+map <A-p> :call KnProjectFileFind()<CR>
 let g:fuf_maxMenuWidth = 150
 
 " OmniCppComplete
@@ -1892,3 +1959,6 @@ colorscheme ir_black
 "$man ls | ul -i |gvim -    "ul -i remove hard to read command
 
 "----plugin note---
+"temporary 
+"%s/\(.*.MAKECMD. .NOLOGO ..SG_OUTPUT_OAKTGT.*dll\)/# \1/gc
+"

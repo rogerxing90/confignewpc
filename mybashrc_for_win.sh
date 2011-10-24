@@ -1,3 +1,10 @@
+COL_RED="\033[0;31m"
+COL_GREEN="\033[0;32m"
+COL_BLUE="\033[0;34m"
+COL_YELLOW="\033[0;33m"
+COL_RESET="\033[0m"
+COL_UNDERLINE="\033[4m"
+
 alias nn="explorer ."
 alias cdd="cd .."
 alias cdc="cd d: && cd /D/kn/1confignewpc"
@@ -89,12 +96,13 @@ else
 	echo "" > filelist.txt
 fi
 
+echo "current path is ${PWD}"
 find . -name "*.cpp" -o -name "*.h" -o -name "*.hpp" >> filelist.txt && \
 #ctags --sort=foldcase --sort=yes --c++-kinds=+p --fields=+iaS \
 #	--extra=+q --language-force=C++ -R -L filelist.txt && \
 ctags --sort=foldcase --sort=yes --fields=+iaS \
-	--language-force=C++ -R -L filelist.txt && \
-rm -rf ./filelist.txt
+	--language-force=C++ -R -L filelist.txt
+#rm -rf ./filelist.txt
 }
 
 function gentagsdpca(){
@@ -109,8 +117,8 @@ if [ $# -lt 1 ]; then
 fi
 find "$1" -name "*.cpp" -o -name "*.h" > filelist.txt && \
 ctags --sort=foldcase --sort=yes --c++-kinds=+p --fields=+iaS \
-	--extra=+q --language-force=C++ -R -L filelist.txt && \
-rm -rf ./filelist.txt
+	--extra=+q --language-force=C++ -R -L filelist.txt
+#rm -rf ./filelist.txt
 }
 
 function igg(){
@@ -136,6 +144,23 @@ else
 	echo ".gitignore not found"
 	cd $CURRENT_DIR
 fi
+}
+
+################################################################################
+# [ function ]:
+################################################################################
+
+function addfile() {
+	#git ls-files --modified
+	for file in `git ls-files --modified` ; do
+		echo -e "do you want to add ${COL_GREEN}$file${COL_RESET}: "
+		read YESNO
+		if [ $YESNO == "y" -o $YESNO == "Y" ]; then
+			CMD="git add $file"
+			echo $CMD
+			eval $CMD
+		fi
+	done
 }
 
 #set -o vi
