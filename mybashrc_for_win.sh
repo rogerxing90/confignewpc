@@ -115,6 +115,7 @@ if [ $# -lt 1 ]; then
 	echo "Please provide path. Application exited."
 	return
 fi
+#echo "cur=`pwd`; path input: $1" `ls -la filelist.txt`
 find "$1" -name "*.cpp" -o -name "*.h" > filelist.txt && \
 ctags --sort=foldcase --sort=yes --c++-kinds=+p --fields=+iaS \
 	--extra=+q --language-force=C++ -R -L filelist.txt

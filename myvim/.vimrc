@@ -465,6 +465,7 @@ nnoremap <MiddleMouse> :exe "/". expand("<cword>")<CR>
 "[ D       #display first macro definition
 "list matches, and then select one to jump to (like global with a choice!)
 map <C-F3> [I:let nr = input("Which one: ")<Bar>exe "normal " . nr ."[\t"<CR>
+nmap <A-d> :1<Bar>/#include<CR>
 
 "+++++++++++++++++++++++++ FUNCTION +++++++++++++++++++++++++++
 "===============================================================
@@ -499,15 +500,15 @@ map <A-h> :call KnSaveLog()<CR>
 "example: AAA:AAA (BBB CCC* DDD) ===> //#[ operation AAA (BBB ...*)
 function! KnSetFunctionComment()
 	let curline = getline('.')
-	let substr = matchlist(curline, '\S\+::\(\S\+\) *\((*[^)]\{-}\) *\S*)\{-}')
-	let mytext = "//#[ operation "
+	let substr = matchlist(curline, '\S\+::\(\S\+\) *\([^,)]\{-}\) \S\+')
+	let mytext = "//#[ operation"
 	for n in substr[1:]
 		if n !=""
-			let mytext = mytext.n
+			let mytext = mytext." ".n
 		endif
 	endfor
 	let mytext = mytext.")"
-	let @+="\n\t".mytext."\n\t//#]"
+	let @+="\t".mytext."\n\t//#]"
 	echo mytext
 	"echo substr
 endfunction
@@ -1740,7 +1741,7 @@ function! ProjectFuzzyFind()
   endif
 endfunction
 
-function! KnProjectFileFind()
+function! KnProjectFileFind(givenname)
 	if filereadable("D:\\CASDEV\\CCM_WA\\DPCARSgp\\IMX\\DPCA_iMX\\Delivery\\MMP_GENERIC\\allfilelist.txt")
 		let items = readfile("D:\\CASDEV\\CCM_WA\\DPCARSgp\\IMX\\DPCA_iMX\\Delivery\\MMP_GENERIC\\allfilelist.txt")
 		let files = []
@@ -1750,11 +1751,43 @@ function! KnProjectFileFind()
 	else
 		echoerr "file is not readable, please generate the filelist first"
 	endif
+
+	"let fileToOpen = "oom"
+	"if a:givenname != ""
+	"	let fileToOpen = a:givenname
+	"endif
     call fuf#givenfile#launch('', 0, '>', files)
+    "call fuf#givenfile#launch(fileToOpen, 0, '>', files)
 endfunction
 
-map <A-p> :call KnProjectFileFind()<CR>
+map <A-p> :call KnProjectFileFind("")<CR>
 let g:fuf_maxMenuWidth = 150
+
+function! KnOpenCompileError()
+	let fileNameLineNum=inputdialog("Syntax:FilenameToOpen(lineNumber)")
+	let substr = matchlist(fileNameLineNum, '\(\S\+\)(\(\d\+\))')
+	let filename=substr[1]
+	let lineNumber=substr[2]
+	"let @+=filename
+	"echo filename
+	"echo lineNumber
+	if filereadable("D:\\CASDEV\\CCM_WA\\DPCARSgp\\IMX\\DPCA_iMX\\Delivery\\MMP_GENERIC\\allfilelist.txt")
+		let items = readfile("D:\\CASDEV\\CCM_WA\\DPCARSgp\\IMX\\DPCA_iMX\\Delivery\\MMP_GENERIC\\allfilelist.txt")
+		for n in items
+			let matchfile = matchlist(n, filename)
+			if matchfile != []
+				break
+			endif
+		endfor
+		if matchfile != []
+			"echoerr n
+			exe "e ". n
+			call cursor(lineNumber, 0)
+		endif
+	endif
+	exe "normal " .lineNumber."G"
+endfunction
+map <A-u> :call KnOpenCompileError()<CR>
 
 " OmniCppComplete
 let OmniCpp_NamespaceSearch = 1
