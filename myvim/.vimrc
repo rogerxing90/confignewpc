@@ -469,6 +469,17 @@ nmap <A-d> :1<Bar>/#include<CR>
 
 "+++++++++++++++++++++++++ FUNCTION +++++++++++++++++++++++++++
 "===============================================================
+"== [ Function ]: KnSetMidLinePos
+"===============================================================
+function! KnSetMidLinePos()
+	let cur_col = col("$")
+	let mid_col = cur_col / 2
+	let cur_line = line(".")
+	call cursor(cur_line, mid_col)
+endfunction
+nnoremap ,fmid :call KnSetMidLinePos()<CR>
+
+"===============================================================
 "== [ Function ]: KnPrintEnum
 "===============================================================
 function! KnPrintEnum() range
