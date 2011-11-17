@@ -59,6 +59,8 @@ set ruler              "display cursor position
 "set formatoptions=tqbcwan
 "set formatoptions +=2           "paragraph format(start with xx....)g`
 "set guitablabel
+set guitablabel=%t
+"set guitablabel=%f				" full path, check statusline for more options
 "set completeopt=menu, preview
 " normally don't automatically format `text' as it is typed, i.e. only do this
 " with comments, at 79 characters:
@@ -469,15 +471,44 @@ nmap <A-d> :1<Bar>/#include<CR>
 
 "+++++++++++++++++++++++++ FUNCTION +++++++++++++++++++++++++++
 "===============================================================
+"== [ Function ]: KnVisualSelectCommentBlock
+"===============================================================
+function! KnPrintComment()
+	let comment  = [
+				\'/**',
+				\' * \brief',
+				\' *',
+				\' * \param [in]',
+				\' *',
+				\' * \return None',
+				\' */' ]
+	for n in comment
+		exe "normal o"
+		call setline(getpos(".")[1],n)
+	endfor
+endfunction
+"===============================================================
+"== [ Function ]: KnVisualSelectCommentBlock
+"===============================================================
+function! KnVisualSelectCommentBlock()
+	exe "normal [*"
+	exe "normal v"
+	exe "normal ]*"
+endfunction
+nnoremap ,vc :call KnVisualSelectCommentBlock()<CR>
+
+"===============================================================
 "== [ Function ]: KnSetMidLinePos
 "===============================================================
 function! KnSetMidLinePos()
-	let cur_col = col("$")
-	let mid_col = cur_col / 2
+	let end_col = col("$")
+	let cur_col = col(".")
+	let mid_col = (end_col - cur_col) / 2 + cur_col
+	echo "e=".end_col.";c=".cur_col."m=".mid_col
 	let cur_line = line(".")
 	call cursor(cur_line, mid_col)
 endfunction
-nnoremap ,fmid :call KnSetMidLinePos()<CR>
+nnoremap ,fm :call KnSetMidLinePos()<CR>
 
 "===============================================================
 "== [ Function ]: KnPrintEnum
@@ -533,6 +564,7 @@ function! TempReplacePrototype()
 	let linenum = line(".")
 	:s/\w\+:://
 	:s/ *{/;/
+	:exe 'normal =='
 endfunction
 map <A-q> :call TempReplacePrototype()<CR>
 
@@ -1777,26 +1809,29 @@ let g:fuf_maxMenuWidth = 150
 function! KnOpenCompileError()
 	let fileNameLineNum=inputdialog("Syntax:FilenameToOpen(lineNumber)")
 	let substr = matchlist(fileNameLineNum, '\(\S\+\)(\(\d\+\))')
-	let filename=substr[1]
-	let lineNumber=substr[2]
-	"let @+=filename
-	"echo filename
-	"echo lineNumber
-	if filereadable("D:\\CASDEV\\CCM_WA\\DPCARSgp\\IMX\\DPCA_iMX\\Delivery\\MMP_GENERIC\\allfilelist.txt")
-		let items = readfile("D:\\CASDEV\\CCM_WA\\DPCARSgp\\IMX\\DPCA_iMX\\Delivery\\MMP_GENERIC\\allfilelist.txt")
-		for n in items
-			let matchfile = matchlist(n, filename)
+	echo "len of array = ". len(substr)
+	if len(substr) >= 2
+		let filename=substr[1]
+		let lineNumber=substr[2]
+		"let @+=filename
+		"echo filename
+		"echo lineNumber
+		if filereadable("D:\\CASDEV\\CCM_WA\\DPCARSgp\\IMX\\DPCA_iMX\\Delivery\\MMP_GENERIC\\allfilelist.txt")
+			let items = readfile("D:\\CASDEV\\CCM_WA\\DPCARSgp\\IMX\\DPCA_iMX\\Delivery\\MMP_GENERIC\\allfilelist.txt")
+			for n in items
+				let matchfile = matchlist(n, filename)
+				if matchfile != []
+					break
+				endif
+			endfor
 			if matchfile != []
-				break
+				"echoerr n
+				exe "e ". n
+				call cursor(lineNumber, 0)
 			endif
-		endfor
-		if matchfile != []
-			"echoerr n
-			exe "e ". n
-			call cursor(lineNumber, 0)
 		endif
+		exe "normal " .lineNumber."G"
 	endif
-	exe "normal " .lineNumber."G"
 endfunction
 map <A-u> :call KnOpenCompileError()<CR>
 
@@ -1864,7 +1899,7 @@ nnoremap <silent> <F10> :YRShow<CR>
 "===============================================================
 "== Plugin: FuzzyFinder
 "===============================================================
-nnoremap <silent> ,f     :FufFile<CR>
+nnoremap <silent> ,ff     :FufFile<CR>
 nnoremap <silent> ,ob     :FufBuffer<CR>
 nnoremap <silent> ,od     :FufDir<CR>
 
