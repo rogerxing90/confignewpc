@@ -246,6 +246,9 @@ inoremap <A-j> <C-X><C-O>
 "== Ungrouped Mapping
 "===============================================================
 "//---------------------------------- normal mapping start //
+nmap ,ct :tabc<CR>
+nmap ,cp :tabp<CR>
+nmap ,cn :tabn<CR>
 nmap :W :w
 nmap <A-0> :only<cr>
 "save file
@@ -487,6 +490,8 @@ function! KnPrintComment()
 		call setline(getpos(".")[1],n)
 	endfor
 endfunction
+map <A-g> :call KnPrintComment()<CR>
+
 "===============================================================
 "== [ Function ]: KnVisualSelectCommentBlock
 "===============================================================
@@ -494,6 +499,8 @@ function! KnVisualSelectCommentBlock()
 	exe "normal [*"
 	exe "normal v"
 	exe "normal ]*"
+	"exe "normal <"
+	exe "normal gv"
 endfunction
 nnoremap ,vc :call KnVisualSelectCommentBlock()<CR>
 
@@ -554,7 +561,7 @@ function! KnSetFunctionComment()
 	echo mytext
 	"echo substr
 endfunction
-map <A-g> :call KnSetFunctionComment()<CR>
+map <A-q> :call KnSetFunctionComment()<CR>
 
 "===============================================================
 "== [ Function ]: TempReplacePrototype
@@ -566,7 +573,7 @@ function! TempReplacePrototype()
 	:s/ *{/;/
 	:exe 'normal =='
 endfunction
-map <A-q> :call TempReplacePrototype()<CR>
+"map <A-q> :call TempReplacePrototype()<CR>
 
 "===============================================================
 "== [ Function ]: TempDelete
@@ -600,6 +607,11 @@ inoremap ,ag //#[ ignore<CR>//#]<ESC>k
 "nmap <C-K> :3wincmd w<CR>
 "nmap <C-J> :2wincmd w<CR>
 "nmap <C-H> :1wincmd w<CR> "conflicts with toggle highlight
+nmap ,1 :1wincmd w<CR>
+nmap ,2 :2wincmd w<CR>
+nmap ,3 :3wincmd w<CR>
+nmap ,4 :4wincmd w<CR>
+nmap ,5 :5wincmd w<CR>
 "if has('win32')
 nmap <M-z> :call SwitchPrevWin()<CR>
 imap <M-z> <ESC>:call SwitchPrevWin()<CR>
@@ -739,11 +751,11 @@ function! KnLogHighLight()
 		hi USR   guifg=black  guibg=lightyellow   gui=NONE  ctermfg=NONE  ctermbg=NONE  cterm=NONE
 		hi SYS   guifg=black  guibg=lightgray   gui=NONE  ctermfg=NONE  ctermbg=NONE  cterm=NONE
 		hi MSG   guifg=black  guibg=lightgreen   gui=NONE  ctermfg=NONE  ctermbg=NONE  cterm=NONE
-		let g:id1 = matchadd("OOM","\\[OOM]")
+		let g:id1 = matchadd("OOM","\\[LCM")
 		let g:id2 = matchadd("ErrorMsg", "\\[ERR]")
 		let g:id3 = matchadd("POW", "\\[POW]")
 		let g:id4 = matchadd("USR", "\\[USR]")
-		let g:id5 = matchadd("SYS", "\\[SYS]")
+		let g:id5 = matchadd("SYS", "\\[SYSOOM")
 		let g:id6 = matchadd("MSG", "\\(OOM].\\{-}:\\)\\@<=.*")
 	else
 		let g:KnLogHighLightToggle = 0
@@ -1979,6 +1991,32 @@ endif
 
 "colorscheme mycolor
 colorscheme ir_black
+
+
+"===============================================================
+"== [ web ] Strikethrough
+"===============================================================
+"if has("multi_byte")
+"  if &termencoding == ""
+"    let &termencoding = &encoding
+"  endif
+"  set encoding=utf-8
+"  setglobal fileencoding=utf-8
+"  "setglobal bomb
+"  set fileencodings=ucs-bom,utf-8,latin1
+"endif
+"
+"" modify selected text using combining diacritics
+"command! -range -nargs=0 Overline        call s:CombineSelection(<line1>, <line2>, '0305')
+"command! -range -nargs=0 Underline       call s:CombineSelection(<line1>, <line2>, '0332')
+"command! -range -nargs=0 DoubleUnderline call s:CombineSelection(<line1>, <line2>, '0333')
+"command! -range -nargs=0 Strikethrough   call s:CombineSelection(<line1>, <line2>, '0336')
+"
+"function! s:CombineSelection(line1, line2, cp)
+"  execute 'let char = "\u'.a:cp.'"'
+"  execute a:line1.','.a:line2.'s/\%V[^[:cntrl:]]/&'.char.'/ge'
+"endfunction
+
 "+++++++++++++++++++++++++ Reference ++++++++++++++++++++++++++
 "===============================================================
 "== Reference MY
