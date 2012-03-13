@@ -23,7 +23,8 @@ alias lsaa="ls -ctrla | grep -v 4096 | grep -v 65 | tail -n-1"
 alias lsa5="ls -ctrla | grep -v 4096 | grep -v 65 | tail -n-5"
 VIM_SERVER="hp"
 alias g="gvim --servername $VIM_SERVER --remote --remote-silent"
-alias mydate="CMD='date +_%d%B%y_%I%M%p'; echo $CMD ; eval $CMD"
+#alias mydate="CMD='date +_%d%B%y_%I%M%p'; echo $CMD ; eval $CMD"
+alias mydate="echo `date +_%d%B%y_%I%M%p`"
 
 
 ## copied from mybashrc
@@ -119,7 +120,7 @@ if [ $# -lt 1 ]; then
 	echo "Please provide path. Application exited."
 	return
 fi
-echo "cur=`pwd`; path input: $1" `ls -la filelist.txt`
+echo "cur=`pwd`; path input: $1"
 find "$1" -name "*.cpp" -o -name "*.h" -o -name "*.hpp" > filelist.txt && \
 ctags --sort=foldcase --sort=yes --c++-kinds=+p --fields=+iaS \
 	--extra=+q --language-force=C++ -R -L filelist.txt
@@ -166,6 +167,25 @@ function addfile() {
 			eval $CMD
 		fi
 	done
+}
+
+### need to provide
+## e.g. FNAME="`date +%d%B%y_%I%M%p`.tar"
+function backupfile() {
+	SOURCE_FILENAME="$1"
+	DESTINATION_FILENAME="$2"
+	SOURCE_DIR="$3"
+	DESTINATION_FULL_PATH="$4"
+	TAR_FILENAME=${SOURCE_DIR}"_"${DESTINATION_FILENAME}
+
+	pushd $SOURCE_DIR > /dev/null
+	echo "\n\n###      tar $SOURCE_FILENAME from $SOURCE_DIR      ###"
+	tar -cvf $TAR_FILENAME $SOURCE_FILENAME
+	mkdir -p $DESTINATION_FULL_PATH
+	echo "\n### moving     $TAR_FILENAME to $DESTINATION_FULL_PATH    ###"
+	mv $TAR_FILENAME $DESTINATION_FULL_PATH
+	popd > /dev/null
+
 }
 
 #set -o vi

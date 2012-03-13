@@ -115,6 +115,7 @@ set colorcolumn=80
 "noremap <M-Space> :simalt ~<CR>
 "inoremap <M-Space> <C-O>:simalt ~<CR>
 "cnoremap <M-Space> <C-C>:simalt ~<CR>
+"set titlestring=doc name
 
 ""Set mapleader
 "let mapleader = ","
@@ -246,9 +247,9 @@ inoremap <A-j> <C-X><C-O>
 "== Ungrouped Mapping
 "===============================================================
 "//---------------------------------- normal mapping start //
-nmap ,ct :tabc<CR>
-nmap ,cp :tabp<CR>
-nmap ,cn :tabn<CR>
+nnoremap ,ct :tabc<CR>
+nnoremap ,cp :tabp<CR>
+nnoremap ,cn :tabn<CR>
 nmap :W :w
 nmap <A-0> :only<cr>
 "save file
@@ -373,7 +374,6 @@ nmap ,d :e main.c<bar>%s#//\(while(i);\)# \1<CR>
 "nmap ,n :b main<bar>%s#[^/]\(while(i);\)#//\1<CR>
 nmap ,u :%s/.*EV (\(.\{-}\),\(.\{-}\)).*/const UWord16 \1_\2 = 0x000;/g<CR>
 nmap ,vv ?STATIC\\|GLOBAL<CR>
-nmap ,amm :mksession! D:\kn\vim_dpca_session.vim<CR>
 "delete extra space
 nmap ,arr <ESC>:%s/\s\+$\\| \+\ze\t//gc<CR>
 let g:menu_on=0
@@ -381,7 +381,7 @@ function! ToggleMenu()
 	if g:menu_on == 0
 		echo g:menu_on
 		let g:menu_on = 1
-		set guioptions +=m
+		set gauioptions +=m
 	elseif g:menu_on == 1
 		echo g:menu_on
 		let g:menu_on = 0
@@ -396,6 +396,14 @@ nmap \bh i/*=<ESC>74A=<ESC>o<C-W>==  @  @<CR>==<CR>==  DESC:<CR>==  USAGE:<CR>==
 nmap \bi i/*=<ESC>74A=<ESC>o<C-W>==  <CR><ESC>75A=<ESC>a*/<ESC>=1k
 nmap \bj i/*+++++++++++++++++++++++++++++++++<  >++++++++++++++++++++++++++++++++*/<ESC>F<l
 nmap \bk i// -------------------------------------------  //<ESC>==F-3l
+function! AddCurrentPath()
+	let cur_inc_dir=expand('%:p:h')."/../inc"
+	let cur_inc_dir_p=substitute(cur_inc_dir, " ", '\\ ', "g")
+	echo cur_inc_dir_p
+	exe "set path+=". cur_inc_dir_p
+	"echo &path
+endfunction
+nmap ,aaa :call AddCurrentPath()<CR>
 
 "//---------------------------------- title comment start //
 "nmap ;/ i// --  -- //<esc>2F-hi
@@ -470,7 +478,8 @@ nnoremap <MiddleMouse> :exe "/". expand("<cword>")<CR>
 "[ D       #display first macro definition
 "list matches, and then select one to jump to (like global with a choice!)
 map <C-F3> [I:let nr = input("Which one: ")<Bar>exe "normal " . nr ."[\t"<CR>
-nmap <A-d> :1<Bar>/#include<CR>
+"nmap <A-d> :1<Bar>/#include<CR>
+nmap <A-d> :call cursor("$",1)<Bar>call search("#include", "b")<CR>
 
 "+++++++++++++++++++++++++ FUNCTION +++++++++++++++++++++++++++
 "===============================================================
@@ -536,7 +545,7 @@ endfunction
 "== [ Function ]: KnSaveLog
 "===============================================================
 function! KnSaveLog()
-    let name = inputdialog("filename")
+    let name = inputdialog("give filename to be saved")
 	if name != ""
 		let filename = "D:\\kn\\00_project\\02_dpca_new\\00_output_log\\".name
 		exe 'w '.filename."_".strftime("%d%b%Y_%H%M%p").".txt"
@@ -568,10 +577,13 @@ map <A-q> :call KnSetFunctionComment()<CR>
 "===============================================================
 "uint16_t aaa::bbb(uint32_t param) { --> uint16_t bbb(uint32_t param);
 function! TempReplacePrototype()
-	let linenum = line(".")
-	:s/\w\+:://
-	:s/ *{/;/
-	:exe 'normal =='
+	"let linenum = line(".")
+	":s/\w\+:://
+	":s/ *{/;/
+	"	"change CAST(xxx) --> static_cast<xxx>
+	:%s/CAST(\([[:graph:]]\{-}\))/static_cast<\1>/gc
+	:%s/NULL/0/gc
+	":exe 'normal =='
 endfunction
 "map <A-q> :call TempReplacePrototype()<CR>
 
@@ -586,6 +598,8 @@ function! KnTempDelete()
 	exe 'g /Loaded symbols/ d'
 	exe 'g /.ERR..MSG..HS..TSD/ d'
 	exe 'g /LTPROF:/ d'
+	exe 'g /CamApp_CaptureThread/ d'
+	exe 'g /PID.*TID:/ d'
 endfunction
 map <A-w> :call KnTempDelete()<CR>
 "===============================================================
@@ -1325,9 +1339,11 @@ function! KnGrepLifeCycleOnly()
 	let dest_src1="D:\\CASDEV\\CCM_WA\\DPCARSgp\\IMX\\DPCA_iMX\\Delivery\\MMP_GENERIC\\GEN_SYS\\src\\Lifecycle/**/*.cpp"
 	let dest_src2="D:\\CASDEV\\CCM_WA\\DPCARSgp\\IMX\\DPCA_iMX\\Delivery\\MMP_GENERIC\\GEN_SYS\\src\\SysMost/**/*.cpp"
 	let dest_src3="D:\\CASDEV\\CCM_WA\\DPCARSgp\\IMX\\DPCA_iMX\\Delivery\\MMP_GENERIC\\GEN_SYS\\src\\Main/**/*.cpp"
+	let dest_src4="D:\\CASDEV\\CCM_WA\\DPCARSgp\\IMX\\DPCA_iMX\\Delivery\\MMP_GENERIC\\GEN_SYS\\src\\FailureHandler/**/*.cpp"
 	"echo a:search_term . ": " dest_src .": " . dest_inc
-	exec "vimgrep /".search_term ."/j ".dest_src1." ".dest_src2." ".dest_src3
+	exec "vimgrep /".search_term ."/j ".dest_src1." ".dest_src2." ".dest_src3. " ". dest_src4
 	exec "cw"
+	exec "normal /".search_term
 endfunction
 nmap <A-F10> <ESC>:call KnGrepLifeCycleOnly()<CR>
 
@@ -1430,7 +1446,7 @@ function! SaveSearch(...)
 	exe "put g"
 endfunction
 
-vmap <A-F10> <ESC>:exe "normal! gvy"<CR> :call SaveSearch("<C-R>"")
+vmap <A-F7> <ESC>:exe "normal! gvy"<CR> :call SaveSearch("<C-R>"")
 
 "===============================================================
 "== [ Function ]: increment last number on filename and open it
@@ -1819,7 +1835,7 @@ map <A-p> :call KnProjectFileFind("")<CR>
 let g:fuf_maxMenuWidth = 150
 
 function! KnOpenCompileError()
-	let fileNameLineNum=inputdialog("Syntax:FilenameToOpen(lineNumber)")
+	let fileNameLineNum=inputdialog("Syntax: FilenameToOpen(lineNumber)")
 	let substr = matchlist(fileNameLineNum, '\(\S\+\)(\(\d\+\))')
 	echo "len of array = ". len(substr)
 	if len(substr) >= 2
@@ -1840,9 +1856,15 @@ function! KnOpenCompileError()
 				"echoerr n
 				exe "e ". n
 				call cursor(lineNumber, 0)
+			else
+				echoerr "no match in allfilelist"
 			endif
+		else
+			echoerr "allfilelist is not readable"
 		endif
 		exe "normal " .lineNumber."G"
+	else
+		echoerr "matched str is wrong (s=)". substr
 	endif
 endfunction
 map <A-u> :call KnOpenCompileError()<CR>
@@ -2079,3 +2101,5 @@ colorscheme ir_black
 "temporary 
 "%s/\(.*.MAKECMD. .NOLOGO ..SG_OUTPUT_OAKTGT.*dll\)/# \1/gc
 "
+"
+nmap <F6> :exe "/SYSOOM\\\|POW]\\\|USR]\\\|SYSMAIN\\\|SYSOOM\\\|IPC]"<CR>
