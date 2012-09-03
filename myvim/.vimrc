@@ -29,7 +29,7 @@ set guioptions-=m     "hide menubar
 set confirm        "Raise a confirm dialog for changed buffer
 set shiftwidth=4
 set tabstop=4       "after set to a new value, use retab to replace old to new tabstop value
-"set expandtab
+set expandtab
 "set linebreak        "enable breakat
 set visualbell        "set vb t_vb=on "visual bell
 "set noerrorbells
@@ -366,6 +366,7 @@ vmap sb "zdi<b><C-R>z</b><Esc>
 "note: 	:set paste		-		to prevent messy paste
 
 "//---------------------------------- temporary mapping start //
+noremap <A-q> <ESC>:q<CR>
 iabbr nnn "note:<Tab>
 nmap \bf /8[[:digit:]]\{6}[0-9a-zA-Z]<cr>
 "nmap \bd :%s#//\(\#define ENABLE_DEBUG\)#\1<CR>
@@ -482,6 +483,85 @@ map <C-F3> [I:let nr = input("Which one: ")<Bar>exe "normal " . nr ."[\t"<CR>
 nmap <A-d> :call cursor("$",1)<Bar>call search("#include", "b")<CR>
 
 "+++++++++++++++++++++++++ FUNCTION +++++++++++++++++++++++++++
+"obj: DPCA log and trace sorting
+"sort /^.\{-}]\ze \d\{8}/n
+
+function! KnGetStartEnd(search_term)
+    "cursor position must be at the beginning of desired line
+    let end_line = 0
+    let [start_line, end_col] = searchpos(a:search_term, "W")
+    "echo "start_line = ". start_line
+    if (start_line != 0)
+        "move cursor to next line so that not start searching again from same line
+        call cursor(start_line+1,0)
+        let [end_line, end_col] = searchpos(a:search_term, "W")
+    endif
+    return [start_line, end_line]
+endfunction
+
+function! KnSortTime()
+    " take down the current line text, will be jump to this line again at the end
+    "let cur_line_text = getline(".")
+    "" set to first line
+	call cursor(0, 0)
+    let begin_time_line = 1
+    let continue_loop = 1
+    let [ start_line, end_line ] = KnGetStartEnd("default_hwinfo")
+    echo "start = ". start_line . " ; end_line = " . end_line
+    while (continue_loop)
+        if (start_line != 0)
+            if (start_line != begin_time_line)
+                "find if any log before this life cycle
+                call cursor(begin_time_line, 0)
+                let search_result_start = search('^.\{-}]\ze \d\{8}', '', start_line)
+                let search_result_end = search('^.\{-}]\ze \d\{8}', 'b', start_line)
+            endif
+        else
+        endif
+    endwhile
+    "" search for the line when log timer started
+    "let search_result = 1
+    "let begin = 1
+    "let total_lifecycle = 1
+    "while (search_result)
+    "    "get the start of next life cycle, we will search from beginning
+    "    "of a life cycle till next life cycle
+    "    let [end_line, end_col] = searchpos("default_hwinfo")
+    "    echo "end_line = ".end_line
+    "    if (end_line != 0 )
+    "        " there is more than one life cycle in this log
+    "        " we will first sort the time of previous life cycle
+    "        call cursor(end_line, 0)
+    "        let search_result = search('^.\{-}]\ze \d\{8}', 'b', end_line)
+    "        let total_lifecycle = total_lifecycle+1
+    "    else
+    "        " there is no more lifecycle in this log
+    "        call cursor(begin_line, 0)
+    "        let search_result = search('^.\{-}]\ze \d\{8}')
+    "    endif
+    "    "let search_result = search('^.\{-}]\ze \d\{8}')
+    "    "let line_found = getline(".")
+    "    "let time_extract = matchstr(line_found, ' \d\{8}', 12)
+    "endwhile
+    ""echo time_extract
+    "echo "total life cycle found = " . total_lifecycle
+endfunction
+
+
+
+
+function! KnGenerateTable() 
+    "search for "[ PR" which does not start with number or COMPLETED ]
+    let line_toc_begin = search('Table of Content - Start')+1
+    let line_toc_end = search('Table of Content - End')-1
+    exe ":". line_toc_begin. "," .line_toc_end ." d"
+    let cursor_line = line_toc_begin-1
+    echo "start = ". line_toc_begin . "; end = ". line_toc_end . "; cursor_line = ". cursor_line
+    call cursor(cursor_line, 1)
+	call SaveSearch('\(\([0-9]* \)\|\([0-9]* [ COMPLETED ]\)\)\@<!\([ PR \)', cursor_line)<CR>
+    "exe 'normal "gp'
+endfunction
+
 "===============================================================
 "== [ Function ]: KnVisualSelectCommentBlock
 "===============================================================
@@ -570,7 +650,7 @@ function! KnSetFunctionComment()
 	echo mytext
 	"echo substr
 endfunction
-map <A-q> :call KnSetFunctionComment()<CR>
+"map <A-q> :call KnSetFunctionComment()<CR>
 
 "===============================================================
 "== [ Function ]: TempReplacePrototype
@@ -578,14 +658,15 @@ map <A-q> :call KnSetFunctionComment()<CR>
 "uint16_t aaa::bbb(uint32_t param) { --> uint16_t bbb(uint32_t param);
 function! TempReplacePrototype()
 	"let linenum = line(".")
-	":s/\w\+:://
+	:s/\w\+:://
+	:s/$/;/
 	":s/ *{/;/
 	"	"change CAST(xxx) --> static_cast<xxx>
-	:%s/CAST(\([[:graph:]]\{-}\))/static_cast<\1>/gc
-	:%s/NULL/0/gc
+	":%s/CAST(\([[:graph:]]\{-}\))/static_cast<\1>/gc
+	":%s/NULL/0/gc
 	":exe 'normal =='
 endfunction
-"map <A-q> :call TempReplacePrototype()<CR>
+"nnoremap <A-q> :call TempReplacePrototype()<CR>
 
 "===============================================================
 "== [ Function ]: TempDelete
@@ -606,7 +687,7 @@ map <A-w> :call KnTempDelete()<CR>
 "== [ Function ]: Insert Comment
 "===============================================================
 "nnoremap ,ai <Esc>i/**<CR>* \brief<CR>*<CR>* \param None<CR>*<CR>* \return None<CR>*/<Esc>==?brief<CR>
-inoremap ,ai /**<CR>\brief<CR><CR>\param None<CR><CR>\return None<CR>*/<Esc>==?brief<CR>
+inoremap ,ai /**<CR>\brief<CR><CR>\param<CR><CR>\return<CR>*/<Esc>==?brief<CR>
 "nnoremap ,ak <Esc>i/**  */<Esc>==F i
 inoremap ,ak /**  */<Esc>F i
 inoremap ,ag //#[ ignore<CR>//#]<ESC>k
@@ -754,31 +835,43 @@ let g:KnLogHighLightToggle = 0
 let g:id1 = 0
 let g:id2 = 0
 function! KnLogHighLight()
-	call KnTempDelete()
+	"call KnTempDelete()
 	match Normal /\s\+$\| \+\ze\t \|\%>80v/
 	" clear column 80 highligh
 	set colorcolumn=0
 	if g:KnLogHighLightToggle == 0
+        echo "highligh on"
 		let g:KnLogHighLightToggle = 1
 		hi OOM   guifg=black  guibg=lightblue   gui=NONE  ctermfg=NONE  ctermbg=NONE  cterm=NONE
 		hi POW   guifg=black  guibg=lightcyan   gui=NONE  ctermfg=NONE  ctermbg=NONE  cterm=NONE
 		hi USR   guifg=black  guibg=lightyellow   gui=NONE  ctermfg=NONE  ctermbg=NONE  cterm=NONE
 		hi SYS   guifg=black  guibg=lightgray   gui=NONE  ctermfg=NONE  ctermbg=NONE  cterm=NONE
 		hi MSG   guifg=black  guibg=lightgreen   gui=NONE  ctermfg=NONE  ctermbg=NONE  cterm=NONE
-		let g:id1 = matchadd("OOM","\\[LCM")
+		"let g:id1 = matchadd("OOM","\\[LCM")
+		"let g:id2 = matchadd("ErrorMsg", "\\[ERR]")
+		"let g:id3 = matchadd("POW", "\\[POW]")
+		"let g:id4 = matchadd("USR", "\\[USR]")
+		"let g:id5 = matchadd("SYS", "\\[SYSOOM")
+		"let g:id6 = matchadd("MSG", "\\(OOM].\\{-}:\\)\\@<=.*")
 		let g:id2 = matchadd("ErrorMsg", "\\[ERR]")
-		let g:id3 = matchadd("POW", "\\[POW]")
-		let g:id4 = matchadd("USR", "\\[USR]")
-		let g:id5 = matchadd("SYS", "\\[SYSOOM")
-		let g:id6 = matchadd("MSG", "\\(OOM].\\{-}:\\)\\@<=.*")
+		let g:id7 = matchadd("ErrorMsg", "REBOOT")
+		let g:id8 = matchadd("ErrorMsg", "Data Abort")
+		let g:id8 = matchadd("ErrorMsg", "xception")
+		let g:id9 = matchadd("MSG", "default_hwinfo")
+		let g:id10 = matchadd("POW", "goHmiActive")
+		let g:id11 = matchadd("POW", "goPendingDown")
+		let g:id20 = matchadd("POW", "idle()")
+		let g:id20 = matchadd("POW", "pendingRestart()")
+		let g:id12 = matchadd("USR", "entSysOom[[:graph:]]*")
 	else
+        echo "highligh off"
 		let g:KnLogHighLightToggle = 0
 		"call matchdelete(g:id1)
 		"call matchdelete(g:id2)
 		call clearmatches()
 	endif
-	exe "normal gg"
-	exe "/POW]"
+	"exe "normal gg"
+	"exe "/POW]"
 endfunction
 nmap <a-l> :call KnLogHighLight()<CR>
 
@@ -1089,6 +1182,10 @@ function! KnFold()
    set foldmethod=syntax
    execute "normal zM"
 endfunction
+
+function! FoldNotFound()
+	set foldmethod=manual
+endfunction
 "
 "===============================================================
 "== [ Function ]: Folding inside the function [knng]
@@ -1340,8 +1437,12 @@ function! KnGrepLifeCycleOnly()
 	let dest_src2="D:\\CASDEV\\CCM_WA\\DPCARSgp\\IMX\\DPCA_iMX\\Delivery\\MMP_GENERIC\\GEN_SYS\\src\\SysMost/**/*.cpp"
 	let dest_src3="D:\\CASDEV\\CCM_WA\\DPCARSgp\\IMX\\DPCA_iMX\\Delivery\\MMP_GENERIC\\GEN_SYS\\src\\Main/**/*.cpp"
 	let dest_src4="D:\\CASDEV\\CCM_WA\\DPCARSgp\\IMX\\DPCA_iMX\\Delivery\\MMP_GENERIC\\GEN_SYS\\src\\FailureHandler/**/*.cpp"
+    let dest_src5="D:\\CASDEV\\WinCE\\public\\MMP_PROD\\QA\\GEN_SYS\\LifeCycle/**/*.cpp"
 	"echo a:search_term . ": " dest_src .": " . dest_inc
-	exec "vimgrep /".search_term ."/j ".dest_src1." ".dest_src2." ".dest_src3. " ". dest_src4
+    let my_search="vimgrep /".search_term ."/j ".dest_src1." ".dest_src2." ".dest_src3. " ". dest_src4
+    let my_search=my_search." ".dest_src5
+    exec my_search
+	"exec "vimgrep /".search_term ."/j ".dest_src1." ".dest_src2." ".dest_src3. " ". dest_src4
 	exec "cw"
 	exec "normal /".search_term
 endfunction
@@ -1376,6 +1477,17 @@ endfunction
 "nmap <A-F12> <ESC>:call DpcaGrepCurWord()<CR>
 
 
+function! KnSearchCurrentDoc()
+    let search_term = inputdialog("search term")
+	if (search_term == "" )
+		let search_term = expand("<cword>")
+	endif
+    "assign to search pattern register
+    let @/=search_term
+    "go to next match
+    normal n
+endfunction
+nmap <C-F> <ESC>:call KnSearchCurrentDoc()<CR>
 
 "===============================================================
 "== [ Function ]: user input new string to replace the word under cursor
@@ -1423,30 +1535,48 @@ function! SaveSearch(...)
 	" note: a:0=len(a:000)
 	let list_len = a:0
 	let str=""
+	let cur_line = line(".")
 	if list_len !=0
 		" if argument lis is not empty
 		let str=a:1
+        let @+=a:1
+        "echo "search term ".str
 	else
 		let str=expand("<cword>")
 	endif
 	" clear register g
 	let @g=""
 	" redirect global search output to register g
-	exe "redir @g>>"
-	exe "g /". str
-	exe "redir END"
-	" open a new buffer
-	exe "new"
-	" set this buffer attribute
-	setlocal buftype=nofile
-	setlocal bufhidden=wipe
-	setlocal noswapfile
-	setlocal nobuflisted
-	" paste the content of register g
-	exe "put g"
+	silent exe "redir @g>>"
+	silent exe "g /". str
+	silent exe "redir END"
+    if ( list_len == 2)
+        call cursor(a:2, 1)
+    else
+        " open a new buffer
+        exe "new"
+        " set this buffer attribute
+        setlocal buftype=nofile
+        setlocal bufhidden=wipe
+        setlocal noswapfile
+        setlocal nobuflisted
+        " paste the content of register g
+    endif
+    exe "put g"
 endfunction
 
-vmap <A-F7> <ESC>:exe "normal! gvy"<CR> :call SaveSearch("<C-R>"")
+vmap <A-F7> <ESC>:exe "normal! gvy"<CR> :call SaveSearch("<C-R>"")<CR>
+
+function! SaveSearchPrompt()
+	let m = inputdialog("search term")
+    if m != ""
+        :exe SaveSearch(m)<CR>
+        :let @"=m
+    else
+        :exe SaveSearch(expand("<cword>"))<CR>
+    endif
+endfunction
+nnoremap <A-F7> :call SaveSearchPrompt()<CR>
 
 "===============================================================
 "== [ Function ]: increment last number on filename and open it
@@ -1496,7 +1626,7 @@ nmap ,vb :call Vgrep_listed_Buffer()<CR>
 "== [ Function ]: escape \ in the path
 "===============================================================
 "used in win32 app
-function! Replace_path() range
+function! KnReplace_path() range
 	exe a:firstline. ",".a:lastline.'s#\\#\\\\#g'
 endfunction
 
@@ -1777,6 +1907,14 @@ endfunction
 "endif
 
 "===============================================================
+"== FUNCTION: Rename
+"===============================================================
+function! KnRename(new_name)
+    echo "old doc name = ". expand("%")
+    exec "sav" a:new_name | call delete(expand("#"))
+endfunction
+
+"===============================================================
 "== FUNCTION: ProjectFuzzyFind
 "===============================================================
 " inside <.fuzzyfinder_cfg> can have
@@ -1868,6 +2006,80 @@ function! KnOpenCompileError()
 	endif
 endfunction
 map <A-u> :call KnOpenCompileError()<CR>
+
+
+"===============================================================
+"== FUNCTION: KnMakeBrowsableLink
+"===============================================================
+function! KnMakeBrowsableLink()
+	let lineNr = 1
+	let lineLast = line('$')
+	call setqflist([])
+	let qlist = {}
+	echo "start"
+	while (lineNr <= lineLast )
+		"echoerr lineNr
+		let curline = getline(lineNr)
+		let fileLine = matchstr(curline, '\S\+:')
+		let fileInfo = split(fileLine, ':')
+        let completeFileInfo = 'd:\CASDEV\'.fileInfo[0]
+		"echo filePath
+		"echo fileInfo
+		"call add(qlist, fileInfo)
+		let entry = {'filename':completeFileInfo, 'lnum':fileInfo[1], "text":curline}
+		let qflist = getqflist()
+		call add(qflist, entry)
+		call setqflist(qflist)
+
+		let lineNr = lineNr + 1
+	endwhile
+	"call setqflist(qlist)
+	echo "done"
+endfunction
+
+" move to the next line in the cw(quickfix) window
+function! KnCwMoveNextLine()
+	copen
+	let cur_line = line(".") + 1
+	call cursor(cur_line, 0)
+endfunction
+nmap <A-F5> :call KnCwMoveNextLine()<CR>
+
+function! KnTempDelete2()
+	:g /src.SWLoading/ d
+	:g /src.Configuration/ d
+	:g /src.EngineeringMode/ d
+	:g /src.Frameworks/ d
+	:g /src.SysApplication/ d
+endfunction
+
+
+"===============================================================
+"== FUNCTION: KnFindFunctionInThisFile
+"===============================================================
+function! KnFindFunctionInThisFile()
+    let function_name = expand("<cword>")
+    exe '/\(=\_s*\)\@<!'.function_name
+endfunction
+nmap <A-F6> :call KnFindFunctionInThisFile()<CR>
+
+"===============================================================
+"== FUNCTION: KnMakeBrowsableLink
+"===============================================================
+let g:WinWidthSwitch=1
+function! KnMaxWinWidth()
+    if 1 == g:WinWidthSwitch
+        exe "normal \<C-W>|"
+        let g:WinWidthSwitch = 2
+    else
+        exe "normal \<C-W>="
+        let g:WinWidthSwitch = 1
+    endif
+endfunction
+"nmap <A-F7> :call KnMaxWinWidth()<CR>
+
+
+"~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ 
 
 " OmniCppComplete
 let OmniCpp_NamespaceSearch = 1

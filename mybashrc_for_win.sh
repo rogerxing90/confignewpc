@@ -82,7 +82,8 @@ alias gitnoo="git config --global core.pager less"
 alias gitka="gitk --all"
 alias sd="svn diff --diff-cmd=/usr/bin/meld"
 # git log `gg filename`
-alias gg='git ls-files | /bin/grep -w'
+alias gg='git ls-files | /bin/grep -wi'
+alias ggg='git grep -n'
 alias gitff="git ls-files"
 alias gitvv="git remote -v"
 alias gitlf='git log --pretty=format:"%h:%Cblue%an   %Creset%s"'
