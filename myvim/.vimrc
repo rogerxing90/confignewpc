@@ -1530,6 +1530,19 @@ endfunction
 "===============================================================
 "== [ Function ]: save global search to register g
 "===============================================================
+function! KnGoToLine()
+    let lineNum = matchstr(getline("."), '^ *[[:digit:]]\+')
+    if lineNum != ""
+        call SwitchPrevWin()
+        exe ":".lineNum
+    endif
+endfunction
+
+function! KnSaveSearchBindMapping()
+    nnoremap <silent> <buffer> <2-leftmouse> :call KnGoToLine()<cr>
+    exec "nnoremap <silent> <buffer> <cr> :call KnGoToLine()<cr>"
+endfunction
+
 function! SaveSearch(...)
 	"let list_len = len(a:000)
 	" note: a:0=len(a:000)
@@ -1538,14 +1551,27 @@ function! SaveSearch(...)
 	let cur_line = line(".")
 	if list_len !=0
 		" if argument lis is not empty
-		let str=a:1
+        if ( match(a:1, "|"))
+            let str = ""
+            let ori_str = a:1
+            for myword in split(a:1, '|')
+                if (str!="")
+                    let str = str.'\|'.myword
+                else
+                    let str = myword
+                endif
+                "echom "str is ". str
+            endfor
+        else
+		    let str=a:1
+        endif
         let @+=a:1
         "echo "search term ".str
 	else
 		let str=expand("<cword>")
 	endif
 	" clear register g
-	let @g=""
+	let @g="search term: \n". ori_str."\n\n"
 	" redirect global search output to register g
 	silent exe "redir @g>>"
 	silent exe "g /". str
@@ -1560,12 +1586,13 @@ function! SaveSearch(...)
         setlocal bufhidden=wipe
         setlocal noswapfile
         setlocal nobuflisted
+        call KnSaveSearchBindMapping()
         " paste the content of register g
     endif
-    exe "put g"
+    exe "1put g"
 endfunction
 
-vmap <A-F7> <ESC>:exe "normal! gvy"<CR> :call SaveSearch("<C-R>"")<CR>
+vmap <A-F7> <ESC>:exe "normal! gvy" :call SaveSearch("<C-R>"")<CR>
 
 function! SaveSearchPrompt()
 	let m = inputdialog("search term")
@@ -1573,7 +1600,7 @@ function! SaveSearchPrompt()
         :exe SaveSearch(m)<CR>
         :let @"=m
     else
-        :exe SaveSearch(expand("<cword>"))<CR>
+        :exe SaveSearch(expand("<cword>"))
     endif
 endfunction
 nnoremap <A-F7> :call SaveSearchPrompt()<CR>
@@ -2059,7 +2086,7 @@ endfunction
 "===============================================================
 function! KnFindFunctionInThisFile()
     let function_name = expand("<cword>")
-    exe '/\(=\_s*\)\@<!'.function_name
+    exe '/\w\+ \(=\_s*\)\@<!'.function_name
 endfunction
 nmap <A-F6> :call KnFindFunctionInThisFile()<CR>
 
