@@ -1597,7 +1597,7 @@ vmap <A-F7> <ESC>:exe "normal! gvy" :call SaveSearch("<C-R>"")<CR>
 function! SaveSearchPrompt()
 	let m = inputdialog("search term")
     if m != ""
-        :exe SaveSearch(m)<CR>
+        :exe SaveSearch(m)
         :let @"=m
     else
         :exe SaveSearch(expand("<cword>"))

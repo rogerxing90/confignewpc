@@ -1,0 +1,5 @@
+source D:\\kn\\1confignewpc\\mybashrc_for_win.sh
+source D:\\kn\\mylocal_bashrc.sh
+#export PS1="\[\033[33m\w$(__git_ps1)\033[0m\] (\`date +%R\`)\n$ "
+#export PS1="\[\033]0;$MSYSTEM:\w\007\033[32m\]\[\033[33m\w$(__git_ps1)\033[0m\] (\`date +%R\`)\n$"
+export PS1="(\`date +%R\`) $PS1"
