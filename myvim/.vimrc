@@ -682,7 +682,7 @@ function! KnTempDelete()
 	exe 'g /CamApp_CaptureThread/ d'
 	exe 'g /PID.*TID:/ d'
 endfunction
-map <A-w> :call KnTempDelete()<CR>
+"map <A-w> :call KnTempDelete()<CR>
 "===============================================================
 "== [ Function ]: Insert Comment
 "===============================================================
@@ -1592,18 +1592,23 @@ function! SaveSearch(...)
     exe "1put g"
 endfunction
 
-vmap <A-F7> <ESC>:exe "normal! gvy" :call SaveSearch("<C-R>"")<CR>
+vmap <A-F7> <ESC>:exe "normal! gvy" <CR> :call SaveSearch("<C-R>"")<CR>
 
 function! SaveSearchPrompt()
-	let m = inputdialog("search term")
-    if m != ""
-        :exe SaveSearch(m)
-        :let @"=m
+	let mm = inputdialog("search term", "", "cancel pressed")
+    if mm != "" && mm != "cancel pressed"
+        :exe SaveSearch(mm)
+        :let @"=mm
     else
-        :exe SaveSearch(expand("<cword>"))
+        if mm != "cancel pressed"
+            echo "m is ". mm
+            :exe SaveSearch(expand("<cword>"))
+        endif
     endif
 endfunction
-nnoremap <A-F7> :call SaveSearchPrompt()<CR>
+nnoremap <A-F7> :BetterSearchPromptOn<CR>
+vnoremap <A-F7> :BetterSearchVisualSelect<CR>
+nnoremap <A-w>  :BetterSearchSwitchWin<CR>
 
 "===============================================================
 "== [ Function ]: increment last number on filename and open it
