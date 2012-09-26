@@ -20,31 +20,43 @@ if exists('loaded_BetterSearch')
 endif
 let loaded_BetterSearch = 1
 let s:next_buf_number = 1
-let s:content_window = 0
+let s:content_window_nr = 0
+let s:isHighlightOn = 1
+let s:pattern_name = ['String', 'Number', 'Function', 'Keyword', 'Directory', 'Type', 'rubyRegexpDelimiter', 'PmenuSel', 'MatchParen', 'rubyStringDelimiter', 'javaDocSeeTag']
+" content window and search window mapping, for the use of switching between 
+" window
+let s:win_mapping = {}
 
 " === command === "
 command! -n=0 -bar BetterSearchPromptOn :call s:BetterSearchPrompt()
-command! -n=0 -bar BetterSearchVisualSelect :exe "normal! gvy" <CR> :call BetterSearch("<C-R>"")
+command! -n=0 -bar BetterSearchVisualSelect :exe "normal! gvy" <CR> :call s:BetterSearch("<C-R>"")
 command! -n=0 -bar BetterSearchSwitchWin :call s:SwitchBetweenWin()
+command! -n=1 -bar BetterSearchHighlightLimit :let g:BetterSearchTotalLine=<args>
 
-" }}}
-
-function! s:SwitchBetweenWin()
-    let s:current_win_nr = winnr()
-    if s:current_win_nr != bufwinnr(s:content_window)
-        if s:content_window != 0
-            let l:content_window_nr = bufwinnr(s:content_window)
-            exe l:content_window_nr. "wincmd w"
-        endif
-    else
-        let l:last_search_win_nr = bufwinnr("BetterSearch".s:next_buf_number)
-        if l:last_search_win_nr != -1
-            exe l:last_search_win_nr. "wincmd w"
-        endif
+function s:SetDefaultVariable(name, default)
+    if !exists(a:name)
+        let {a:name} = a:default
     endif
 endfunction
 
-function! s:SwitchPrevWin()
+call s:SetDefaultVariable("g:BetterSearchMapHelp", "?")
+call s:SetDefaultVariable("g:BetterSearchMapHighlightSearch", "h")
+call s:SetDefaultVariable("g:BetterSearchTotalLine", 5000)
+
+" }}}
+
+" function {{{
+function s:SwitchBetweenWin()
+    let s:current_buf_nr = bufnr("")
+    if has_key(s:win_mapping, s:current_buf_nr)
+        let l:jump_win = bufwinnr(s:win_mapping[s:current_buf_nr])
+        exe l:jump_win."wincmd w"
+    else
+        echo "buffer ".s:current_buf_nr." not found"
+    endif
+endfunction
+
+function s:SwitchPrevWin()
     let l:winnr_index = winnr()
     if l:winnr_index > 1
         let l:winnr_index -= 1
@@ -55,7 +67,7 @@ function! s:SwitchPrevWin()
 endfunction
 
 
-function! s:GoToLine()
+function s:GoToLine()
     let lineNum = matchstr(getline("."), '^ *[[:digit:]]\+')
     if lineNum != ""
         call s:SwitchPrevWin()
@@ -63,25 +75,51 @@ function! s:GoToLine()
     endif
 endfunction
 
-
-
-function! s:BetterSearchBindMapping()
+function s:BetterSearchBindMapping()
     nnoremap <silent> <buffer> <2-leftmouse> :call s:GoToLine()<cr>
-    exec "nnoremap <silent> <buffer> <cr> :call s:GoToLine()<cr>"
+    exec "nnoremap <silent> <buffer> <cr> :call <SID>GoToLine()<cr>"
+    exec "nnoremap <silent> <buffer> ". g:BetterSearchMapHelp ." :call s:displayHelp()<cr>"
+    exec "nnoremap <silent> <buffer> ". g:BetterSearchMapHighlightSearch ." :call s:HighlightSearchWord()<cr>"
 endfunction
 
-function! s:BetterSearch(...)
+function s:BetterSearchHelp()
+
+endfunction
+
+
+function s:HighlightSearchWord()
+    "syn match search1
+    let s:isHighlightOn = !s:isHighlightOn
+endfunction
+
+
+function s:BetterSearchSyntaxHighlight(search_token)
+    let l:index = 0
+    if s:isHighlightOn && (line('$') < g:BetterSearchTotalLine)
+        while index < len(a:search_token)
+            if (index < len(s:pattern_name))
+                execute "syn match search_word".index. " #". a:search_token[index] ."#"
+                execute "hi def link search_word".index. " ".s:pattern_name[index]
+                let l:index = l:index + 1
+            endif
+        endwhile
+    endif
+endfunction
+
+function s:BetterSearch(...)
 	"let list_len = len(a:000)
 	" note: a:0=len(a:000)
 	let list_len = a:0
 	let str=""
 	let cur_line = line(".")
 	if list_len !=0
-		" if argument lis is not empty
+		" if argument list is not empty
         if ( match(a:1, "|"))
             let str = ""
             let ori_str = a:1
+            let l:search_token = []
             for myword in split(a:1, '|')
+                call add(l:search_token, myword)
                 if (str!="")
                     let str = str.'\|'.myword
                 else
@@ -106,7 +144,7 @@ function! s:BetterSearch(...)
     if ( list_len == 2)
         call cursor(a:2, 1)
     else
-        let s:content_window = bufnr("")
+        let s:content_window_nr = bufnr("")
         let s:next_buf_number += 1
         " open a new buffer
         exe "new BetterSearch". s:next_buf_number
@@ -116,13 +154,19 @@ function! s:BetterSearch(...)
         setlocal noswapfile
         setlocal nobuflisted
         call s:BetterSearchBindMapping()
-        " paste the content of register g
+        let s:win_mapping[s:content_window_nr]=bufnr("")
+        let s:win_mapping[bufnr("")]=s:content_window_nr
+
     endif
+    " paste the content of register g
     exe "1put g"
+    " ---- syntax highlight ----
+    call s:BetterSearchSyntaxHighlight(l:search_token)
+    setlocal nomodifiable
 endfunction
 
 
-function! s:BetterSearchPrompt()
+function s:BetterSearchPrompt()
 	let mm = inputdialog("search term", "", "cancel pressed")
     if mm != "" && mm != "cancel pressed"
         :exe s:BetterSearch(mm)
@@ -134,7 +178,7 @@ function! s:BetterSearchPrompt()
         endif
     endif
 endfunction
-
+" }}}
 
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 "                                                                              "
