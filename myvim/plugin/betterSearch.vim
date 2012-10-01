@@ -12,7 +12,7 @@
 "              obligation to maintain or extend this software. It is provided on an
 "              "as is" basis without any expressed or implied warranty.
 " ============================================================================
-let s:betterSearch_version = '0.0.1'
+let s:betterSearch_version = '0.0.2'
 
 " initialization {{{
 
@@ -267,6 +267,11 @@ endfunction
 " }}}
 
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+" History of changes:
+" [ version ] 0.0.2 ( 01 Oct 2012 )
+"   - able to set highlight syntax
+"   - change default shortcut for syntax=c, help=F1
+"   - improve help description
 "                                                                              "
 " vim:foldmethod=marker:tabstop=4
 "                                                                              "
