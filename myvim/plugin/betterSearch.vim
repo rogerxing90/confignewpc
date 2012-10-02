@@ -27,6 +27,7 @@ endif
 let loaded_BetterSearch = 1
 let s:next_buf_number = 1
 let s:content_window_nr = 0
+let s:content_window_path = ""
 let s:isHighlightOn = 1
 let s:isCopyToClipboard = 0
 let s:search_token_copy = []
@@ -215,8 +216,11 @@ function s:BetterSearch(...)
 	else
 		let str=expand("<cword>")
 	endif
+
+    let s:content_window_path = expand("%:p")
 	" clear register g
 	let @g="\"  Press ". g:BetterSearchMapHelp ." for help\n\n"
+    let @g=@g."content path : ". s:content_window_path. "\n"
 	let @g=@g."search term: \n". ori_str."\n\n"
 	" redirect global search output to register g
 	silent exe "redir @g>>"

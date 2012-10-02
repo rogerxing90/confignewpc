@@ -1802,6 +1802,13 @@ endfunction
 nnoremap <A-j> :call KnJumpToDefinition()<CR>
 
 "===============================================================
+"== [ Function ]: To store Miscellaneous function
+"===============================================================
+function! KnMiscFunc()
+    echo 'find duplicate line = '.'/\%(^\1$\n\)\@<=\(.*\)$/'
+endfunction
+
+"===============================================================
 "== autocompletion for c programming
 "===============================================================
 "autocmd InsertEnter * call MyC_complete()
@@ -2357,4 +2364,5 @@ colorscheme ir_black
 "%s/\(.*.MAKECMD. .NOLOGO ..SG_OUTPUT_OAKTGT.*dll\)/# \1/gc
 "
 "
-nmap <F6> :exe "/SYSOOM\\\|POW]\\\|USR]\\\|SYSMAIN\\\|SYSOOM\\\|IPC]"<CR>
+"nmap <F6> :exe "/SYSOOM\\\|POW]\\\|USR]\\\|SYSMAIN\\\|SYSOOM\\\|IPC]"<CR>
+nmap <F6> :exe 'e D:\kn\1confignewpc\myvim\plugin\betterSearch.vim'<CR>
