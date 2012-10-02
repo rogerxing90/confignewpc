@@ -1719,7 +1719,7 @@ comm! -nargs=? -bang Z call AlternateHeaderSource()
 nmap <A-i> :call AlternateHeaderSource()<CR>
 
 "===============================================================
-"== [ Function ]: alternating header/source of c/cpp file
+"== [ Function ]: ExtractAndSaveReg
 "===============================================================
 "b4:TRANS      (EV (LC,evReqDown),  Down,      down
 "af:#define LC_evReqDown                ( LifecycleSubmitterId | )
@@ -1789,6 +1789,17 @@ function! ConvertHeader()
 	%s/#include//g
 	%s/$\n/, /g
 endfunction
+
+"===============================================================
+"== [ Function ]: jump to definition of the function
+"===============================================================
+" look for "return_type myFuncName" or "return_type ClassName::myFuncName""
+function! KnJumpToDefinition()
+    let word = expand("<cword>")
+    echo 'search for '. word
+    exe '/\(\w\+ \+'.word.'\)\|\(\w\+ \+\w\+::'.word.'\)'
+endfunction
+nnoremap <A-j> :call KnJumpToDefinition()<CR>
 
 "===============================================================
 "== autocompletion for c programming
