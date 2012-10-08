@@ -1798,14 +1798,28 @@ function! KnJumpToDefinition()
     let word = expand("<cword>")
     echo 'search for '. word
     exe '/\(\w\+ \+'.word.'\)\|\(\w\+ \+\w\+::'.word.'\)'
+    "exe '/\(\w\+ \+'.word.'\)\|\(\w\+ \+\w\+::'.word.'.*\(;\)\@!\)'
 endfunction
 nnoremap <A-j> :call KnJumpToDefinition()<CR>
+
 
 "===============================================================
 "== [ Function ]: To store Miscellaneous function
 "===============================================================
-function! KnMiscFunc()
+function! KnMiscFunc() range
     echo 'find duplicate line = '.'/\%(^\1$\n\)\@<=\(.*\)$/'
+
+    "  --- delete the filter terminal time and do a sort on it
+    "  --- the pattern is like this: filter_terminal_time>MRN_TIME 
+    "  --- e.g.: 81233.844>00039695
+    exe a:firstline.",".a:lastline .' s/^.\{-}>//ge'
+    sort
+    /Tux_retrieveLog1
+    echom matchstr(getline("."),'.[[:alnum:]]\{7}',18)
+    "let @" = matchstr(getline("."),'[[:alnum:]]\{7}',18)
+    let @+ = matchstr(getline("."),'[[:alnum:]]\{7}',18)
+    "let @" = @".'|Tux_storeLog1|SYSPOW]|SYSUSR]|SYSMAIN]|SYSOOM]'
+    let @+ = @+.'|Tux_storeLog1|SYSPOW]|SYSUSR]|SYSMAIN]|SYSOOM]'
 endfunction
 
 "===============================================================
