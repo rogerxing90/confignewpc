@@ -42,7 +42,7 @@ let s:win_mapping = {}
 
 " === command === "
 command! -n=0 -bar BetterSearchPromptOn :call s:BetterSearchPrompt()
-command! -n=1 -bar BetterSearchVisualSelect :silent call s:BetterSearch("<args>")
+command! -n=0 -bar -range BetterSearchVisualSelect :call s:VisualSearch()
 command! -n=0 -bar BetterSearchSwitchWin :call s:SwitchBetweenWin()
 command! -n=1 -bar BetterSearchHighlightLimit :let g:BetterSearchTotalLine=<args>
 command! -n=0 -bar BetterSearchHighlighToggle :let s:isHighlightOn=!s:isHighlightOn
@@ -68,6 +68,12 @@ function s:CloseBetterSearchWin()
     if s:bettersearch_window_nr != 0
         exe s:bettersearch_window_nr."bwipeout"
     endif
+endfunction
+
+function s:VisualSearch() range
+    execute "normal! gv""y"
+    let l:temp = @"
+    :silent! call s:BetterSearch(l:temp)
 endfunction
 
 function s:SetHighlightName(index, name)
