@@ -1368,7 +1368,7 @@ endfunction
 ":[range]le[ft] [indent]     left alignment.(Unit of identation is space)     :left 4
 
 "===============================================================
-"== [ Function ]: IndentLineToBraceAbove
+"== [ Function ]: Formatting - IndentLineToBraceAbove
 "===============================================================
 "obj: indent current line after "(" of above line, for use in long function
 function! IndentLineToBraceAbove()
@@ -1382,27 +1382,27 @@ endfunction
 "===============================================================
 "== [ Function ]: Replace string
 "===============================================================
-function! Replacestr()
-    "e - don't issue error when search not found
-    "execute "%s/String/char */ge"
-    "execute "%s/Uint32/unsigned int/ge"
-    "execute "%s/Uint16/unsigned short/ge"
-    "execute "%s/Int/int/ge"
-    "execute "%s/Void/void/ge"
-    "execute "%s/Ptr/void */ge"
-    "execute "%s/Uns/unsigned int/ge"
-	let lineNr = 1
-	let @h = lineNr 
-	" loop from first to last line
-	while (lineNr != line('$')+1)
-		call cursor(lineNr, 0)
-		execute 's/.*EV (\(.\{-}\),\(.\{-}\)).*/const UWord16 \1_\2 = 0x000'.getreg('h')';/g'
-		let lineNr = lineNr + 1
-		let @h = lineNr 
-	endwhile
-endfunction
-
-nmap ,u :call Replacestr()<CR>
+"function! Replacestr()
+"    "e - don't issue error when search not found
+"    "execute "%s/String/char */ge"
+"    "execute "%s/Uint32/unsigned int/ge"
+"    "execute "%s/Uint16/unsigned short/ge"
+"    "execute "%s/Int/int/ge"
+"    "execute "%s/Void/void/ge"
+"    "execute "%s/Ptr/void */ge"
+"    "execute "%s/Uns/unsigned int/ge"
+"	let lineNr = 1
+"	let @h = lineNr 
+"	" loop from first to last line
+"	while (lineNr != line('$')+1)
+"		call cursor(lineNr, 0)
+"		execute 's/.*EV (\(.\{-}\),\(.\{-}\)).*/const UWord16 \1_\2 = 0x000'.getreg('h')';/g'
+"		let lineNr = lineNr + 1
+"		let @h = lineNr 
+"	endwhile
+"endfunction
+"
+"nmap ,u :call Replacestr()<CR>
 
 
 "===============================================================
@@ -1426,54 +1426,54 @@ function! Vgrep_for_specific_ext()
         exec "cw"
     endif
 endfunction
-nmap <A-F11> <Esc>:call Vgrep_for_specific_ext()<CR>
+"nmap <A-F11> <Esc>:call Vgrep_for_specific_ext()<CR>
 
-function! KnGrepLifeCycleOnly()
-    let search_term = inputdialog("search term")
-	if (search_term == "" )
-		let search_term = expand("<cword>")
-	endif
-	let dest_src1="D:\\CASDEV\\CCM_WA\\DPCARSgp\\IMX\\DPCA_iMX\\Delivery\\MMP_GENERIC\\GEN_SYS\\src\\Lifecycle/**/*.cpp"
-	let dest_src2="D:\\CASDEV\\CCM_WA\\DPCARSgp\\IMX\\DPCA_iMX\\Delivery\\MMP_GENERIC\\GEN_SYS\\src\\SysMost/**/*.cpp"
-	let dest_src3="D:\\CASDEV\\CCM_WA\\DPCARSgp\\IMX\\DPCA_iMX\\Delivery\\MMP_GENERIC\\GEN_SYS\\src\\Main/**/*.cpp"
-	let dest_src4="D:\\CASDEV\\CCM_WA\\DPCARSgp\\IMX\\DPCA_iMX\\Delivery\\MMP_GENERIC\\GEN_SYS\\src\\FailureHandler/**/*.cpp"
-    let dest_src5="D:\\CASDEV\\WinCE\\public\\MMP_PROD\\QA\\GEN_SYS\\LifeCycle/**/*.cpp"
-	"echo a:search_term . ": " dest_src .": " . dest_inc
-    let my_search="vimgrep /".search_term ."/j ".dest_src1." ".dest_src2." ".dest_src3. " ". dest_src4
-    let my_search=my_search." ".dest_src5
-    exec my_search
-	"exec "vimgrep /".search_term ."/j ".dest_src1." ".dest_src2." ".dest_src3. " ". dest_src4
-	exec "cw"
-	exec "normal /".search_term
-endfunction
-nmap <A-F10> <ESC>:call KnGrepLifeCycleOnly()<CR>
+"function! KnGrepLifeCycleOnly()
+"    let search_term = inputdialog("search term")
+"	if (search_term == "" )
+"		let search_term = expand("<cword>")
+"	endif
+"	let dest_src1="D:\\CASDEV\\CCM_WA\\DPCARSgp\\IMX\\DPCA_iMX\\Delivery\\MMP_GENERIC\\GEN_SYS\\src\\Lifecycle/**/*.cpp"
+"	let dest_src2="D:\\CASDEV\\CCM_WA\\DPCARSgp\\IMX\\DPCA_iMX\\Delivery\\MMP_GENERIC\\GEN_SYS\\src\\SysMost/**/*.cpp"
+"	let dest_src3="D:\\CASDEV\\CCM_WA\\DPCARSgp\\IMX\\DPCA_iMX\\Delivery\\MMP_GENERIC\\GEN_SYS\\src\\Main/**/*.cpp"
+"	let dest_src4="D:\\CASDEV\\CCM_WA\\DPCARSgp\\IMX\\DPCA_iMX\\Delivery\\MMP_GENERIC\\GEN_SYS\\src\\FailureHandler/**/*.cpp"
+"    let dest_src5="D:\\CASDEV\\WinCE\\public\\MMP_PROD\\QA\\GEN_SYS\\LifeCycle/**/*.cpp"
+"	"echo a:search_term . ": " dest_src .": " . dest_inc
+"    let my_search="vimgrep /".search_term ."/j ".dest_src1." ".dest_src2." ".dest_src3. " ". dest_src4
+"    let my_search=my_search." ".dest_src5
+"    exec my_search
+"	"exec "vimgrep /".search_term ."/j ".dest_src1." ".dest_src2." ".dest_src3. " ". dest_src4
+"	exec "cw"
+"	exec "normal /".search_term
+"endfunction
+"nmap <A-F10> <ESC>:call KnGrepLifeCycleOnly()<CR>
 
-function! KnGrep(search_term)
-	let dest_src="D:\\CASDEV\\CCM_WA\\DPCARSgp\\IMX\\DPCA_iMX\\Delivery\\MMP_GENERIC\\GEN_SYS\\src"
-	let dest_inc="D:\\CASDEV\\CCM_WA\\DPCARSgp\\IMX\\DPCA_iMX\\Delivery\\MMP_GENERIC\\GEN_PUBLIC"
-	"echo a:search_term . ": " dest_src .": " . dest_inc
-	exec "vimgrep /".a:search_term ."/j ".dest_src."/**/*.cpp "
-	"exec "vimgrep /".a:search_term ."/j ".dest_src."/**/*.cpp ".dest_src."**/*.h?? ".dest_inc."**/*.h??"
-	exec "cw"
-endfunction
+"function! KnGrep(search_term)
+"	let dest_src="D:\\CASDEV\\CCM_WA\\DPCARSgp\\IMX\\DPCA_iMX\\Delivery\\MMP_GENERIC\\GEN_SYS\\src"
+"	let dest_inc="D:\\CASDEV\\CCM_WA\\DPCARSgp\\IMX\\DPCA_iMX\\Delivery\\MMP_GENERIC\\GEN_PUBLIC"
+"	"echo a:search_term . ": " dest_src .": " . dest_inc
+"	exec "vimgrep /".a:search_term ."/j ".dest_src."/**/*.cpp "
+"	"exec "vimgrep /".a:search_term ."/j ".dest_src."/**/*.cpp ".dest_src."**/*.h?? ".dest_inc."**/*.h??"
+"	exec "cw"
+"endfunction
 
-function! KnGrep2(search_term)
-	let dest_src="D:\\CASDEV\\CCM_WA\\DPCARSgp\\IMX\\DPCA_iMX\\Delivery\\MMP_GENERIC\\GEN_SYS\\src"
-	let dest_inc="D:\\CASDEV\\CCM_WA\\DPCARSgp\\IMX\\DPCA_iMX\\Delivery\\MMP_GENERIC\\GEN_PUBLIC"
-	exec "vimgrep /".a:search_term ."/j ".dest_src."/**/*.cpp ".dest_src."**/*.h?? ".dest_inc."**/*.h??"
-	exec "cw"
-endfunction
+"function! KnGrep2(search_term)
+"	let dest_src="D:\\CASDEV\\CCM_WA\\DPCARSgp\\IMX\\DPCA_iMX\\Delivery\\MMP_GENERIC\\GEN_SYS\\src"
+"	let dest_inc="D:\\CASDEV\\CCM_WA\\DPCARSgp\\IMX\\DPCA_iMX\\Delivery\\MMP_GENERIC\\GEN_PUBLIC"
+"	exec "vimgrep /".a:search_term ."/j ".dest_src."/**/*.cpp ".dest_src."**/*.h?? ".dest_inc."**/*.h??"
+"	exec "cw"
+"endfunction
 
-function! DpcaGrep()
-    let m = inputdialog("search term")
-	call KnGrep(m)
-endfunction
-nmap <A-F11> <ESC>:call DpcaGrep()<CR>
+"function! DpcaGrep()
+"    let m = inputdialog("search term")
+"	call KnGrep(m)
+"endfunction
+"nmap <A-F11> <ESC>:call DpcaGrep()<CR>
 
-function! DpcaGrepCurWord()
-	let m = expand("<cword>")
-	call KnGrep(m)
-endfunction
+"function! DpcaGrepCurWord()
+"	let m = expand("<cword>")
+"	call KnGrep(m)
+"endfunction
 "nmap <A-F12> <ESC>:call DpcaGrepCurWord()<CR>
 
 
