@@ -1607,8 +1607,9 @@ function! SaveSearchPrompt()
     endif
 endfunction
 nnoremap <A-S-F7> :BetterSearchPromptOn<CR>
-vnoremap <A-S-F7> :BetterSearchVisualSelect<CR>
+vnoremap <A-S-F7> ""y :BetterSearchVisualSelect <C-R>"<CR>
 nnoremap <A-w>  :BetterSearchSwitchWin<CR>
+nnoremap <A-S-q>  :BetterSearchCloseWin<CR>
 
 "===============================================================
 "== [ Function ]: increment last number on filename and open it
