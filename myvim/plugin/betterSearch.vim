@@ -2,8 +2,8 @@
 " File:        betterSearch.vim
 " Description: provide better search functionality in vim
 " Maintainer:  Ng Khian Nam
-" Email:       ngkhiannam@gmail.com 
-" Last Change: 24 September 2012
+" Email:       ngkhiannam@gmail.com
+" Last Change: 4 Jan 2013
 " License:     We grant permission to use, copy modify, distribute, and sell this
 "              software for any purpose without fee, provided that the above copyright
 "              notice and this text are not removed. We make no guarantee about the
@@ -12,7 +12,7 @@
 "              obligation to maintain or extend this software. It is provided on an
 "              "as is" basis without any expressed or implied warranty.
 " ============================================================================
-let s:betterSearch_version = '0.0.2'
+let s:betterSearch_version = '0.0.3'
 
 " initialization {{{
 
@@ -158,7 +158,7 @@ function s:HighlightSearchWord()
     call s:BetterSearchSyntaxHighlight(s:search_token_copy)
 endfunction
 
-" --- for search highlight toggle 
+" --- for search highlight toggle
 function s:BetterSearchSyntaxHighlight(search_token)
     execute "syn match helpText #Press ". g:BetterSearchMapHelp ." for help#"
     execute "hi link helpText Comment"
@@ -272,6 +272,9 @@ endfunction
 
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " History of changes:
+" [ version ] 0.0.3 ( 04 Jan 2013 )
+"   - show the file path
+"
 " [ version ] 0.0.2 ( 01 Oct 2012 )
 "   - able to set highlight syntax
 "   - change default shortcut for syntax=c, help=F1

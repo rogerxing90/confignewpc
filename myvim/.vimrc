@@ -1606,8 +1606,8 @@ function! SaveSearchPrompt()
         endif
     endif
 endfunction
-nnoremap <A-F7> :BetterSearchPromptOn<CR>
-vnoremap <A-F7> :BetterSearchVisualSelect<CR>
+nnoremap <A-S-F7> :BetterSearchPromptOn<CR>
+vnoremap <A-S-F7> :BetterSearchVisualSelect<CR>
 nnoremap <A-w>  :BetterSearchSwitchWin<CR>
 
 "===============================================================
