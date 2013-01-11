@@ -1,0 +1,1105 @@
+Linux Highlight
+
+[ bash option ]
+set -o noclobber   ## not to overwrite existing file
+
+echo sth > file1 ## ok;
+echo sth_again > file1  ## not ok;
+echo sth_again >> file1 ## okay
+echo sth_again >| file1  ## overwrite, ok, as >| means intended
+
+[ PATH ][ user ]
+echo $PATH    ## ./bin:.    ## . for current, but there is security risk
+$ set                                    ## see all variables in current shell, including function
+$ env	                                ## see all exported variables
+$export -p	                         ## see only exported variables 
+
+[ user ][ management ]
+who           ## check who is currently login
+tty is a native terminal device
+pts -  (pseudo terminal device) is a terminal device which is emulated by an other program (example:xterm, screen, or ssh are such programs)
+w                ## show who are login
+[ file architecture ]
+/dev/console  # monitor with phy connection to linux sys
+/dev/full        # write will gen ENOSPC error (used to test how a appp handle disk-full err)
+/dev/hd         # (/dev/hda : entire IDE hda; /dev/hda1 (first partition))
+/dev/sd         # scsi disks
+/dev/sr          # scsi cdrom
+/dev/tty        # virtual console into linux (teletyps terminal)
+/dev/pty        # remote logon e.g. telnet (pseduo-terminal)
+/dev/ttyS # serial if port;/dev/ttyS0=COM1;serial mouse, /dev/mouse=(softlink)/dev/ttySx
+/dev/null        # output is lost, input from /dev/null is zero
+/var/spool      # transitory directory (news/mail)
+
+[ file permission ]
+---(owner)---(group)---(other)
+chmod a+x (all), u+r (user), o+rw(other), g+r(group)
+chown <user> <files>
+chgrp <group> <files>
+umask -S 0000   # set all with rwx permission
+sticky bit       # if on, once app is loaded, it will remain i mem, hoping will be used again. not so useful now 
+
+useful if wan to let everyone create file inside a folder, but only the creator can delete it (e.g. /tmp)
+chmod u+t /dir/or/file
+chmod 4755 toolbox     ## -rwsr-xr-x
+chmod 2755 toolbox     ## -r-xr-sr-x    (group)
+chmod 0755 toolbox     ## undo, -rwxr-xr-x
+
+SUID        # if set, normal user can run it as if a root run it (no need to know root passwd) (-rwsr-xr-x)
+
+SUID stands for set user id. need to set if application must be 'SUID root' 
+if SUID is set by root, other users can run this application as if root is running it
+
+SGID        # if set, belong to all rather than a particular user  (-r-xr-sr-x)
+
+1) Sticky bit was used on executables in linux (which was used more often)so that they would remain in the memory more time after the initial execution, hoping they would be needed in the near future. But since today we have more sophisticated memory accessing techniques and the bottleneck related to primary memory is diminishing, the sticky bit is not used today for this. Instead, it is used on folders, to imply that a file or folder created inside a stickybit-enabled folder could only be deleted by the creator itself. A nice implementation of sticky bit is the /tmp folder,where every user has write permission but only users who own a file can delete them. Remember files inside a folder which has write permission can be deleted even if the file doesn't have write permission. The sticky bit comes useful here.
+2) As of SUID or SetUID bit, the executable which has the SUID set runs with the ownership of the program owner. That is, if you own an executable, and another person issues the executable, then it runs with your permission and not his. The default is that a program runs with the ownership of the person executing the binary.
+3) The SGID bit is the same as of SUID, only the case is that it runs with the permission of the group. Another use is it can be set on folders,making nay files or folders created inside the SGID set folder to have a common group ownership.
+
+
+[ file size ]
+du -h --max-depth=1      # display summary of current directory
+du -sh *                       # display sub-dir and current dir size
+df -h -k                        # show only space that can be used, as system uses space also
+du | sort
+
+[ mount  ] (mount dev mount-point)
+-nc               # mount w/o writing to /etc/mtab
+-vf                # debug w/o actual writing
+mount column -t  # format it nicely
+fuser -u /dev/xxx   # device is busy, show the pid, (check -m)
+
+ps auxw | grep xxx                          ## pid
+
+fuser -k /dev/xxx   # to kill all process using the specified file or filesystem
+lsof /dev/xxx     or  lsof /mount-point
+lsof -w /dos                            # -w suppress gnome virtual file system warning
+lsof -m /dos                            # list the process id using the file system
+umount -l /dos                        # lazy umount, detach file system from file hierarchy then clean up ref asap not busy
+find /dev -lname "*sda6"
+blkid /dev/sda6             # will show UUID and LABEL
+mount UUID="082fb0d5-a5db-41d1-ae04-6e9af3ba15f7" /mnt/sda6uui
+mount LABEL="Fedora-13-x86_64" /mnt/sda6label
+CD/DVD drives will often support either ISO9660 or UDF filesystems
+Specifies whether the dump command should consider this ext2 or ext3 filesystem for backups.
+Non-zero values of pass specify the order of checking filesystems at boot time
+mount | grep sr0                    # cd/dvd
+fuseblk == ntfs (used by mount) FUSE (file system in userspace)
+[ window ] use ext2fsd, after install, tool > service mgt > start, then can assign letter
+
+[ fstab ] (file system table)
+swap has no mount directory
+/proc doesn't have phy partition to mount, is a virtual fs
+
+[ fsck ] (check fs)
+need to know which fs used (if not specified by user or by fstab, use minix)
+good to umount b4 checking (use live cd to root file system)
+important to reboot immediately after fsck made changes
+
+[ tools ] 
+fdisk     # create fs
+mkfs     # format fs
+
+[ swap ]
+swap partition (continuous) is preferred than swap files (usually not continuous)
+dd if=/dev/zero of=/swap/file bs=1024 count=10240   #10MiB, 1 block-1024 byte
+mkswap /swap/file 10240  (create swap)
+swapon /swap/file
+
+[ tools ]
+file filename     # check file type
+
+[ note ]
+root directory "/" has inode=1
+every block dev has a matching char dev
+
+[ ls ]
+ls -i          # display inode
+ls -A         # display hidden file but not "." and ".."
+ls -F         # / directory; nothing – normal file; @ link file; * Executable file
+[filetype][file_permission][# of links][owner][group]     [size][last modified date][filename]
+-rw-r--r--                        1       uidc1325 ccm_root 1.1K   2010-06-14 09:13  apparix.sh
+ls -l /dev/sd{a,b}    # will show major, minor number of char/block dev
+touch "*";   ls "*"     # create and show file with filename "*"
+ls -ld [[:digit:]]*
+ls -dla */rsa*            #show only rsa file inside the directories
+[ show only hidden file ][ hidden ]
+ls -d .*   ## ls -a .* expand to . and .. (thus show everything in current and up directory)
+ls -d .[!.]*    ## dont show .. [!xxx] is negation like [^xxxx]
+grep -l 'MYSEARCH' ~/.[!.]*  ## -l show filename
+
+[ directory only ]
+find . -type d
+
+[ dd ]
+dd if=<source> of=<target> bs=<byte size> ("USUALLY" some power of 2, and usually not less than 512 bytes (ie, 512, 1024, 2048, 4096, 8192, 16384, but can be any reasonable whole integer value.) skip= seek= conv=<conversion>
+bs=byte size, force ibs and obs size, when rd/wr, will rd/wr <byte-size> byte at a time
+dd if=/*source* of=/*destination*
+seek =skip BLOCKS obs-sized blocks at start of  
+skip = number of ibs-sized blocks at start of input
+count = number of blocks to copy
+dd if=/dev/st0 count=1000000 of=/dev/case10img1  # get the first 1GB and write
+dd if=/dev/st0 count=1000000 skip=1000000 of=/dev/case10img2 # get second 1GB
+sudo dd if=u-boot.bin of=/dev/sdb bs=1K seek=1 #skip 1block of size 1K b4 writing
+sudo dd if=uImage.bbg of=/dev/sdb bs=1M seek=1 # skip 1 block of size 1M b4 writing
+sudo dd if=uramdisk.img.BBG of=/dev/sdb bs=4M seek=1" #skip 1 block of size 4M b4 write
+to know dd progress: ps ux | awk '/bin\/dd/ && !/awk/ {print $2}' | xargs kill -s USR1 $1
+to format hdisk with random data: 
+
+for n in `seq 7`; do dd if=/dev/urandom of=/dev/sda bs=8b conv=notrunc; done
+for n in {1..7}; do dd if=/dev/urandom of=/dev/sda bs=8b; done
+
+to scan file:  dd if=/home/sam/file.file | clamscan -
+if dd from smaller disk to larger one, larger one now become smaller in size (partition table), use rsync in this case. rsync will duplicates files as files. format & mount dest_drive
+
+rsync -avH --exclude=/mnt/destination_drive/ /* /mnt/destination_drive/
+then run: grub-install && grub-update for the new dest_drive
+
+split to GB, and output img.split.01, 02.. : dd if=/dev/mydvd | split -d -b 2000m - img.split.
+split to GB: dd if=/dev/hda3 of=/home/sam/backup_set_1.img bs=1M count=4430 
+dd if=/dev/hda3 skip=4430 of=/home/sam/backup_set_2.img bs=1M count=4430
+to restore:  dd if=/media/dvd/backup_set_1.img of=/dev/hda3 bs=1M conv=sync,noerror
+dd if=/media/dvd/backup_set_2.img of=/dev/hda3 seek=4430 bs=1M conv=sync,noerror
+conv=notrunc,noerror,sync (notrunc don't delete file, only overwrite it) (noerror=pad error sector with zero) (sync=ensure sector on output are aligned with input for exact replica)
+create iso: dd if=/dev/hdc of=/home/sam/myCD.iso bs=2048 conv=sync,notrunc
+backup hdisk to sda: dd if=/dev/hda of=/dev/sda bs=64k conv=notrunc,noerror
+replace keywords: dd if=/dev/sda | sed 's/Wendy/Janet/g' | dd of=/dev/sda
+format with zero: dd if=/dev/zero of=/dev/sda bs=4k conv=notrunc
+to check: dd if=/dev/sda | hexdump -C | grep [^00]
+duplicate mbr, not partition table: dd if=/dev/sda of=/home/MBR.image bs=446 count=1
+check for string in binary: dd if=/home/mybinary.file | strings | less
+
+[ block size ]
+if file system block size is 4096 (4K), create a file of 256 byte, it still use 1 block of 4096
+larger block size improve performance, but wasteful if have a lot of small file
+hardware (sector), file system (block/cluster), kernel buffer cache (block), partition table (cylinder); can check with dumpe2fs
+linux use 1024-byte block size, ext3 use 4096-byte block size
+
+
+[ terminal ]
+x-www-browser xxx.html              ### open html in preferred browser
+lynx or curl   xxx.html
+
+admin
+w    # see who is online and what they are doing , e.g. $ w uidc1325
+finger <user>
+killall <name>   # kill all process with <name*>
+[ sed ] , [ awk ],[ cut ]
+cut -c1-6  xxx.txt           # column 1 to column 6 (total=6 char)
+cut -c4,8  xxx.txt           # column 4 and column 8 (total=2 char)
+echo "aha" | cut -b1-3    # ==aha, cut -b1==>a; cut -b2==>b; cut -b1,3==>aa
+cut -d: -f3  -s xxx.txt     # delimiter is ":", take fields 3; (and suppress line w/o delimiter)
+cut -d' ' -f2- xxx.txt       # delimiter is space ' ', take field 2 to the last field
+tips for sed: always start with able to print the whole match first, then slowly reduce to the correct
+/sbin/ifconfig -a | awk '/(cast)/ { print $2 }' | cut -d':' -f2 | head -1        #extract ip
+
+/cast/=line contains "cast", print $2=print f2 of matched line  (coloumn 2) -f2(field 2)
+
+sed -n 's/.*path *= *\([:print:]*\)/\1/gp' < .gitmodules > .projectlist
+product=$(echo -n $selection | sed -e "s/-.*$//")
+kill %`jobs | sed 's#\[\([^\]]*\)\].*tail -f.*_android.log.*#\1#'` > /dev/null &2> /dev/null
+sed 's/'$BASH_VAR'/replace/' < xxx
+sed -ne "/$oursearch/s/$oursearch//p"               ## show only matched
+sed -r                                                             ## use extended regexp, no need to escape + ? () |
+sed -n '5p'                                                      ## print only line 5
+zipnote nlev_r1.1.1.zip | /bin/grep -v comment | cut -d" " -f 2 | cut -d"/" -f2
+git diff --stat autolinq-2.1_base.. | /bin/grep '|' | sed -n 's/\([[:alnum:]]\) *|.*/\1/p' | xargs -I {} gvim --servername $VIM_SERVER --remote {}
+
+[ print ]
+printf "%-10.10s = %5.2f\n" 'totalsum' 200.235
+
+[ sort ]
+-k field_start[type] [,field_end[type]] ; field_start=field_number[.last_character]
+-b = characters within a field should be counted from first non-<blank> field
+sort -k 2,2 infile            # using second field as sort key
+sort -r -o outfile -k 2.2,2.2 infile1 infile2  # reverse order, 2nd char of 2nd field as sort key
+sort -k 2.2b,2.2b infile1 infile2   # 2nd non-blank of second field as sort key
+sort -t : -k 3,3n /etc/passwd  # delimiter=:,  sorted by numeric user id (3rd colon-separated)
+sort -um -k 3.1,3.0 infile
+http://www.opengroup.org/onlinepubs/009695399/utilities/sort.html
+
+[ compare ]
+comm -23 file1 file2     ## show what is unique in file1, don't show wat in both or in file2
+
+[ tail ][ head ]
+tail +2 file     ## skip first two line
+tail -10 file    ## read last 10 lines
+
+[ newline ][ dos ][ remove ]
+tr -d '\r' < file
+dos2unix
+sed -e 's/<Ctrl-V><Ctrl-M>//g'
+sed '/Model-Manufacturer:/s/\r//g'
+[ navigation ]
+pushd ~/goto/this/dir > /dev/null     # cd into ~/goto/this/dir, and save cur dir into stack
+popd	         # change back to last saved dir using pushd
+cd -  (or cd $OLDPWD)         # same as popd , go to previous working directory
+dirs -v           # list directory save using pushd (dirs -c to clear)
+mark [name]   # bookmark current directory as name
+cdb [name]     # go to bookmarked dir
+bm [name]     # bookmark current as name (default is foo); use $ to [name]
+to [name] [subdir]  # change to dir name/subdir
+portal 	      # bookmark all current directory as its folder name
+apparix           # list bookmark (.apparixrc file)
+
+[ read file ]
+tail -f /var/file/in/updating
+watch 'cat /var/file/in/updating'     # update every 2s
+
+watch -d 'ls -l'  # highligh diff between screen update
+watch 'ls -l mydownload.iso'
+[ user ]
+id                  # check user id and group id
+sudo addgroup ccm_root
+sudo adduser insidepower
+sudo adduser insidepower ccm_root
+
+[ prompt ] (PS1, PS2)
+for color PS1, use \n for multi-line integrity (or cmd longer than 1 line will overlap 1st line)
+export PS1='${debian_chroot}\u:\e[1;32m\w\e[34m$(__git_ps1 "(%s)")\e[1;0m \$ \n'
+
+[ backup and automation ] [ Job Scheduling ]
+[ crontab ]
+crontab          # -l (list), -r(remove), -e(edit)
+syntax: min[0-59] hrs[0-23] day[0-31] mth[1-12] dow[0-7] /xx.sh arg1 arg2
+day of week=dow (0 or 7=sun)
+everyday, 5 min after midnight: 5 0 * * * /path/to/command
+run at 2:15 on first day of month: 15 14 1 * * /path/to/command
+run at 10pm on weekdays: 0 22 * * 1-5 /path/to/command
+run 23 min after midnight, 2am, 4am : 23 0-23/2 * * * /path/to/command
+run at 4:05am sun: 5 4 * * sun /path/to/command
+*=all possible value
+,=list of value, e.g. 1,5,10,15,20,25
+-=range
+@reboot, @montly, @weekly, @daily, @midnight, @hourly: @hourly /path/to/ntpdate
+process running at another shell, need export DISPLAY=127.0.0.1:0
+[ at ]
+at now+1 min        # then type the command, ctrl+d to end
+for command need sudo privilege, use "sudo at"
+at -f xxx.sh -v time    # or try at -f xxx.sh midnight
+note: process executed in another forked shell, echo may not show anything
+atq to see the list
+atrm [queue-or-job-number]
+echo xmms -p | at 7.00
+[ sleep ]
+sleep 8h && xmms /path/to/mp3file.mp3
+[ all ]
+Kalarm
+[ restore deleted file ]
+grep -a -B 50 -A 60 'some string in the file' /dev/sda1 > results.txt
+-a (treat binary as text file, -B=before context, -A=line after context
+[ general ] [ trick ]
+mv temp{1,2,3} /new-folder       ## move temp1, temp2, temp3 to new-folder
+
+[ ps ]
+pstree -p           ## show tree like structure of ps
+
+[ count files ]
+ls -1 targetdir | wc -l
+find targetdir -type f  -maxdepth 1 | wc -l
+
+[ showing filetypes ]
+file myfile.txt
+stat myfile.txt    #show total hardlink
+ls -l myfile.txt    #second field shows total hardlink
+
+[ tar ] [ gunzip ] [ zip ] [ compression ]
+gunzip -9 /source             # generate /source.gz  (-9 slowest but best compression)
+gzip file                           # compress to file.gz
+gzip -d file.gz                  # decompress file.gz
+tar -xzvf file.tar.gz           # extract gzip file
+tar -czvf file.tar.gz files    # create gzip file
+tar -cjf file.tar.bz2            # create a tar with Bzip2 (-xjf to extract)
+
+repo forall -c "mkdir -p backup && /bin/cp --parent -fL `git ls-files` backup/ && pushd backup && tar -czvf ../backup.tar.gz * && popd && rm -rf backup/"
+the file/directory need read access, else will cannot open: permission xxx, exit from previous delayed
+zip ~/Desktop/xxx.zip ~/my-folder/*
+zipnote nlev_r0.3.0.zip              ## to list the files inside
+
+[ system info ]
+uname -a
+cat /proc/cpuinfo
+cat /proc/meminfo
+free     # show memory and swap usage
+
+[ finding commands ][ command info ][ which ][ type ]
+type -a ls             #show all instead of stopping at first one
+man -k music      #search manpage names/description containing musics
+locate ls              #update database with updatedb
+slocate ls             ##like locate, but dont search for file without user access
+
+type -a <command>    ## better than which (which only search $PATH and csh alias only
+
+alias lss="ls -ctrla"; type -a lss
+
+which <command>
+whereis <command>   # show possible 
+apropos <cmd_keyword>   ## search command by keyword
+
+apropos pdf   ## find cmd info which contains pdf
+
+[ file info ]
+ls -l file
+stat file_name     ## details info like ls -l (more verbose)
+file file_name      ## file type
+file1 -nt file2       ## check if file1 is newer than file2 ;; -ot=older than ;; -ef=same inode
+
+[ completion ]
+File Names
+Directory Names
+Executable Names
+User Names (when they are prefixed with a ~)
+Host Names (when they are prefixed with a @)
+Variable Names (when they are prefixed with a $
+git clone git://git.debian.org/git/bash-completion/bash-completion.git
+
+[ internet ]
+
+[ wget ]
+wget http://xxx/
+wget -r http://xxx/              # download the entire site (-r=recursive)
+
+wget -r -l4 --no-parent -A.jpg http://xxx # (l4=4 level, -A=get all, --no-parent=no parent dir
+wget -r -l1 --no-parent -A.gif -i file # read url(s) from a files
+wget -r -p -U Mozilla http://www.stupidsite.com/restricedplace.html
+wget --wait=20 --limit-rate=20K -r -p -U Mozilla http:/xxx.html
+wget http://www.openssl.org/source/openssl-1.0.0a.tar.gz
+[ gpg ]
+gpg xxx.tar.gz                   # verify gpg, if not found, import the RSA key
+gpg --import public.key       # public.key can be a file or stdin
+gpg --gen-key
+[ version ]
+uname -r
+cat /proc/version
+rpm -q kernel
+dmesg | grep Linux
+ls <kernel-src>/boot  # vmlinuz-xxx, note: vmlinuz=compressed & bootable kernel
+[ backup ]
+foremost - Recover files using their headers, footers, and data structures
+restoring cd/dvd/hdd/flash drive/photos
+ddrescue -b 2048 -d -e 20 -r 300 -v /dev/hdc /home/sam/dvd.iso log.txt
+if  not mounted, restore: foremost -t all -k 256 -v -b 2048 -i ~/dvd.iso -o ~/dvd/
+
+[ forgot root password ] [ recovery ]
+use recovery mode, at grub, press e, add "single", then press b to boot
+choose root
+mount -o remount,rw /    #if not will have "Authentication token lock busy" when passwd
+[ cmd ] [ gui ] 
+sudo apt-get install libnotify-bin
+notify-send "rsnapshot done :)"
+notify-send -t 5000 -u low -i   "BSE Sensex touched 18k" (-t=timeout, -i=info, low priority)
+_zenity="/usr/bin/zenity"; domain=$(${_zenity} --title "title" --entry --text "info" )
+#display progress: _out="/tmp/whois.output.$$";  whois $domain  | tee >(${_zenity} --width=200 --height=100  --title="whois" --progress  --pulsate --text="Searching domain info..." --auto-kill --auto-close  --percentage=10) >${_out}
+# Display back output: ${_zenity} --width=800 --height=600  --title "Whois info for $domain"  --text-info --filename="${_out}"
+${_zenity} --error --text="No input provided"
+#0=yes, 1=no, 255=esc: dialog --title "Delete file" --backtitle "Linux Shell Script Tutorial Example" --yesno "Are you sure you want to permanently delete \"/tmp/foo.txt\"?" 7 60
+gmessage (gtk-based xmessage), xmessage, whiptail, python-dialog
+if using crontab, need export DISPLAY=[user's machine]:0
+[ copy ]
+cp --parent src/v/mgt.vhd copy/                ## copy file with its structure also
+cp -rf /dest-with-lot-of-soft-link /dest
+[ md5sum ]
+md5sum xxx.iso   ## generate md5sum
+md5sum -c my_MD5SUMS.file   ## with the xxx.iso inside the same folder, verify
+[ redirect ]
+aaa > xxx.txt 2>&1                 ## redirect stderr and stdout to xxx.txt
+./xxx.sh 2>&1 | tee mylog   ## mylog will capture error in xxx.sh too
+myscript 1>output.log 2>err.log   ## == myscript > output.log 2>err.log
+myscript >& out         ## == myscript 1>out 2>&1 == myscript &> out
+cmd1 ; cmd2 ; cmd3 > out.log    ## only cmd3 output is captured
+{ cmd1 ; cmd2 ; cmd3 ; } > out.log  ## all cmd output are captured, last ";" is needed
+myscript 3>out3 4>out4 5>out5   ## redirect file descriptor 3 to out3 ... then we can use
+
+echo "test test" >&3          ## inside the script
+
+stdin=0; stdout=1 (buffered) ; stderr=2 (unbuffered)
+cmd1 > out.log 2>&1   ## both stdout & stderr log save to out.log
+cmd2 2>&1 > out.log    ## redirect stder->stdout, then stdout->out.log; in this case err log print to screen not out.log
+cmd2 2>&1 | cmd3       ## both stdout and stderr output are pipe to cmd3
+myscript 3>&1 1>&2 2>&3-   ##  stdout->stderr; stderr to fd3==stdout
+myscript 3>&1 1>stdout.log 2>&3 - | tee -a stderr.log  ## stdout->stdout.log; stderr->stdout && stderr->stderr.log
+[ proc ]
+cpu temperature :   /proc/acpi/thermal_zone/THRM
+cat /proc/filesystems   # to check if kernel support a particular fs
+[ xorg ] [ x11 ]
+sudo Xorg -configure    # need to run while no in x11
+sudo /etc/init.d/gdm restart   # restart x
+[ bluetooth ]
+echo "0" | sudo tee -a /sys/devices/platform/asus_laptop/bluetooth         # turn led light off
+[ mount ]
+sudo mount -t iso9660 -o loop /dev/sr0 mnt
+[ profile ] [ bashrc ] [ vimrc ]
+/etc/skel/.bashrc             # for new user, .bashrc will copy from this file
+/etc/vim/gvimrc.local       # global configuration
+C:\Documents and Settings\uidc1325\.bashrc   ## for msysgit bash, same for .gitconfig
+[ ubuntu ] [ initrc ]  at the end of the boot process after all system services have been started
+sudo vim /etc/init.d/local            ## then add the command there
+sudo chmod +x /etc/init.d/local
+sudo update-rc.d local defaults 80
+[ ubuntu ] [ apt ]
+dpkg-query -W | grep jd
+dpkg -i pkg.deb      # install debian package
+[ hostname ]
+/etc/hosts             ## syntax: remote-host-ip_num remote-host-name
+[ runlevel ]  ## is a command to show current run level too
+0 - halt (shutdown)
+1 - single user mode
+5 - multiuser, gui, networking
+6 - reboot
+only one runlevel at a time, e.g. if runlevel=3 (it is not run from 1,2, then 3)
+
+[ inittab ] 
+cat /etc/init/rc-sysinit.conf | grep DEFAULT_RUNLEVEL
+[ screen ] [ byobu ]
+can use this to check many info about the linux fs and proc, e.g. cpu info, mem, ...
+export DISPLAY=localhost:10    ## x forwarding (xhost + on local if neede)
+ctrl-a d            ## detach [F6]
+F2  (new) F3 (prev) F4 (next) F7 (copy)
+ctrl-a S - horizontal split (ctrl-a | for vertical split)
+C-a A  # (Amend) give a name to window
+C-a K  # (kill) close this window
+[ display ] [ x]
+Unable to open X display. 
+
+sol1: export DISPLAY=<local-machine-x-server-ip>:<disp-num>.<screen-num>
+
+use export DISPLAY=localhost:0  if using x forwarding (tunnel)
+
+sol2: run "xhost +" on display machine if not authorize to open windows
+
+disp-num: a group of dev containing 1 or more screens but with one keyboard & mouse
+screen-num: specific screen within the disp-num group
+startx
+init 4   or /sbin/init 4
+xdpyinfo | head
+xrandr --auto                    # to auto resize, e.g. when connecting to external monitor
+xauth merge /home/<user>/.Xauthority && export DISPLAY=:0.0 && xrandr --auto
+xauth list
+xhost +local:non-authorized-user               # as x owning user, add the user
+x server is local machine; remote x client make connection to x server in local machine; 
+xeyes -display paxbox1.paxco.com:0.0        # use -display else use export DISPLAY=xx
+GDM2 uses custom.conf, add the following: [security] DisallowTCP=false
+xinit
+
+[ ctags ]
+/usr/bin/find . -path ./arch/ -prune -o -name "*.h" -o -name "*.c" > taglist.file
+/usr/bin/find arch/arm/mach-mx51 -name "*.h" -o -name "*.c" >> taglist.file
+ctags --sort=foldcase -R -L taglist.file
+[ network ]
+traceroute www.google.com   # if asterisk mean timeout for expected packet
+mtr google.com                  # traceroute and ping
+whois domain – get whois information for domain
+dig domain – get DNS information for domain
+dig -x host – reverse lookup host
+wget file – download file
+wget -c file – continue a stopped download
+sudo ifconfig wlan0 down
+curl -o -u <user:password> <url>    # get the list of files in ftp
+curl -o -u <user>:<pass> <url>/file  # get the file from ftp
+curl http://{site,host}.host[1-5].com -o "#1_#2"       
+iwconfig                              # configure wireless
+iwlist wlan0 channel           # list wireless info
+ifconfig wlan0 down           # switch off wireless interface
+ifconfig eth0 192.168.10.12 netmask 255.255.255.0 broadcast 192.168.10.255
+ifdown eth0:0                      # interface eth0 alias
+route add -net 10.0.0.0 netmask 255.0.0.0 gw 192.168.10.254 eth0 
+watch netstat -tn
+
+[ network ] [ configuration file ]
+/etc/resolve.conf                  # DNS
+
+search cw01.xxx.com, cw02.xxx.com          # search for domain
+nameserver 10.219.37.xxx                           # DNS ip, each ip by one entry
+
+/etc/hosts                             # host to be resolved locally (not by DNS)
+
+10.219.37.xxx   my-hostname.domain.com   second-hostname.com   third-hostname
+
+/etc/nsswitch.conf                # list order of host name search, typically local files, NIS server then DNS
+/etc/network/interfaces        # specify network configuration like static ip, dhcp
+
+man interfaces
+auto eth0
+iface eth0 inet dhcp
+auto eth0
+iface eth0 inet static
+	    address 208.88.34.106
+	    netmask 255.255.255.248
+	    broadcast 208.88.34.111
+	    network 208.88.34.104
+	    gateway 208.88.34.110
+
+[ route ]
+ip route                                # ip routing table
+route add default gw 192.168.1.254 eth0        # route all traffic via eth0--> gateway 192.168.1.254
+ip route add 192.168.1.0/24 dev eth0              # same as above
+
+[ iptables ]
+iptables -L                            # list
+iptables -I FORWARD 1 -s 192.168.65.0/24 -i eth1 -d 192.168.1.0/24 -j ACCEPT
+
+[ wireless ]
+lspci -v | less                        # to check the wireless info, search for Wireless
+sudo iwlist wlan0 scan         # scan
+sudo iwconfig wlan0 essid xxx-smile-network   # connect
+sudo iwconfig wlan0 essid any     # card will pick the first available access point
+sudo iwconfig wlan0 freq 2.422G  # set to frequency or use "sudo iwconfig wlan0 channel 3"
+sudo iwconfig wlan0 frag 512    # break packet down to small in very noisy env
+sudo iwconfig wlan0 commit     # apply the changes set above, as some card will take time to apply
+
+[ ip forwarding ]
+echo 1 > /proc/sys/net/ipv4/ip_forward            # as gateway or router; /etc/sysctl.conf; /etc/sysconfig/network
+
+[ network classes ]
+Class A: Defined by the first 8 bits with a range of 0.0.0.0 - 127.255.255.255
+Class B: Defined by the first 8 bits with a range from 128.0.0.0 - 191.255.255.255
+Class C: Defined by the first 8 bits with a range from 192.0.0.0 - 223.255.255.255
+Class D: Defined by the first 8 bits with a range from 224.0.0.0 - 239.255.255.255
+Class E: Defined by the first 8 bits with a range from 240.0.0.0 - 247.255.255.255
+
+[ ip subnet ] [ CIDR notation ]
+ipcalc -n 12.7.149.0/26         ## give info about subnet, need install
+ip-address/<total bit for netmask+subnet> # e.g. 204.17.5.32/27==network 204.17.5.32; 255.255.255.224; 3 bit sub
+27=24 net-id+3 bit sub-net; can create 5 subnet (3 bits); and up to 32 hosts, 30 out of 32 can be assigned
+204.17.5.0 255.255.255.224     host address range 1 to 30
+204.17.5.32 255.255.255.224    host address range 33 to 62
+[ mail ]
+tail -f /var/log/maillog           # to check what is going on
+
+[ im ] [ write ] [ chat ]
+write uidc1325 pts/1
+wall            # to broadcast to all user
+
+[ log level ][ dmesg ]
+dmesg -s 16392           # default buffer size, can set to 1MB
+dmesg -n log_level      # 1 is the highest
+[ recover deleted files ] [ sdcard ]
+sudo apt-get install testdisk
+sudo photorec
+
+choose /dev/mmcblk0 -> intel -> FAT32 -> other -> Free -> choose folder to recover to 
+[ environment variable ]
+when we export variable, it got stored at the /proc/<pid>/environ
+will be inherited to child process, to check cat /proc/3940/environ | tr '\0' '\n'
+set          # check the current variable
+unset HTTP_PROXY  ## note: variable doesn't has $ here
+
+[ misc ]
+enable -n myapp_not_builtin    ## avoid using builtin cmd, use myapp_not_builtin instead
+echo -n "no newline"
+alias myalias="cd ~/mydoc"
+card ls --output=~/ls.ps     # format help message into a ref card
+gksu gedit
+date
+cal 2010                          # calendar (show 2010), to show just one month: cal 5 2010
+ncal -w 2010                    # print week num with -w
+time read # simple timer (start till user ret); time read -N 1 (read 1 char); time read -t 60
+reset                               # reset screen
+tput clear (or clear or ctrl+L)
+python -m SimpleHTTPServer   # serve current dir at http://localhost:8000/
+python -m SimpleHTTPServer 8080
+echo cmd | at 3pm tomorrow # exec one-time job (atq=queue, atrm=remove)
+ssh-copy-id remote-machine # copy public-key to remote://~/.ssh/authorized_keys
+ssh -p port user@host    # connect to host on port
+scp ~/.ssh/identity.pub user@remote-machine:/tmp
+ssh remote-machine 'cat >> .ssh/authorized_keys' < .ssh/identity.pub
+export HISTFILESIZE=1000
+export HISTIGNORE="&:[ ]*:exit"   # ignore duplicate cmd, start with [] and exit (shopt)
+fortune                            # daily quote
+bashis                              # bash theme
+dd if=/dev/dsp | ssh username@host dd of=/dev/dsp  # output microphone to other comp
+ssh user@host cat /path/to/remotefile | diff /path/to/localfile -  # compare local & remote
+
+- = standard input
+
+sshfs name@server:/path/to/folder /path/to/mount/point  # mount remote folder via ssh
+useradd -g ccm_root -p xxxx -m admin (-m=create home)
+usermod (to modify user details)
+sudo usermod -l old_login current_login
+/etc/sudoers
+time                               # take the time used to execute the function
+size                               # show size of text, bss, data ..
+hostname -i                     # extract ip
+cat /proc/cpuinfo             # check how many cpu we have "cpu cores : 2"
+Expect - Tcl extension    # automate interaction, e.g with minicom
+quota -vs                         # check quota (s=human readable)
+bc                                    # terminal calculator
+telnet 127.0.0.1 22          # check if a port is open (connected) or not (connection refused)
+cat -s (sequeeze blank); cat -n (show line num); cat -t (show tab as ^); cat -e (show end of line with $)
+
+[ proc ]
+/proc/<pid>                   # contains cmdline, cwd, environ, fd(file descriptor), fdinfo (offset, open flag)
+/proc/<pid>/maps          # currently mapped regions and their access permissions
+/proc/<pid>/stat             # used by ps
+/proc/<pid>/status         # easier to read than /proc/<pid>/stat
+/proc/cmdline                 # cmd line pass to kernel
+
+BOOT_IMAGE=/boot/vmlinuz-2.6.32-25-generic root=UUID=e9e95e86-1543-4ebb-b07b-cf68b6673c0a ro quiet splash
+
+/proc/config.gz              # .config file used, make xconfig, make config, 
+/proc/cpuinfo
+/proc/fb                         # framebuffer info
+/proc/filesystems           # supported file systems compiled into kernel
+/proc/interrupts
+/proc/iomem                 # io memory map
+/proc/kallsyms               # kernel exported symbols
+/proc/kcore                    # phy mem of system (elf format); kcore+vmlinux(unstripped binary)+gdb=>cur kernel data
+/proc/kmsg                    # dmesg; this file can be used instead of syslog call to read kernel msg
+/proc/loadavg                # load average figures
+/proc/meminfo
+/proc/modules                # lsmod use this
+/proc/mounts                  # same as mount
+/proc/net/arp                  # arp table
+/proc/net/tcp                   # also /proc/net/udp;
+/proc/partitions               # show major/minor number of each partition
+/proc/self/xxx                 # same as /proc/<pid>/xxx,  a convenient to refer to own pid
+/proc/stat                        # system statistics, cpu, blocked process, running process
+/proc/sys/kernel/             # contains parameter like printk, hostname
+/proc/version
+/proc/uptime
+
+[ man ]
+1      shell commands (e.g. mv, ls, cat)
+2      system calls (e.g. _exit, read, write)
+3      library calls (including stdio) e.g. exit, printf
+4      device and network specific info (e.g. mv, ls, cat)
+5      file formats (e.g. passwd, termcap)
+6     games and demos (e.g. fortune, worms)
+7     miscellaneous (e.g. troff macros, ascii character map)
+8     admin functions (e.g. fsck, network daemons)
+man 3 errno
+man 5 proc
+man 7 ascii
+man 7 bootparam
+man 7 hier                       # list fs hierarchy
+man 7 operator                 # c precedence and associativity table
+man 7 regex
+man 7 time
+man 7 units                      # kilo, kibi
+man 7 url
+
+[ image ] [ resize ]
+sudo apt-get install imagemagick
+mogrify -resize 640 *.jpg          ## note: will replace original photo
+mogrify -resize 640×480! *.jpg ## not maintaining proper ratio
+[ programming ][ debug ][ gcc ]
+nm
+objdump
+readelf      ## displaying elf info
+ldd           ## Printing Shared Libraries
+od            ## Dumping File In Various Formats
+
+
+[ bash ] [ programming ][ script ][ execute == eval ]
+$ (cd  ~ && ls -la)            # subshell, result won't affect current shell (e.g wun cd into ~)
+cp filename{,.bak}            # == cp filename filename.bak  (brace expansion)
+echo {a,b,c}{a,b,c}{a,b,c} # aaa, aab,  ...
+mv temp{1,2,3,4} ./foo\ bar/   # move temp1, temp2.. to ./foo bar/
+./app1; ./app2                  # exec app1, then app2 (even app1 failed)
+for files in *; do echo git add $files/.; done
+(echo >/dev/tcp/localhost/25) &>/dev/null && echo "TCP p25 open"||echo "TCP p25 close"
+CMD="echo a string" && eval $CMD     ## execute a string as a command
+nohup my-no-ending-script &     ## append output to nohup.out
+
+[ argument ]
+echo $1 $10 ${10}      #$10 become $1+append 0, ${10} is the correct one
+$* list all argument
+$@ better than $* as it can support filename with space
+shift                              ## consume argument, $2->$1, $3->$2
+$0 = application name
+$1 = first param
+
+[ variable ]
+ARG_OR_DEFAULT_VALUE=${1:-"internal_value"}      ## if $1 is null or empty, use "internal_value"
+VAR_SET_IF_NULL_EMPTY_OR_NOEXIST=${HOME:=/test}       
+
+echo ${HOME:=/test}    ## /home/user123
+unset HOME      # no $
+echo ${HOME:=/test}   ## /test
+
+${VAR:="$(pwd)"}
+${VAR:=${HOME}}
+${VAR:=~user}
+${VAR:=$((NUM+1))}
+${1:="this will not work as we can't assign to $1"}   ## not sure
+${1:-"this will work as we din assign to $1"}
+VAR_SET_IF_NOT_EXIST_ONLY=${HOME=/test}
+VAR1=${1:?"Error & exit if no argument is provided by user"}  ## not popular, as harder to read
+
+if [ -z $1 ] ; then echo "Error" ; exit ; fi ;
+
+[ filename/argument with space ]
+myscript: ls -l "${1}"        ## $ myscript "filename with space"
+$ mysh *.txt
+my.sh: for filename in $*   ## $ 123.txt filename with space.txt ==> total=4 args, which not wat we want
+my.sh: for filename in "$@"   ## "123.txt" "filename with space.txt" ==> total=2 args, correct!
+
+[ expansion ][ parameter ][ special symbol ][ string mangling ][ substitution ]
+${VARIABLE_PARAMETER}
+$(COMMAND_SUB_SHELL)
+$((ARITHMETIC))
+for SEQ in 1 2 3 ; do echo my num${SEQ}embedded ; done
+$@  	                                ## total arguments passed in       
+${#}                                    ## total arguments passed in (or $#_
+${#VAR_LENGTH}
+var=get_substr_get
+
+echo ${var:2:5} ## t_sub    ;; substring
+$ echo ${#var} ## 14          ;; length of variable
+$ echo ${var#get} ## _substr_get     ;; delete first from front
+$ echo ${var##get} ## _substr_get   ;; delete longest match till end from front
+$ echo ${var%get} ## get_substr_    ;; delete first from rear
+$ echo ${var%%get} ## get_substr_  ;; delete longest from rear
+$ echo ${var/get/put}  ##put_substr_get  ;; subs first occurrence
+$ echo ${var//get/put} ##put_substr_put  ;; subs all occurrence
+
+[ heredoc ]
+$ cat my.sh
+# << EOF or <<EOF (space / no space in between is fine)
+# $ need to be escaped
+# grep $1 <<-EOF     ## - suppress leading tabs, but not space
+grep $1 <<EOF
+text1 haha
+text1 haha \$100
+text2 hehe
+EOF
+$ mys.h text1     
+
+[ array ]
+MY_ARRAY=(first second third) ; echo ${MY_ARRAY[0]}
+
+[ arithmetics ]
+COUNT=$((COUNT + 6))        ## no space between = , space between + and (( or )) is allowed
+let COUNT=6+7                          ## no space between = and +
+COUNT = $(( COUNT + 6))       ## error!! as bash interpret as executing COUNT app with = is first argument
+COUNT=$(( COUNT+$1))        ## user supply first argument
+a=8; b=1; BIT_SHIFT=$(( a<<=b ))    ## 16 (bitwise left shift)
+>>=   ## bit-shift right
+&=     ## bitwise and
+|=       ## bitwise or
+^=      ## bitwise exclusive or
+echo $((COUNT+=5, INDEX==3 ))   ## double assignment
+let COUNT+=5 INDEX+=3
+
+[ read ][ user input ]
+read    ## read user input to environment variable $REPLY
+read -p "key in your name then surname: " NAME SURNAME        ## no $
+read -s -p 'password: ' PASSWORD; printf "%b" "\n"             ## dun show what user type, need \n to go next line
+
+[ multiple command ][ && ][ || ]
+cmd1 ; cmd2 ; cmd3 ;      ## always executed
+cmd1 && cmd2 && cmd3;    ## executed if previous is successful
+cmd1 || cmd2 || cmd3    ## executed if previous is not successful
+goodcmd || echo "will not be printed"
+badcmd || echo "will be printed"
+
+[ history ]
+^old^new^                     # replace last cmd old with new and execute it 
+!!:s/old/new                     # above is shortcut, use !!:gs/old/new for global
+!last_cmd_pattern             # exec lastest cmd start with last_cmd_pattern
+!last_cmd_pattern:p          # print lastest cmd start with last_cmd_pattern (no exec)
+!?most_recent_contain_str? # exec most recent cmd containing string
+!!
+!-2                                 # second last command
+echo !!:2-3                      # echo with last cmd 2nd and 3rd arg
+echo !!:*                         # echo with last cmd all arg (^=first, $=last)
+echo !!:$:r                       # last arg, with suffix (e.g. .bat) removed
+echo !!:$:h                      # last arg, keep head only (last=/etc/hosts, now=/etc/)
+echo /var/*!!:$:e              # last arg suffix (last=xxx.log, now=/var/*.log)
+history | tail -2 | head -1 | cut -d' ' -f3-
+
+[ set -o vi ][ vi ]
+esc into cmd mode (after each normal cmd executed, it will go into insert mode)
+/ or ? to search history   (N, n to go to next search)
+G                                   # move to history line N (15G)
+A                                   # move to end of line and edit
+0                                   # move to beginning of line
+h i j k, a, i, dd, D, p, .(repeat), f(find), m{a-z}(bookmark char position)
+man 3 readline
+
+ [ tricky ][ echo ]
+echo "PS1='\${debian_chroot:+(\$debian_chroot)}\\w\\e[37m\\e[0m \$(__git_ps1 \"(%s)\")\\n\\\$ '" >> ~/.bashrc
+
+[ pipe ][ tee ]
+${PIPESTATUS[*]}           ## pipe exit status array 
+${PIPESTATUS[0]}           ## commandA | commandB;  [0]=commandA exit status
+myscript.sh | uniq | tee /tmp/out.log | cm2 | cmd3      ## print the output in the middle of pipe
+for pipe to work, application must be able to take stdin as input
+
+rm file.*  ## okay
+find 'file.*'  | rm   ## not okay
+rm $(find 'file.*')  ## okay
+
+[ debug ]
+set -e         ## if error, exit the script
+
+cd non_existence_directory     ## script will stop here then exit
+
+[ condition ]
+if (( $? )) ; then echo "fail"; else echo "ok" fi   ## $? = not 0 if fail
+
+[ if ]
+if [ $result = 1 ] ; then echo "gd " ; exit 0 ; else echo "bad ; exit 2 ; fi
+[ $result = 1] \
+	    && { echo "gd" ; exit 0; } \
+	     || { echo "bad" ; exit 2; }
+
+[ case ]
+[ -z $user_input ] && user_input="n"
+case $user_input in
+	[yY1] ) echo "user say yes" ;; 
+	[ nN0]) echo "user say no" ;;
+	*) echo "Error" ;;
+esac
+
+[ until ]
+until [ $user_input = "y" ] ; do read -p "exit? " answer ; done
+
+[ for ]
+for script in /myscript-dir/* ; do if [ -f $script -a -x $script ] ; then $script fi ; done ;  ##-x=executable
+
+[ document ][ usage ]
+perldoc myscript   ## read on-screen, auto-paginated
+pod2usage myscript    ## just usage
+pod2html myscript > xxx.html   ## create html
+pod2man myscript > xxx.1
+# sample script with usage doc
+echo 'put all cmd & script here; we will put usage after this'
+# use a : NOOP and here document
+:<<'MY_DOC'
+...
+=head1 NAME
+oneline description here
+=head1 SYNOPSIS
+...[option]<file>
+=head1 OPTIONS
+=head1 DESCRIPTION
+...
+=cut
+MY-DOC
+[ xargs ]
+(cmdA_output_multiline | xargs cmdB -a ) == cmdB -a cmdA_multiline_output
+(cmdA_output_multiline | xargs -I {} cmdB -a {}) == cmdB -a cmdA_1st; cmdB -a cmdA_2...
+-I will ask xargs to execute once for each line output, -I will replace {} with tat output 
+ls dir_with_pdfs/*.pdf | xargs strings | grep "keyword"    # find word in pdf
+ls | xargs -I {} -t -p echo "haha" {}     # process one by one (-t=verbose, -p=ask, -i capital)
+find . -name "*log" -print0 | xargs -0 echo "haha" 
+
+-print0     # output result terminated in null instead new line
+-0   # treat result from pipe is terminated as null, treat char lit, no special char (e.g. \n)
+
+find . -name "*nonexist" -prin0 | xargs -r /bin/rm -f   # -r=no run if empty output
+find /path -type f -exec rm '{}' + == find /path -type f -print0 | xargs -0 rm
+find . -maxdepth 1 ! -name "*.gz" -a ! -name "\." -exec echo '{}' \;  ## exclude . dot
+find . -maxdepth 1 \( ! -regex '\.' \)    ## exclude .  dot dir and all dir
+enpower xargs with script: looking for changes in all remote branch
+
+git branch -r | xargs -I {} ./myscript.sh {} "git log -Sconti_rel"
+myscript.sh ( echo $1; $2 $1)
+
+git ls-files --full-name | xargs -I {} gvim --servername `hostname` --remote {}
+[ searching ] or [ grep ]  global/regular expression/print = grep
+repo forall -p -c git branch -r | grep \(project\|temp\) # A or B
+ra git branch -r | grep project\|merge_temp # search A or B (same as above)
+grep -q -e "^[0-9][0-9]*";   -e regex
+grep -rIin xxx *          # recursive, ignore binary, ignore case, print line number
+ra git log merge-cm-r532-a-r500 -n1 --pretty=oneline | grep 5.3.2 -B1
+grep '\<P..H\>'           # search word "PxxH", same as vim \<word\>
+grep '*' myfile            # search for character *, but to be interpreted by regular exp
+grep "*abc"                # is meaningless, should use grep ".*abc"
+grep '\[' xxx                 # escape [
+find /Applications -path "*.app/Contents/Info.plist" -exec grep -iH python {} \;
+grep -rH --include='*.c' 'hello' /home/gigi
+grep -e '--cut here--' *           ## without -e, will attempt to parse --cut here-- as options
+cat /etc/passwd | grep 'alain' - /etc/motd    ## search standard input and in files
+grep -w -e '\(.\)\(.\).\2\1' file         ## match palindromes e.g. "radar" or "civic"
+grep "this\|or_this" xxx
+grep "this\?" xxx                        ## \?=zero or one;  \+=1 or more
+grep "[[:digit:]]" xxx
+grep "[[:digit:]nz]" xxx              ## find a digit followed by n or z, e.g. 1n or 1z
+egrep "b(an)+a" xxx                  ## extended grep, no need to escape + ? ( ) | ,  compare grep "b\(an\)\+a" xxx
+/bin/grep -h -o -E "Full Name.*" * | uniq ## -h:suppress filename, -o:only match printed,
+find ./ -name "*.ext" -print0 | xargs -n1 -P8 grep -H "str" >> file #vy fast (3min)
+grep -R "string" >> file  #vy slow (8h) -print0 delimit filename with NUL char, avoid problem
+
+[ find ]
+/usr/bin/find core libs -name "*.cpp"              ## find two folders, double quote needed
+find /home/gigi -name '*.c' -print0 | xargs -0r grep -H 'hello'
+ffind <inode>                                                 ## find a file using inode (need to install)
+find . -perm 750                                             ## find file with permission 750
+find . -not -perm 750                                      ## find file not permission 750
+find . -type l                                                   ## find symbolic 
+find . -user insidepower
+find . -path ./gen -prune -o -name *.java -print   ## must include "-print" else ./gen will get printed out
+
+[ su ][ sudo ]
+su -     ## acquiring super user power with root PATH(note: su use user PATH, not root)
+error: sudo: sorry, you must have a tty to run sudo
+sudo -u user2 /usr/bin/perl run-periodic-tasks --load 5 --randomly   ## trying to invoke a perl cmd as user2
+use visudo to disable sudo’s tty requirement, allowing sudo to be invoked from any shell lacking a tty (including cron)
+su --session-command="/usr/bin/perl run-periodic-tasks --load 5 --randomly" user2 &       ## better, more secure
+This line launches a new, non-login shell (typically bash) as the other user in a separate, background process and runs the command you passed using the shell’s -c option
+root     28109     1  0 17:10 ?        00:00:00 su --session-command=/usr/bin/perl run-periodic-tasks --load 5 --randomly dynamic
+user2  28110 28109  0 17:10 ?        00:00:00 bash -c /usr/bin/perl run-periodic-tasks
+
+
+
+getting current directory name
+basename /usr/local/bin
+basename `pwd`
+pwd | sed 's,^\(.*/\)\?\([^/]*\),\2,'
+echo ${PWD##*/}
+pwd | rev | awk –F \/ '{print $1}' | rev
+
+pwd = /usr/share/cups/data
+pwd | rev  = atad/supc/erahs/rsu/
+pwd | rev | awk –F \/ '{print $1}'  = atad
+pwd | rev | awk –F \/ '{print $1}' | rev = data
+[ problem ]
+when trying to mount ntfs, complain: doesn't seem to have a valid ntfs and “Unexpected clusters per mft record (-127)”
+[not working as recovery console not able to boot] use xp recovery cd, fixboot or fixmbr
+[ recovery console wouldn’t recognize my C:\WINDOWS folder, go into blue screen ]
+
+[solution]
+sudo apt-get install testdisk 
+sudo testdisk
+After starting testdisk, choose "No log", choose the correct HDD and "Proceed", choose "Intel", choose "Advanced", select the Windows partition, choose "Boot", then choose "Rebuild BS"; if testdisk gives you a warning that the "Extrapolated boot sector and current boot sector are different", then choose "Write". 
+sudo mount -t ntfs-3g /dev/sda1 /mnt/nt
+
+[ sudo echo ][ echo ]
+echo 6 | sudo tee -a /proc/acpi/processor/CPU0/throttling
+sudo sh -c 'echo "text" >> /etc/apt/sources.list.d/echo.txt'
+
+[ live cd ] [ customization ]
+sudo aptitude install squashfs-tools genisoimage
+mkdir mnt  && sudo mount -o loop ubuntu-9.04-desktop-i386.iso mnt
+mkdir extract-cd 
+rsync --exclude=/casper/filesystem.squashfs -a mnt/ extract-cd
+sudo unsquashfs mnt/casper/filesystem.squashfs 
+sudo mv squashfs-root edit
+sudo cp /etc/resolv.conf edit/etc/
+sudo cp /etc/hosts edit/etc/
+sudo mount --bind /dev/ edit/dev 
+sudo chroot edit 
+mount -t proc none /proc 
+mount -t sysfs none /sys 
+mount -t devpts none /dev/pts
+export HOME=/root 
+export LC_ALL=C
+
+aptitude clean
+rm -rf /tmp/* ~/.bash_history
+rm /etc/resolv.conf
+rm /var/lib/dbus/machine-id
+rm /sbin/initctl
+dpkg-divert --rename --remove /sbin/initctl
+umount /proc
+umount /sys
+umount /dev/pts
+exit
+sudo umount edit/dev
+chmod +w extract-cd/casper/filesystem.manifest
+sudo chroot edit dpkg-query -W --showformat='${Package} ${Version}\n' > extract-cd/casper/filesystem.manifest
+sudo cp extract-cd/casper/filesystem.manifest extract-cd/casper/filesystem.manifest-desktop
+sudo sed -i '/ubiquity/d' extract-cd/casper/filesystem.manifest-desktop
+sudo sed -i '/casper/d' extract-cd/casper/filesystem.manifest-desktop
+sudo rm extract-cd/casper/filesystem.squashfs
+sudo mksquashfs edit extract-cd/casper/filesystem.squashfs -nolzma    ## note: in 10.04, -nolzma removed
+sudo vim extract-cd/README.diskdefines
+cd extract-cd
+sudo rm md5sum.txt
+find -type f -print0 | sudo xargs -0 md5sum | grep -v isolinux/boot.cat | sudo tee md5sum.txt
+sudo mkisofs -D -r -V "$IMAGE_NAME" -cache-inodes -J -l -b isolinux/isolinux.bin -c isolinux/boot.cat -no-emul-boot -boot-load-size 4 -boot-info-table -o ../ubuntu-9.04.1-desktop-i386-custom.iso .
+qemu -cdrom ubuntu-9.04.1-desktop-i386-custom.iso -boot d -m 512
+kvm -cdrom ubuntu-9.04.1-desktop-i386-custom.iso -boot d -m 512
+cdrecord dev=/dev/cdrom ubuntu-9.04-desktop-i386-custom.iso
+[ busybox ]
+busybox cp /data/data/koushikdutta.superuser/su /system/bin/su\n
+
+[ grub problem ] : not solved
+
+[ removing grub2 ]:  http://ubuntuforums.org/showthread.php?t=1298932
+sudo apt-get update     ### then check if grub, grub-common are there
+sudo mv /boot/grub /boot/grub_backup
+sudo mkdir /boot/grub
+sudo apt-get --purge remove startupmanager
+sudo apt-get --purge remove grub-pc grub-common
+sudo apt-get install grub
+sudo update-grub
+sudo fdisk -l
+sudo grub-install /dev/sda
+sudo grub
+find /boot/grub/stage1
+root (hd0,2)
+setup (hd0)
+quit
+sudo apt-get install startupmanager
+
+title Microsoft Windows XP Home Edition
+rootnoverify (hd0,0)
+savedefault
+makeactive
+chainloader +1
+
+[ xming ]
+XLaunch -> multiple windows -> start a program -> (gnome-terminal); using plink.exe; password can give later -> save cfg, launch
+
+
+[ my command ]
+# to add another git remote using repo
+# not working
+repo forall -c "git remote -v | sed -e 's/^conti */conti_dev /g' -e 's/ git@/ dev@/g' | awk '{ print $2 }' | xargs -I {} echo {}"
+
+# working
+repo forall -c "git remote -v | sed -e 's/^conti *//g' -e 's/git@/dev@/g' | awk '{ print $2 }' | xargs -I {} echo git remote add conti_dev {}"
+repo forall -c "git remote -v | sed -e 's/^conti *//g' -e 's/git@/dev@/g' | awk '{ print $2 }' | xargs -I {} git remote add conti_dev {}"
+repo forall -p -c "git remote -v | head -n1 | sed -e 's/^conti_dev//g' -e 's/dev@/int@/g' | awk '{ print $2 }' | xargs -I {} git remote add conti_rel {}"
+ra "git remote -v | sed -e 's/^conti_dev *//g' -e 's/dev@/int@/g' | awk '{ print $1 }' | xargs -I {} git remote add conti_rel {}"
+git diff --stat autolinq-2.1_base.. | /bin/grep '|' | cut -c 1-52 | xargs -I {} gvim --servername $VIM_SERVER --remote {}
+
+to learn
+
+ps aux | sort -nk +4 | tail  # display top ten running process (sort according col4)
+use htop or top
+
+to test
+@/etc/rc.local, before exit 0, add
+
+ethtool -s eth0 wol g
+
+note the mac hw address
+reboot system
+sudo apt-get install wakeonlan
+wakeonlan xx:xx:xx
+
+web:
+to see what the error is in reality, try using nohup: nohup [command] nohup.out
+tar --exclude=stats/* -czpf pacesetter.tar.gz *
+Directories need execute permission (so that chdir() works),
+d
+[ chrome ]
+Action: com.ubuntu.systemservice.setproxy
+Vendor: SystemServer
+
+
+
+[ installation ]
+- currently using ext4 for root
+- root is in /dev/sda4 (ext4)
+- home at /dev/sda11 (ext4)
+- second partition at /dev/sda12 (ext3)
+
+
+
+[ dev ][ udev ][ sysfs ]
+ /dev directory 
+is used to store file-like device nodes 
+populated with every device that might possibly appear in the system
+devfs came along to provide a more manageable approach (noticeably, it only populated /dev with hardware that is plugged into the system
+udev is the "new" way of managing /dev directories,
+sysfs is a new filesystem to the 2.6 kernel
+exports basic information about the devices currently plugged into your system and used by udev
+sysfs is mounted at /sys and is browseable
+ls -lR /dev/disk
+Files in /etc/udev/rules.d/ are parsed in lexical 	
+In general, you want your own rules to be parsed before the defaults, so I suggest you create a file at /etc/udev/rules.d/10-local.rules and write all your rules into this file

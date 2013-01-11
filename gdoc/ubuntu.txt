@@ -1,0 +1,3158 @@
+
+ubuntu Softwaresetup
+
+
+
+[ installation ]
+- currently using ext4 for root
+- root is in /dev/sda4 (ext4)
+- home at /dev/sda11 (ext4)
+- second partition at /dev/sda12 (ext3)
+- configure swap area
+
+
+
+1. Editing PS (command prompt) @ vi ~/.bashrc
+2. gksudo and kdesu for graphical applications. sudo for command-line applications.
+3. /etc/apt/sources.list (synatic source)
+4. command line shortcut: sudo mv /usr/bin/firefox f
+5. gconf-editor
+6. echo $PATH (win: echo %PATH%)
+7. "Headers" mean development (*.h) files which are conveyed by -dev packages.
+8. smb://192.168.1.101
+9. Alt+ Print Screen + (Raising Elephants Is So Utterly Boring) - to restart ubuntu
+
+[ software ] recommended
+accessories
+speedcrunch (calculator)
+quaculate
+synergys and quicksynergy - mouse and keyboard sharing
+
+game
+cgoban
+
+graphics
+gThumb
+scribus
+inkscape
+
+internet
+wireshark
+kotepe? (replace pidgin?)
+Epiphany (fast gtk browser)
+midori (promising webkit browser)
+
+programming
+ddd
+meld (like beyond compare)
+FLUID (fltk gui editor)
+quanta plus
+valgrind (memory debugger, profile)
+
+sound and video
+vlc
+audacity
+
+system tools
+hotwire shell
+
+pdf
+pdf2ps  - convert to postscript then open using scribus
+scribus 
+pdftk
+pdftk 1.pdf 2.pdf 3.pdf cat output 123.pdf      # merge a few pdfs into one
+
+misc
+rar + 7zip support
+Konsole (KDE)
+Liferea – Linux based feed reader
+
+[ dual panel file manger ]
+krusader (qt, slow, but have many feature) - use this 
+xfe (clickable path like nautilus) - use this
+tux commander (tabbable)
+gnome commander (no tabable)
+
+network ?
+nmap - For double checking IP allocations, finding that system downstairs that uses DHCP
+netcat - networking "swiss army knife"
+logwatch - or something similar to aid in reading / paring log files or serious messages
+
+fonts ?
+ttf-mscorefonts-installer - download gratis Microsoft core web fonts
+ttf-liberation - Red Hat work-alike fonts
+ttf-inconsolata - monospace font for programming
+adblock-plus and foxyproxy web browser plugins
+
+online storage ?
+Dropbox, for offsite backup
+skydrive
+
+chat?
+Quassel - the irc client with quite progressive features.
+irssi - IRC client
+Liferea is one of the best among desktop feed readers.
+
+file browser
+Midnight Commander
+misc
+ubuntu tweak
+glippy (simple clipboard manager + image)
+gmrun (autocompletion, history)
+
+c-r, c-s, !, tab
+wallpaper
+Real-time Sunlight Wallpaper
+
+enhancement
+screen -ls          # to list
+byobu (enhancement to screen)
+
+F2 - create new session (or window)
+F3 - move to prev session /window
+F4 - move to next window
+F6 - detach from byobu
+F7 - start copy (to paste use ctrl-a ])
+F8 - change window title
+F12 - to lock the screen
+ctrl-a h - screen shot current output to hardcopy.n
+ctrl-a <0-9> - switch to screen #0-9
+ctrl-a " - view list of current screen and select from it
+ctrl-a esc - copy mode
+ctrl-a A - name a session
+ctrl-a S - horizontal split (ctrl-a | for vertical split)
+
+multiuser
+
+ sudo chmod u+s /usr/bin/screen
+c-a : then type "multiuser on"
+c-a : then type "acladd user-name"
+to attach: screen -x <user-name>/
+
+[ optimization ]
+sudo apt-get install preload
+show startup apps
+change the setting
+sudo sed -i 's/NoDisplay=true/NoDisplay=false/g' /etc/xdg/autostart/*.desktop
+run the program: startup applications
+reduce grub boot wait time
+gksu gedit /etc/default/grub
+sudo update-grub2
+
+[ manpage ]
+man page for everything:   
+manpages-posix
+
+apt-get install xxx
+apt-get remove xxx
+apt-get autoremove
+apt-cache search phpmyadmin    #to search for phpmyadmin,
+apt-get update   #update database, said if apt-cache couldn't find a package
+
+to consider
+axel - download manager
+elinks - text browser
+ncdu - disk usage viewer (kn: like a bit slow)
+htop - enhancement to top
+surfraw - kn: chrome like can't use this properly
+
+surfraw google kmandla -browser=elinks
+
+elinks
+esc -> setup -> option
+
+Document->Cache->Ignore cache-control info from server (0)
+Document->Default color settings->Use document-specified colors (1)
+Document->HTML Rendering->Underline Links (1)
+Document->Browser->Forms->external editor (vim)
+User interface -> LEDs
+Terminals->xterm->colors(3)
+Document->downloading->directory
+
+esc->Terminal options (VT100, 256, block cursor, tranparency, underline)
+to edit form (press enter)
+press . then enter the link number, enter once to highlight the link, enter again to activate
+to go back <-, to go forward ->
+/ to search
+[ or ] to scroll horizontaly
+w to wrap
+< or > to switch between tabs
+t to open new tab
+g for location dialog
+h for history manager
+\ to see source
+D for download manager
+d to download link target
+q to quit
+
+[ window ] software
+1. irfanview
+2. fineprint (iprint is new software)
+3. flash
+4. photoshop
+5. notepad++
+6. sourceInsight
+7. xplorer2 (freeCommander)
+8. artrage
+9. cygwin
+10. spacemonger
+11. andLinux - let's Linux apps run natively in Windows
+12. magicDisc (by MagicISO)
+VirtuaWin – Provides multiple desktops similar to Linux
+13. CDex - grab audio to mp3
+14. Calibre - ebook management (format conversion)
+
+
+user icon 96x96
+
+package to install on new pc
+sudo apt-get -y install vim-gnome #(gtk is for xubuntu)
+sudo apt-get -y install build-essential
+sudo apt-get -y install exuberant-ctags
+sudo apt-get -y install git-svn
+sudo apt-get -y install git-doc
+sudo apt-get -y install gitk
+sudo apt-get -y install meld
+sudo apt-get -y install subversion
+sudo apt-get -y install ddd
+aii libncursesw5-dev
+sudo apt-get -y install apparix
+sudo apt-get -y install speedcrunch
+#sudo apt-get -y install doxygen
+
+
+chrome plugin
+adblock
+Google Quick Scroll
+autopager
+Copy Without Formatting
+Docs PDF/PowerPoint Viewer (by Google)
+FastestChrome - Browse Faster
+Google Dictionary (by Google)
+Google Translate
+Recent Tabs
+RSS Subscription Extension (by Google)
+Session Manager
+Web Developer
+Sexy Undo Close Tab
+Webpage Screenshot
+WOT
+SmoothScroll by PatrickB
+Screen Capture (by Google)
+AutoZoom by Red
+Development and Coding Search
+
+Explain and Send Screenshots
+
+[ 12.10 ]
+
+sudo apt-get update && sudo apt-get upgrade
+mp3, avi, flash videos
+sudo apt-get install ubuntu-restricted-extras
+dual layer dvd:
+sudo wget --output-document=/etc/apt/sources.list.d/medibuntu.list http://www.medibuntu.org/sources.list.d/$(lsb_release -cs).list && sudo apt-get --quiet update && sudo apt-get --yes --quiet --allow-unauthenticated install medibuntu-keyring && sudo apt-get --quiet update
+sudo apt-get install libdvdcss2
+privacy → switch off online search result
+Enable 'Show Remaining Space Left' Option in Nautilus File Browser
+View → Statusbar
+install “preload”
+switch between windows same application 
+"System Settings.." --> "Keyboard" go to 'Shortcuts' tab. →  "Navigation". Scroll down to "Switch windows of an app directly", e.g. Alt+`
+Apt-fast is a simple command line utility that can make installation and upgrading of softwares in Ubuntu/Debian much faster. Apt-fast make use of Axel application which accelerates HTTP/FTP downloads by using multiple sources for one file.
+sudo add-apt-repository ppa:apt-fast/stable
+sudo apt-get update
+sudo apt-get install apt-fast
+sudo apt-fast install chromium-browser
+sudo apt-fast upgrade
+Install Open in Terminal Nautilus Extension
+sudo apt-get install synaptic
+ubuntu tweak
+sudo add-apt-repository ppa:tualatrix/ppa
+sudo apt-get update
+sudo apt-get install ubuntu-tweak
+
+
+
+
+
+
+[ 12.04 ] [ color profiles ]
+
+
+[ 12.04 ][ language set up ]
+In Dash, type Language Support
+Choose Keyboard Input method system: ibus (step1)
+Then choose the language to install (step2)
+log out and log in, then should see the keyboard icon
+click the keyboard icon, select the preference
+click the “input method” select the input method, then add it
+
+
+
+[ keyboard shortcut ][ 12.04 ]
+
+ Super - open up search key
+
+Holding down the Super key will get you a keyboard overlay that documents most of these (12.04 only).
+Launcher
+
+
+Hold Super - Invoke the Launcher (Pre-12.04).
+Hold Super, then press 1 or 2 or 3 and so on until 0 to open or focus an application. The number corresponds to the location of the icon on the launcher from top to bottom.
+Adding Shift will open a new instance of the application if it's already open.
+Holding the key is also useful when you want to get to the Launcher but do not want to invoke the Dash.
+Super-T - Open the rubbish bin/trash can.
+Alt-F1 - Put keyboard focus on the Launcher, use arrow keys to navigate, Enter launches an application, Right arrow exposes the quicklists if an application has them.
+Ctrl-Alt-T - Launch a terminal window.
+Dash
+
+
+Tap Alt - Opens the HUD
+Hold Alt - Reveals application menu
+Tap Super - Opens the Dash. The open signal is sent when you let go of the key, not when you push it down, so if it feels slow just let go of the key earlier.
+Ubuntu 11.10
+Tab Move to the next lens (When the dash is open)
+Shift-Tab Move to the previous lens (when the dash is open)
+Ubuntu 12.04
+Ctrl-Tab Move to the next lens (When the dash is open)
+Ctrl-Shift-Tab Move to the previous lens (when the dash is open)
+Alt-F2 - Invoke the Dash in a "special mode" to run a command. Typing in a Folder Name will find that folder in Nautilus, you can also use ~ as a shortcut in the field.
+The Dash opens with focus on the search box to find applications and files. Using the arrow keys will navigate the results, use Enter to launch. Hitting Enter twice in rapid succession after a search term will automatically launch the first match in a search, even if it's still ongoing. (Basically a dash version of "I'm feeling lucky").
+Super-A - Open Applications lens
+Super-F - Open Files & Folders lens
+Super-M (11.10+ only) - Open the music lensa
+Super-V (12.04 only) - Open the video lens
+Panel
+
+
+F10 (11.10 and earlier) / Alt-F10 (12.04) - Open the first menu on the panel, use the arrows keys to "scrub" across the menus. (There is no shortcut for the session menu, so hitting F10 and left arrow is a quick way to get there)
+Press Esc to close the menus without choosing anything.
+Window Management
+
+
+Ctrl-Super-D - Show desktop; hitting it again restores the windows.d
+Super-W - (11.10 and earlier) Spread mode, zoom out on all windows in all workspaces, in 12.04 it zooms out on the windows in the current workspace.
+Super-D (11.10 and earlier) - Minimize all windows; hitting it again restores them.
+Alt-Space - Opens the window's accessibility menu.
+Alt-Tab - Switch to other applications, you can hold Alt down and then hit tab to switch to the next application.
+Alt-` - (11.10+ only) - Switch between an application's windows. Hitting this combo when you're already focused on an application will automatically switch only between the windows for that application. The ` key on US layouts, but Unity will use whichever key is above your Tab key. (More info) (Video)
+Ctrl-Super-↑ (12.04 only) - Maximize the current window (seems to be buggy at the moment)
+Ctrl-Super-↓ (12.04 only) - Restore/Minimize the current window (seems to be buggy at the moment)
+Ctrl-Super-← (12.04 only) - Maximize current window to the left
+Ctrl-Super-→ (12.04 only) - Maximize current window to the right
+Window Placement
+
+If you cycle through the same key Unity will cycle through different placement widths, so experiment by hitting the numkey multiple times, for example Ctrl-Alt-numpad 5 5 5:
+Ctrl-Alt-Numpad 7 - Place window in top left corner of screen.
+Ctrl-Alt-Numpad 8 - Place window in top half of screen.
+Ctrl-Alt-Numpad 9 - Place window in top right corner of screen.
+Ctrl-Alt-Numpad 5 - Center/Maximize the window in the middle of the screen. In 12.04 this toggles between maximize and restore state
+Ctrl-Alt-Numpad 1 - Place window in the bottom left corner of the screen.
+Ctrl-Alt-Numpad 2 - Place window in the bottom half of the screen.
+Ctrl-Alt-Numpad 3 - Place window in the bottom right corner of the screen.
+Ctrl-Alt-Numpad 0 -  (minimize) Maximize the current window.
+Workspace Management
+
+
+Super-S - Expo mode (for everything), zooms out on all the workspaces and lets you manage windows.
+Shift-Alt-↑ - Expo mode for all windows in the current workspace only.
+Ctrl-Alt-← / → / ↑ / ↓ - (11.10+) - Change to a new workspace.
+Ctrl-Alt-Shift-← / → / ↑ / ↓ - Place window to a new workspace.
+Ctrl-Alt-L - Lock the screen.
+Screenshots
+
+
+PrtScn - Take a screenshot of the current workspace
+Alt-PrtScn - Take a screenshot of the current window
+System
+
+
+Ctrl-Alt-Del - Logout
+Mouse Tricks
+
+Launcher
+
+
+Clicking and holding an icon and then dragging it around will allow you to reorder it on the launcher. You can also drag it off to the right of the launcher to move it around. Note that you need to make an explicit movement to the right to move the icon off the launcher before you can move it around.
+Dragging and Dropping an icon into the trash can will remove it from the Launcher. The program itself will remain installed and accessible through the dash.
+Scrolling the mouse wheel while over the Launcher scrolls the icons if you have too many and need to move around quickly.
+Window Management
+
+
+Maximizing - Dragging a window to the top panel, or double-clicking a window's titlebar, orAlt-F10 (11.10 and earlier), will maximize it.
+Restore - There are two ways to restore, or unmaximize, the topmost maximized window of the current monitor for this workspace (not using the window controls)
+Double clicking on the top panel (but not in the application's menu)
+Dragging the top panel down.
+Middle click on Maximize - Maximize Window Vertically.
+Right click on Maximize - Maximize Window Horizontally
+Focus the topmost maximized window of the current monitor for this workspace: Left click on the top panel (but not in the application's menu)
+Tiling - Dragging a Window to the left/right border will auto tile it to that side of the screen.
+Middle click on an application's launcher icon - Open a new instance of the application in a new window. If the application isn't running it will just open it normally.
+Middle click on the top panel or window title bar (but not the menu) - send the current window behind all other windows.
+
+
+
+[ lucid ]setting
+
+[ bluetooth ]
+sudo update-rc.d -f bluetooth remove # to disable at boot run
+sudo update-rc.d bluetooth defaults # to enable
+sudo /etc/init.d/bluetooth start # to start it later
+man update-rc.d
+echo "0" | sudo tee -a /sys/devices/platform/asus_laptop/bluetooth         # turn led light off
+
+[ close to right ] [ button ][ left ] [ right ] [ close ]
+gconftool-2 --set /apps/metacity/general/button_layout --type string menu:minimize,maximize,close
+
+[ nautilus ] [ shortcut key ][ hotkey ]
+gconftool --set /desktop/gnome/interface/can_change_accels --type=bool True
+gconftool --set /apps/nautilus/preferences/default_folder_viewer --type=string list_view
+gconf-editor /apps/nautilus/preferences/side_pane_view
+on the menu, just press the key to be assigned to
+sudo apt-get install nautilus-actions
+
+[ ctrl-alt ]
+Ctrl + Alt + F1 through F12 are mapped for switching between virtual consoles. graphical display is F7 or F8.
+Ctrl + Alt + BkSp aborts your graphical server and kills all graphical processes.
+Ctrl + Alt + - and + switch to a smaller or higher screen resolution, respectively.
+Ctrl + Alt + Esc runs xkill by default. The next window you click is killed.
+
+[ sound ] [ applet ] [ taskbar ]
+gnome-volume-control-apple
+
+-----------------
+AVG antivirus
+-----------------
+1. simply type sudo avggui
+
+2.
+sudo gedit /usr/share/applications/avgupdate.desktop
+
+File:/usr/share/applications/avg.desktop
+[Desktop Entry]
+Name=AVG Updater
+Comment=Antivirus
+Exec=sudo /opt/grisoft/avg7/bin/avgupdate -o
+Icon=/opt/grisoft/avggui/prog/pixmaps/avgupdateico.png
+Terminal=true
+Type=Application
+Categories=Application;System;
+
+[or]
+
+@ /usr/share/applications/avggui.desktop
+Exec=gksudo avggui &
+
+-----------------
+enable desktop effect
+-----------------
+
+install envy
+install xserver-xgl
+
+To disable Xgl autostart for this user, create a file named ~/.config/xserver-xgl/disable
+
+-----------------
+smb file sharing
+-----------------
+find the /media/sdax
+right click to share
+then
+sudo smbpasswd -a 'insidepower'
+
+--problem--
+not able to create new user
+currently accessing using linux user
+change the password for it
+$ sudo smbpasswd -a insidepower
+
+-----------------
+firefox
+-----------------
+cd /home/insidepower/.mozilla/firefox
+cat profiles.ini
+(change relative path to absolute, point to the profile we have backup)
+
+firefox -ProfileManager
+
+
+--------------------------
+installing ie5 (with wine installed)
+--------------------------
+sudo gedit /etc/apt/sources.list
+uncomment (remove ##) from feisty universe
+
+synaptic package manager -> search cabextract ->install
+
+goto user home, type
+wget http://www.tatanka.com.br/ies4linux/downloads/ies4linux-latest.tar.gz
+
+unzip
+tar zxvf ies4linux-latest.tar.gz
+
+run the application
+
+-----------------------
+installing chinese
+-----------------------
+scim -d
+export XMODIFIERS=@im=scim
+export GTK_IM_MODULE=scim
+gnome-session
+ 
+new method:
+locale | grep LANG=
+sudo apt-get install scim-qtimm im-switch scim-pinyin
+im-switch -z <LANGUAGE CODE> -s scim
+im-switch -z en_SG.utf8  -s scim
+Control-spacekey starts and stops Chinese input
+
+[ google ] [ pinyin ]
+git clone git://github.com/tchaikov/scim-googlepinyin.git
+aptitude install autotools-dev libgtk2.0-dev libscim-dev
+sudo apt-get install automake
+sudo apt-get install libtool
+./autogen.sh
+make
+sudo make install
+
+-----------------
+remove ntfs mount icon on desktop
+-------------------
+$gconf-editor
+apps>nautilus>desktop > volumes visible (unselect) to remove *ALL* volumes icon
+
+-----------------
+grub
+-------------------
+sudo grub
+root(hd0,1)
+setup (hd0)
+quit
+
+----------------
+win chkdsk
+----------------
+chkdsk c: /R (repair errors, locate bad sectors, and recover readable information)
+chkdsk c: /f (repair errors without scanning the volume for bad sectors)
+
+----------------
+misc
+----------------
+1. blacklist driver (gksu gedit /etc/modprobe.d/blacklist
+2. (proxy) gksu gedit /etc/bash.bashrc
+(last line) type **export http_proxy="http://username:password@proxyAddr:port_number/"**
+
+----------------
+removing drivers
+----------------
+sudo mv /etc/X11/org.conf.original-0 /etc/X11/xorg.conf
+
+----------------
+installing dhcp
+----------------
+Please note that if you are installing the DHCP server for the first
+time you need to configure it first. Please stop (/etc/init.d/dhcp
+stop) the DHCP server daemon, edit /etc/dhcpd.conf to suit your needs
+and particular configuration, and restart the DHCP server daemon
+(/etc/init.d/dhcp start).
+
+You also need to edit /etc/default/dhcp to specify the interfaces dhcpd
+should listen to. By default it listens to eth0.
+
+< option routers 192.168.1.1;
+< option domain-name "mydomain.org";
+< option domain-name-servers 192.168.1.1, 192.168.1.2;
+---
+< option subnet-mask 255.255.255.0;
+---
+< subnet 192.168.1.0 netmask 255.255.255.0 {
+< range 192.168.1.100 192.168.1.149;
+
+----------------
+font
+----------------
+fontconfig-voodoo -f -s zh_CN
+sudo gedit /usr/share/language-selector/fontconfig/zh_CN
+(move the western fonts (ie Bitstream, Deja Vu, etc) higher up on the list)
+and set
+<edit name="antialias" mode="assign">
+<bool>false</bool>
+
+#bytecode hinting
+sudo dpkg-reconfigure fontconfig-config
+sudo dpkg-reconfigure fontconfig (apply the change)
+
+#--skip--
+$ sudo apt-get install msttcorefonts
+x-ttcidfont-conf
+
+----------------
+firefox
+----------------
+firefox.exe -ProfileManager (or f -ProfileManager)
+~/.mozilla/firefox/
+
+# In profiles.ini, locate the entry for the profile you've just moved. Change the Path= line to the new location. If you are using a non-relative pathname, the direction of the slashes may be relevant (this is true for Windows XP).
+# Change IsRelative=1 to IsRelative=0.
+# Save profiles.ini and restart Firefox.
+
+----------------
+type of files
+----------------
+# d (directory)
+# l (symbolic link)
+# b (block device)
+# c (character device)
+# p (named pipe)
+# s (socket)
+
+---------------
+create hardisk link (softlink)
+---------------
+ln -s /media/sda1 winNew
+ln -s /media/sda
+ln -s /media/sda5 entertainments
+ln -s /media/sda6 softwareNew
+ln -s /media/sda7 nebula2
+ln -s /media/sda8 ubuntu_vm
+ln -s /media/sda9 anime2
+ln -s /media/sda10 powerWord2
+ln -s /media/sda11 old
+ln -s /media/sdb10 powerWord
+ln -s /media/sdb1 win_vm
+ln -s /media/sdb5 software
+ln -s /media/sdb6 song
+ln -s /media/sdb7 anime
+ln -s /media/sdb8 Nebula
+ln -s /media/sdb9 badSector
+
+----------------
+vmware-mouse not scrollable
+----------------
+$ sudo gedit /etc/X11/xorg.conf
+Then find "InputDevice" section with Identifier "Configured Mouse"
+Change Option "Protocol" "ps/2"
+to
+Option Option "Protocol" "IMPS/2"
+Last restart X using Ctrl + Alt + Backspace
+
+----------------
+vmware
+----------------
+wget http://download3.vmware.com/software/wkst/VMware-workstation-5.5.0-18463.tar.gz
+
+or
+
+http://download3.vmware.com/software/vmplayer/VMware-player-2.0.2-59824.i386.tar.gz
+
+Locate the windows.iso file (example):
+$ tar ztvf VMware-workstation-5.5.0-18463.tar.gz | grep windows.iso
+vmware-distrib/lib/isoimages/windows.iso
+
+Extract the windows.iso file (example):
+$ tar zxvf VMware-workstation-5.5.0-18463.tar.gz vmware-distrib/lib/isoimages/windows.iso
+
+Or, to extract windows.iso without creating the vmware-distrib/lib/isoimages directory structure, use pax:
+$ pax -zrvf VMware-workstation-5.5.0-18463.tar.gz -s,vmware-distrib/lib/isoimages/,, vmware-distrib/lib/isoimages/windows.iso
+
+3. Mount the windows.iso file as a loopback file system, and either share the loopback file system with Samba, or copy the VMware Tools files to a location accessible by your guest system.
+
+$ mkdir /tmp/vmware_tools
+$ mount -o loop windows.iso /tmp/vmware_tools
+
+In your guest system, run setup.exe from the VMware Tools directory.
+
+uninstall vmware
+/usr/bin/vmware-uninstall.pl
+
+----------------
+customKey
+----------------
+gconf-editor
+apps-metacity-
+keybinding (paste the command)
+global keybinding (choose run_command_x) type in the shortcut Key
+
+
+---------------
+video
+---------------
+w32codecs
+totem-xine
+libxine-extracodecs
+
+(third party tab) add:
+deb http://www.debian-multimedia.org etch main
+
+(install real-player): remove w32codecs version of Realplayer plug-in
+sudo rm -rf /usr/lib/firefox/plugins/libtotem-complex-plugin.*
+
+sun-java5-plugin
+
+dvd:
+libdvdread3
+
+sudo  /usr/share/doc/libdvdread3/install-css.sh
+
+rmvb:
+1. sudo wget http://www.medibuntu.org/sources.list.d/gutsy.list -O /etc/apt/sources.list.d/medibuntu.list
+2. wget -q http://packages.medibuntu.org/medibuntu-key.gpg -O- | sudo apt-key add - && sudo apt-get update
+3. sudo apt-get install mplayer
+4. sudo apt-get install w32codecs
+5. gmplayer video.rmvb
+---------------
+Desktop/Icon/Gdm Theme
+---------------
+gdm / Login Window Preferences
+1. Open the "gdmsetup/Login Window Preferences" > tab "Local"
+2. Use the "Add" Button and select the downloaded file.
+
+Icon:
+1. extract into ~/.icon then In <Appearance> choose Customize <Icon>
+
+awn:
+1.
+sudo apt-get install build-essential automake1.9 autotools-dev bzr libxdamage-dev libxcomposite-dev libgnome2-common libgnome2-dev libgnome-desktop-dev libgnome-vfs-dev libgtk2.0-dev libwnck-dev libgconf2-dev libglib2.0-dev libdbus-glib-1-dev libgnomevfs2-0 libgnome-desktop-2 libgnome2-0 libwnck-common python-gtk2 python-gconf gnome-common python-dev python-gtk2-dev python-cairo-dev python-gnome2-dev
+2. download awn software
+https://launchpad.net/awn/+download
+3. unzip the file and in that directory, run "./config" then "sudo make" then "sudo make install"
+
+curve-awn
+1. If you have avant already installed, remove it:
+sudo rm -f /usr/local/bin/awn*
+sudo rm -f /usr/local/bin/avant*
+sudo rm -rf /usr/local/lib/awn
+sudo rm -f /usr/local/share/locale/*/LC_MESSAGES/avant-window-navigator.mo
+sudo rm -f /usr/local/share/applications/avant*
+sudo rm -f /usr/local/share/applications/awn*
+sudo rm -rf /usr/local/share/avant-window-navigator
+sudo rm -f /usr/local/lib/libawn*
+sudo rm -rf /usr/local/include/libawn
+sudo rm -f /usr/local/lib/libawn*
+sudo rm -f /usr/local/lib/pkgconfig/awn.pc
+sudo rm -rf /usr/local/share/awn-core-applets
+sudo rm -rf /usr/local/lib/python2.5/site-packages/awn/
+
+2. sudo apt-get install bzr m4 gnome-common
+3.
+sudo apt-get install build-essential autotools-dev libxdamage-dev libxcomposite-dev libgnome2-common libgnome2-dev libgnome-desktop-dev libgnome-vfs-dev libgtk2.0-dev libwnck-dev libgconf2-dev libglib2.0-dev libdbus-glib-1-dev libgnomevfs2-0 libgnome-desktop-2 libgnome2-0 libwnck-common python-gtk2 python-gconf bzr gnome-common python-dev python-gtk2-dev python-cairo-dev python-gconf python-gnome2-dev 
+bzr co http://bazaar.launchpad.net/~awn-curves-team/awn/awn-curves awn-curves
+cd awn-curves
+./autogen.sh && make
+sudo make install
+ 
+4. gedit /etc/apt/sources.list
+5.
+deb http://download.tuxfamily.org/syzygy42 gutsy avant-window-navigator
+deb-src http://download.tuxfamily.org/syzygy42 gutsy avant-window-navigator
+6.
+wget http://download.tuxfamily.org/syzygy42/reacocard.asc
+sudo apt-key add reacocard.asc
+rm reacocard.asc
+sudo apt-get update
+7. sudo apt-get install avant-window-navigator-bzr awn-core-applets-bzr
+
+---------------
+customized startup
+---------------
+1. System > prefernces > sessions
+2. add "avant-window-navigator"
+
+---------------
+Installing IE6
+---------------
+sudo apt-get install cabextract
+sudo apt-get install wine
+copy mfc42.dll
+wget http://www.tatanka.com.br/ies4linux/downloads/ies4linux-latest.tar.gz
+tar zxvf ies4linux-latest.tar.gz
+cd ies4linux-2.99.0/
+./ies4linux
+Type "ie6" to run
+
+---------------
+Installing IrfanView
+---------------
+copy mfc42.dll
+
+
+---------------
+Accessing Ext3 from window
+---------------
+1. DiskInternals
+2. Explore2fs
+3. Ext2 Installable File
+
+---------------
+Checking portable hdisk
+---------------
+1. fdisk -l
+2. df -h (df - system disk space usage)
+3. cat /etc/fstab
+
+to mount: mount /dev/sda1 /mnt/sda1
+to unmount: umount /mnt/sda1
+
+
+---------------
+Ubuntu stuck at ... running local boot script (reading etc/rc.boot)
+---------------
+1. press control alt F1-F6 to log into one of the tty (1 to 6)
+2. type ...  sudo dpkg-reconfigure xserver-xorg
+3. set all the value to default one....
+4. type ... startx
+
+
+---------------
+To let other to remote access this computer
+---------------
+set the permission at system->remote desktop
+vncviewer greengrass:0
+
+---------------
+To list installed software
+---------------
+dpkg --get-selections
+
+
+---------------
+Virtual Box
+---------------
+#to mount
+sudo mount -t vboxsf sharename mnt_point/
+e.g. sudo mount -t vboxsf del2 mnt/
+
+#download
+sudo aptitude install virtualbox-ose virtualbox-ose-modules-generic
+sudo aptitude remove virtualbox-ose-modules-2.6.24-16-38
+
+#give permission to run virtual box
+sudo usermod -G vboxusers -a [your username]
+
+sudo apt-get install build-essential
+sudo apt-get install linux-headers-(replaced with uname -r result)
+sudo /etc/init.d/vboxdrv setup
+
+install guest addition (under devices)
+/media/cdrom0$ sudo ./VBoxLinuxAdditions.run
+
+to map shared folder
+net use x: \\vboxsvr\sharedfolderName
+
+# something is wrong, vbox not able to load image
+/etc/init.d/vboxdrv setup
+
+to move vdi and image file to another location
+
+change the following in VirtualBox.xml to reflect the changes
+<MachineRegistry>
+      <MachineEntry uuid="{5bababfa-ad62-471c-44b8-24bc07022f03}" src="Machines/winXP/winXP.xml"/>
+
+    <DiskRegistry>
+      <HardDisks>
+        <HardDisk uuid="{901f1f7e-dc57-48a3-f2a3-d14434f71cf5}" type="normal">
+          <VirtualDiskImage filePath="/media/software/virtualBox/winXP/winXP.vdi"/>
+          <DiffHardDisk uuid="{623b34a6-606c-45cf-8e99-9f2ba5c53459}">
+            <VirtualDiskImage filePath="/media/Software/VirtualBox/Machines/winXP/Snapshots/{623b34a6-606c-45cf-8e99-9f2ba5c53459}.vdi"/>Audio:
+choose "Alsa Audio Driver/pulse (recommended)" if you running virtualbox from Linux host and want to run windows virtual machine.
+choose "Null Audio Driver" if you running virtualbox from Linux host and want to run linux virtual machine.
+choose "Oss Audio Driver" if you running virtualbox from Windows host..
+
+new partition:
+create a new vdi
+goto setting->hardisk-> add ide primary slave
+
+move configuration VirtualBox.xml file to new location
+set new environment variable
+VBOX_USER_HOME=D:\VirtualBox
+
+--------------
+Enter password for default keyring to unlock
+-------------
+sudo apt-get install libpam-keyring
+
+The next step is to actually make use of this PAM plug-in. Edit /etc/pam.d/gdm and add the following in the bottom:
+auth optional pam_keyring.so try_first_pass
+session optional pam_keyring.so
+Log out and back in, and the Gnome keyring will be opened by your login!
+
+
+---------------
+vnc
+--------------
+vncviewer -fullscreen 192.168.0.1:0
+Press 'F8' -> Quit viewer
+from windown realVNC: 
+192.168.1.2:0 or 192.168.1.2::5900 to connect to desktop 0, 
+to connect to desktop 1 use 192.168.1.2:1 or 192.168.1.2::5901 and so on
+-------------
+openssh-server
+-------------
+if ever get connection refused (port 22)
+sudo apt-get install openssh-server
+
+--------------
+wants access to the default keyring but it is locked
+--------------
+to fix it - just delete /home/YOUR NAME/.gnome2/keyrings/default.keyring
+
+-------------
+gnu go
+-------------
+sudo apt-get build-dep gnugo
+
+-----------
+graphical git
+-----------
+sudo apt-get install gitk
+
+----------
+sun-java6-plugin
+---------
+sudo apt-get install sun-java6-plugin (or)
+sudo apt-get install sun-java5-jre sun-java5-plugin sun-java5-fonts
+sudo apt-get install sun-java6-jre sun-java6-plugin
+
+[ 12.04 ][ sun-java6-jdk ]
+mkdir ~/src
+cd ~/src
+git clone https://github.com/flexiondotorg/oab-java6.git
+cd ~/src/oab-java6
+sudo ./oab-java.sh
+
+------
+company ssl vpn
+------
+gksudo firefox (need root privilege to install some file)
+https://extranet.scei.a-star.edu.sg/dana-na/auth/(I2R)url_default/welcome.cgi
+
+------------
+shortcut key
+------------
+Keyboard shortcuts for GNOME desktop
+Ctrl + Alt + F1 = Switch to the first virtual terminal
+Ctrl + Alt + F2(F3)(F4)(F5)(F6) = Select the different virtual terminals
+Ctrl + Alt + F7 = Restore back to the current terminal session with X
+Alt + F3 = opens the Deskbar Applet
+Alt + F5 = unmaximizes the current window.f
+Alt + F7 = move the current window
+Alt + F8 = resizes the current window.
+Alt + F9 = minimizes the current window.
+Alt + F10 =  maximizes the current window.
+Alt + Space = opens the window menu.
+Ctrl + Alt + + = Switch to next X resolution
+Ctrl + Alt + - = Switch to previous X resolution
+
+Ctrl + A = Move cursor to beginning of line
+Ctrl + E = Move cursor to end of line
+Ctrl + C = kills the current process.
+Ctrl + Z = sends the current process to the background.
+Ctrl + D = logs you out.
+Ctrl + R = finds the last command matching the entered letters.
+Enter a letter, followed by Tab + Tab = lists the available commands beginning with those letters.
+Ctrl + U = deletes the current line.
+Ctrl + K = deletes the command from the cursor right.
+Ctrl + W = deletes the word before the cursor.
+Ctrl + L = clears the terminal output
+Shift + Ctrl + C = copy the highlighted command to the clipboard.
+Shift + Ctrl + V (or Shift + Insert) = pastes the contents of the clipboard.
+Alt + F = moves forward one word.
+Alt + B = moves backward one word.
+Arrow Up/Down = browse command history
+Shift + PageUp / PageDown = Scroll terminal output
+
+Keyboard shortcuts for Compiz
+Alt + F6 = switch between windows in an application
+Alt + Tab = switch between open windows
+Win + Tab = switch between open windows with Shift Switcher or Ring Switcher effect
+Win + E = Expo, show all workspace
+Ctrl + Alt + Down = Film Effect
+Ctrl + Alt + Left mouse button = Rotate Desktop Cube
+Alt + Shift + Up = Scale Windows
+Ctrl + Alt + D = Show Desktop
+Win + Left mouse button = take screenshot on selected area
+Win + Mousewheel = Zoom In/Out
+Alt + Mousewheel = Transparent Window
+Alt + F8 = Resize Window
+Alt + F7 = Move Window
+Win + P = Add Helper
+F9 = show widget layer
+Shift + F9 = show water effects
+Win + Shift + Left mouse button = Fire Effects
+Win + Shift + C = Clear Fire Effects
+Win + Left mouse button = Annotate: Draw
+Win + 1 = Start annotation
+Win + 3 = End annotation
+Win + S = selects windows for grouping
+Win + T = Group Windows together
+Win + U = Ungroup Windows
+Win + Left/Right = Flip Windows
+Keyboard shortcut for Nautilus
+Shift + Ctrl + N = Create New Folder
+Ctrl + T = Delete selected file(s) to trash
+Alt + ENTER = Show File/Folder Properties
+Ctrl + 1 = Toggle View As Icons
+Ctrl + 2 = Toggle View As List
+Shift + Right = Open Directory (Only in List View)
+Shift + Left = Close Directory (Only in List View)
+Ctrl + S = Select Pattern
+F2 = Rename File
+Ctrl + A = Select all files and folders
+Ctrl + W = Close Window
+Ctrl + Shift + W = Close All Nautilus Windows
+Ctrl + R = Reload Nautilus Window
+Alt + Up = Open parent directory
+Alt + Left = Back
+Alt + Right = Forward
+Alt + Home = go to Home folder
+Ctrl + L = go to location bar
+F9 = Show sidepane
+Ctrl + H = Show Hidden Files
+Ctrl + + = Zoom In
+Ctrl + - = Zoom Out
+Ctrl + 0 = Normal Size
+
+
+xfce
+close window : Alt + F4
+Maximize window : Alt + F5
+Maximize vertically : Alt + F6
+Maximize horizontally : Alt + F7
+Hide window : Alt + F8
+Shade window : Alt + F9
+Stick window : Alt + F10
+Cycle windows focus : Alt + Tab
+Move window : Control + Shift + Alt + Arrow (up, down, left, or right)
+Resize window : Shift + Alt + Arrow (up, down, left, or right)
+Next workspace : Control + Alt + Arrow right arrow
+Previous workspace : Control + Alt + Arrow left
+Add a workspace : Alt + Inser
+Delete a workspace : Alt + Delete
+Go to workspace number N (1-9) : Control + F(N)
+Move the window to previous|next workspace : Alt + Control + Home|End
+Move a window to workspace number N (1-9) : Alt + Control + keypad key number N
+Start xfhelp4 : Alt + F1
+Start xfrun4 : Alt + F2
+Lock the screen : Alt + Control + Delete
+
+xbind-key
+sudo aptitude install xbindkeys-config
+$ xbindkeys --defaults > ~/.xbindkeysrc  #create config file
+xbindkeys-config
+Terminal Emulator
+
+quadkonsole --columns 1 --rows 1
+
+Terminal browser
+
+links http://www.google.com
+wake from hibernate/standby
+
+I am using kernel boot parameters "noapic nolapic pci=noacpi". "noapic nolapic" are required to prevent complete freeze on "Uncompressing Linux", and "pci=noacpi" is required for network and external CD-ROM to work.
+
+Suspend-to-ram works now with i915. I am bypassing the blank screen problem with xorg.conf 'Option "VBERestore" "true"' and /etc/default/
+acpi-support 'DOUBLE_CONSOLE_SWITCH=true'
+http://www.iki.fi/karvinen/acer_travelmate_3004wtmi_with_linux.html
+Clean up
+
+sudo apt-get autoremove and sudo apt-get clean
+reinstall software with newer version manually
+
+
+to change the link (which Alt+F2 run application invoke), do
+1. which firefox
+2. relink the firefox to newer version (soft link) and Done!
+
+list of software
+1. conduit (synchonization)
+2.
+
+re-enable ctrl-alt-backspace
+
+gksu gedit /etc/X11/xorg.conf
+
+Section "ServerFlags"
+    Option "DontZap"  "yes"
+EndSection
+
+Option "DontZap"  "yes"
+
+restart x-server
+sudo /etc/init.d/gdm restart
+terminal client window
+to exit full screen (ctrl+alt+enter)
+enable virtual box usb: Jaunty (ubuntu 9.04)
+1. Add yourself to the vboxusers group:
+sudo usermod -G vboxusers -a YOURUSERNAME
+2. Determine the devgid for the vboxusers group:
+grep vboxusers /etc/group
+It will return something like:
+vboxusers: x:123:username
+3. Add the usbfs to fstab using vboxusers devgid:
+gksudo gedit /etc/fstab
+Add this line (be sure to use the devgid from step 2):
+none /proc/bus/usb usbfs devgid=123,devmode=664 0 0
+4 Reboot
+
+or
+if [ "`grep vboxusers /etc/group|grep $USER`" == "" ] ; then sudo usermod -G vboxusers -a $USER ; fi
+ sudo -i
+vGid="`grep vboxusers /etc/group|cut -d\: -f3`" # Determine the devgid for the vboxusers group
+if [ "$vGid" ] && [ "`grep usbfs /etc/fstab`" == "" ] ; then
+echo "none /proc/bus/usb usbfs devgid=${vGid},devmode=664 0 0" >>/etc/fstab
+mount -a
+fi
+ubuntu crash
+Alt + SysRq + K
+Alt + SysRq + ‘R’ ‘E’ ‘I’ ‘S’ ‘U’ ‘B’  (reverse BUSIER)
+
+Whenever I tried to turn on AMD’s Cool’n'Quiet feature, the system became very unstable. I had to go through a lot of pain to remove that driver without crashing the system.
+The equivalent software in Linux is powernowd, also known in Gnome (and, therefore, Ubuntu) as “CPU Frequency manager”, which takes advantage of the different CPU power-stepping features to slow down your processor when you don’t need it. This fits the pattern of crashing on high activity (when the CPU steps up) and occasionally at idle (when the CPU steps down after high activity).
+The fix: Go to System -> Administration -> Services and uncheck the option for powernowd. This will permanently stop the daemon. You can also run “/etc/init.d/powernowd stop” on Ubuntu and several other distributions to stop the daemon temporarily. (Distributions vary as to how to permanently stop a daemon. In Gentoo, for example, you’d run “rc-update del powernowd default”.)
+So, it seems that the chipset on many motherboards (mine is an Asus M2N-SLI Deluxe), or perhaps the processor (mine is an AMD Athlon 64 X2 5200+), is incompatible with power stepping. The same advice applies to Ubuntu 8.04 (Hardy Heron) and probably previous releases as well.
+xclip
+
+problem:
+xclip.c:27:27: error: X11/Xmu/Atoms.h: No such file or directory
+need to install libxmu-dev   (if still not enough then install libxmu-headers)
+copy the bin file from installed dir to loca/bin
+vnc
+
+exit full screen (f8)
+thunderbirds
+
+POP3 (not recommended, use IMAP, which will always sync with email server, port=143)
+incoming server: mailbe01.i2r.a-star.edu.sg
+SMTP
+outgoing server: mailfe01.i2r.a-star.edu.sg
+missing libstdc++5
+
+sudo apt-get install libstdc++5
+give password to root user
+
+sudo passwd
+funny
+
+fortune - print a random, hopefully interesting, adage
+samba - unable to connect
+samba not running
+firewall blocking
+
+system adminstration
+get webmin faclity from webmin.com
+after install, http://localhost:10000
+fedora admin tool usually start with system-config-xxx (e.g. system-config-network)
+
+check ubuntu name
+cat /etc/issue
+cat /etc/lsb-release
+cat /etc/apt/sources.list
+install deb file
+
+dpkg -i filename.deb
+[ game ]
+alien blaster
+battle tanks (fast 2D)
+cgoban
+chromium b.s.u
+enigma (golf-puzzle, paired box)
+exterme tux racer
+fish fillet (puzzle)
+FrenesiaLinux (arcade)
+hedgewars (worm-like)
+i have no tomatoes (bomberman-like)
+kbounce 
+neverball (balancing)
+super tux kart (mario kart)
+wormux (hedgewars)
+xmoto (balancing on motor)
+
+command:
+sudo apt-get install btanks
+
+not good:
+bomber clone
+xscorch
+
+to try: (seems good)
+pingus
+GLtron
+ManiaDrive
+
+to try:
+Maze of Galious
+bzflag
+beneath a steel sky (commercial science fiction adventure
+foobiliard
+freeciv
+freedroid
+GL-117
+Torus Trooper
+blobAndConquer
+starfighter
+Excalibur: Morgana's Revenge  (action adventure)
+ppracer (tux racer)
+torcs
+
+??
+junior-game-gl
+
+
+okay:
+mealstrom (asteroid)
+powermanga (plane shout-up)
+
+[ go ]
+uligo - go problem
+linux resourse
+
+SourceForge - 
+
+freshmeat.net 
+www.source-forge.net 
+slashdot.org
+www.newsforge.com
+www.linux.com
+www.ibm.com/linux
+www.ibiblio.org - linux software archive
+www.ibiblio.org/pub/linux - document
+www.softwarefreedom.org
+www.laptop.org
+
+linux news
+slashdot.org - top news site for open source devotees (news articles, book reviews and interviews)
+digg.com/linux_unix
+www.groklaw.net - legal issues surrounding open source software
+www.linuxtoday.com - news that is of particular interest to software developers and it managers
+www.lwn.net - weekly newsleeter covering a range of topics
+www.newsforge.com - online newspaper for linux and open source (many original articles)
+www.linuxinsdier.com
+en.wikipedia.org/wiki/Linux
+
+
+Proxy support for Synaptic Package Manager.
+Start the software and click Settings-> Preferences-> Network Tab. Click Manual Proxy Configuration and enter your proxy information. If you have to login to the proxy then use the host format username:password@host.
+
+Proxy support for apt-get package management
+Define the http_proxy variable in the format http://host:port/. If you have to login then use the format http://username:password@host:port/. To define this variable add the following lines to the root login file /root/.bashrc.
+
+http_proxy=http://username:password@host:port/
+export http_proxy
+
+Proxy support for Mozilla Firefox
+Start Mozilla then click on Edit->Preferences. In the General section click on Connection Settings. Enter your proxy infomation here. If you have to authenticate against your proxy then Mozilla will prompt you for a username and password.
+
+Proxy support for the Gnome desktop
+Click on Computer->Desktop Preferences->Network Proxy
+
+-------------------------
+actuall representation
+-------------------------
+1# CTRL+D does send EOF (quit)
+2# Ctrl+C does *NOT* kill the running app, it simply sends SIGINT to it, which is completely different from actually sending SIGKILL.
+CTRL-C = SIGINT
+kill = SIGTERM
+kill -9 = SIGKILL
+-------------------------
+history
+-------------------------
+history | tail -3
+481 aixpert -l low -n
+482 ls -l /etc/security/aixpert/core/
+483 vi /etc/security/aixpert/core/secaixpert.xml
+!481 will run the aixpert command.
+
+-------------------------
+foreground background
+-------------------------
+Addition to CTRL+Z:
+While fg will resume the process, bg will continue running the process in the background. It's the equivalent of ending a a command with "&".
+
+-------------------------
+reset
+-------------------------
+reset
+If you mess up your terminal, use the reset command. For example, if you try to cat a binary file, the terminal starts showing weird characters. Note that you may not be able to see the command when you're typing it.
+
+-------------------------
+mouse
+-------------------------
+Middle mouse button
+* Paste text.
+* Move items.
+* Move windows to the back.
+
+-------------------------
+home directory
+-------------------------
+cd #return to home directory
+cd ~ #return to home directory
+cp 123.txt ~123.txt #copy to home directory
+mv 123.txt ./test/123.txt #moving a file to home directory/test folder
+
+--------------------------
+FAT and tar.gz2
+--------------------------
+when try to extract, encounter this problem:
+Cannot utime: Operation not permitted
+Problem solved by another guru, he adviced not to
+execute commands in FAT partitions (symb. links).
+
+-------------------------
+ How to boot Ubuntu from ISO image on hard drive or USB stick
+-------------------------
+Copy ISO image to any partition or flash drive which you have. Add to kernel parameters:
+find_iso=/path/to/image/ubuntu-live-cd.iso boot=casper
+In the GRUB menu: press 'e', then point to kernel string, then again press 'e'. After edition press 'Enter', then 'b'.
+If you boot from CD/DVD press 'F6'.
+
+https://help.ubuntu.com/community/RecoveringUbuntuAfterInstallingWindows
+
+Error: Too many open files
+
+ulimit -a
+ulimit -n
+
+/etc/security/limits.conf
+add
+uidc1325 hard nofile 4096
+
+connecting to ubuntu from window
+
+There are many tools available for this purpose. Currently, only XMing has been trialed.
+This tool uses XDMCP protocol to remotely connect to linux pc.
+Install the XMing in the windows selecting the default setting where ever it is irrelevant.
+On installations you get XLaunch and XMing at the startup programs in Windows PC.
+To connect to the remote linux PC start XLaunch.
+Select "One Window" option and Next
+Select "Open Session via XDMCP" and Next
+Key in the ip address of the linux pc  and Next
+Choose default setting for all the irrelevant queries.
+Save configurations for future use
+Click Finish to launch the remote window.
+This will initiate a new user login into your linux pc. Close the windows like any other applications once you are done with your linux pc.
+
+For the XMing to operate successfully, below settings may be needed at the linux PC
+Go to System-> Administrator-> FireStarter and Stop or lock the firewall.
+Go to System-> Preferences-> Remote Desktop Preferences, 
+select Allow other users to view and Control your desktop
+select 'Configure network automatically to accept connections'
+Go to Sytem-> Administrator-> Login window and
+In General Tab -> Unclick 'Disable multiple logins for a single user'
+In Remote Tab -> Select Style 'Same as local'
+In Security Tab -> Unclick 'Deny TCP connections to XServer'
+Some of the above may not be needed for successful connection of linux pc to XMing tool.
+
+disable automount 
+
+There is a solution but you will have to enter your password every time you want to mount a removable device:
+1. Press Alt+F2 and enter: polkit-gnome-authorization
+2. Go to Storage => Mount file systems from removable drivers
+3. Press the "Edit..." button
+4. Choose "Active Console: Authentication"
+5. Press the "Modify..." button
+[ sudoer ]
+
+sudo select-editor
+sudo visudo
+export EDITOR=vim
+sudo -E visudo
+export EDITOR="nano"
+%sudo ALL= NOPASSWD: /usr/sbin/firestarter
+
+[ jaunty repo ]
+
+deb http://us.archive.ubuntu.com/ubuntu/ jaunty multiverse
+deb http://us.archive.ubuntu.com/ubuntu/ jaunty-updates multiverse
+sudo add-apt-repository "deb http://ftp.science.nus.edu.sg/ubuntu/ jaunty multiverse"
+[ byobu ]
+
+gedit /etc/apt/sources.list
+sudo add-apt-repository "deb http://ppa.launchpad.net/byobu/ppa/ubuntu jaunty main"
+sudo apt-key adv --keyserver keyserver.ubuntu.com --recv-keys F430BBA5 
+sudo aptitude update 
+sudo aptitude install byobu byobu-extras
+[ swap size ]
+System with about 4 GB of physical memory 	1 GB 	1 GB 
+Mid-range server with about 8 GB of physical memory 	2 GB 	2 GB 
+High-end server with about 16 to 128 GB of physical memory 	4 GB 	4 GB 
+High-end server with more than 128 GB of physical memory 	1/4 of physical memory size 	1/4 of physical memory size 
+
+
+[ repository ]
+Main - Officially supported software.
+Restricted - Supported software that is not available under a completely free license.
+Universe - Community maintained software, i.e. not officially supported software.
+Multiverse - Software that is not free
+
+deb http://us.archive.ubuntu.com/ubuntu/ hardy main restricted deb-src http://us.archive.ubuntu.com/ubuntu/ hardy main restricted
+Here's what they say:
+
+deb: These repositories contain binaries or precompiled packages. These repositories are required for most users.
+deb-src: These repositories contain the source code of the packages. Useful for developers.
+http://archive.ubuntu.com/ubuntu: The URI (Uniform Resource Identifier), in this case a location on the internet. See the official mirror list or the self-maintained mirror list to find other mirrors.
+hardy is the release name or version of your distribution.
+main & restricted are the section names or components. There can be several section names, separated by spaces.
+
+faster Ubuntu aptitude source in Singapore
+
+deb http://ubuntu.oss.eznetsols.org/ubuntu/ lucid main restricted
+deb-src http://ubuntu.oss.eznetsols.org/ubuntu/ lucid main restricted
+
+deb http://ubuntu.oss.eznetsols.org/ubuntu/ lucid universe
+deb-src http://ubuntu.oss.eznetsols.org/ubuntu/ lucid universe
+deb http://ubuntu.oss.eznetsols.org/ubuntu/ lucid-updates universe
+deb-src http://ubuntu.oss.eznetsols.org/ubuntu/ lucid-updates universe
+deb http://ubuntu.oss.eznetsols.org/ubuntu/ lucid multiverse
+deb-src http://ubuntu.oss.eznetsols.org/ubuntu/ lucid multiverse
+deb http://ubuntu.oss.eznetsols.org/ubuntu/ lucid-updates multiverse
+deb-src http://ubuntu.oss.eznetsols.org/ubuntu/ lucid-updates multiverse
+deb http://ubuntu.oss.eznetsols.org/ubuntu/ lucid-security main restricted
+deb-src http://ubuntu.oss.eznetsols.org/ubuntu/ lucid-security main restricted
+deb http://ubuntu.oss.eznetsols.org/ubuntu/ lucid-security universe
+deb-src http://ubuntu.oss.eznetsols.org/ubuntu/ lucid-security universe
+deb http://ubuntu.oss.eznetsols.org/ubuntu/ lucid-security multiverse
+deb-src http://ubuntu.oss.eznetsols.org/ubuntu/ lucid-security multiverse
+
+deb http://ftp.science.nus.edu.sg/ubuntu/ YOUR_UBUNTU_VERSION_HERE main
+deb-src http://ftp.science.nus.edu.sg/ubuntu/ YOUR_UBUNTU_VERSION_HERE main
+
+deb http://ftp.science.nus.edu.sg/ubuntu/ YOUR_UBUNTU_VERSION_HERE main
+deb-src http://ftp.science.nus.edu.sg/ubuntu/ YOUR_UBUNTU_VERSION_HERE main 
+[ virtualbox ] [ physical drive ]
+
+sudo apt-get install mbr
+install-mbr -f ~/.VirtualBox/FAKE.mbr
+VBoxManage internalcommands listpartitions -rawdisk /dev/sda
+
+Number Type StartCHS EndCHS Size (MiB) Start (Sect)
+1 0x07 0 /1 /1 1023/254/63 119240 63
+5 0x07 1023/254/63 1023/254/63 30718 244204128
+Whichever one(s) have 0×07 as their “Type” are the one we want to use (here is 1,5)
+
+sudo chmod 666 /dev/sda
+sudo chmod 666 /dev/sda1
+sudo chmod 666 /dev/sda5
+
+sudo usermod -a -G disk uidc1325
+
+## need to logout and log in back
+VBoxManage internalcommands createrawvmdk -filename ~/.VirtualBox/winxp.vmdk -rawdisk /dev/sda -partitions 1,5 -mbr ~/.VirtualBox/FAKE.mbr -relative -register
+
+The “partitions” parameter is what tells VirtualBox “only give Windows access to these partitions, and no where else!”
+Just to break down what’s going on here:
+VBoxManage internalcommands createrawvmdk – this portion runs the program to “Create Raw VMDK”. Self-explanatory. DO NOT USE SUDO HERE (h/t to Javier, below!)
+-filename ~/.VirtualBox/winxp.vmdk – this is the output file that actually holds the micro-image. You can call it whatever you like, and you can put it whereever you like. If you have multiple Virtual Machines, you may like to file them away in a separate folder. Whatever you like.
+-rawdisk /dev/sda -partitions 4 -This tells it that the raw Windows installation is located on device /dev/sda and that you only want to use partition 4 (yours may be different, as noted above)
+-mbr ~/.VirtualBox/FAKE.mbr -relative – the -mbr parameter tells it to use that Fake MBR we created earlier. It won’t work without this. -relative is a parameter that works in conjunction with the -partitions parameter, to allow you to explicitly specify which partition you want to use.
+-register – This tells VirtualBox to register it in its database of available images. Not absolutely necessary, but it’s a nice shortcut.
+
+That’s it. Chances are, if you are going to get errors anywhere, it’s likely to be here.
+
+Enable IO APIC
+
+Some of the sites I’ve read have suggested creating an alternate hardware profile for when you boot into Vbox. This is a good idea if you plan on booting into it normally once in a while (for games or whatnot). To create a new Hardware Profile, right click on “My Computer” and click “Properties”. Select “Hardware” then at the bottom, select “Hardware Profiles”. Create a new one and name it “Raw Boot”, and rename the current one to “VBox Boot”.
+
+Windows will go through some growing pains this first boot sequence, as it maps all the hardware drivers to the VirtualBox extensions provided — You will likely need to restart. No guarantees on all the hardware working as it does in a native boot. You should be able to use things like Word, browse the web, use Photoshop (if you allocated enough RAM…you can always change that later), etc. Anything relatively lightweight should be fine.
+[ display ]
+
+XServer does not listen to TCP connections (default Ubuntu 10.04 configuration)
+
+Problem: 
+1. borg > xhost +
+2. borg > ssh <anyuser>@<anyhost>
+3. anyhost > export DISPLAY:<borg's IP>:0.0
+4. xclock
+
+NOTHING HAPPENS!!!! Any ideas? Here is what I have tried thus far.
+
+Efforts:
+1. gdmsetup - looked for security tab, doesn't exist
+2. installed gdm2setup - still not there
+3. looked for gdm.conf - not there
+4. when doing ps -ef|grep X - there is a -nolisten tcp "could this be culprit" hmm not sure
+5. modified /etc/ssh/ssh_config to Forward X
+
+None of above worked
+
+GDM2 uses custom.conf
+export display
+add the following:
+[security]
+DisallowTCP=false
+------
+Forget all the above. Just be sure the following is set. in etc/sysconfig/displaymanager
+
+DISPLAYMANAGER_REMOTE_ACCESS="yes"
+DISPLAYMANAGER_ROOT_LOGIN_REMOTE="yes"
+DISPLAYMANAGER_XSERVER_TCP_PORT_6000_OPEN="yes"
+
+Uncommeted the following line in /etc/services 
+x11 6000-6063/tcp X Window System 
+
+Then reset X.
+[ synergys ] 
+synergys -c /home/uidc1325/.synergy.conf
+section: screens
+sgp1404c:
+switchCorners = right
+end
+
+[ printer ] [ pdf ]
+sudo apt-get install cups-pdf
+or use the print-to-file already installed in ubuntu
+[ compiz ] [ arrange window ] [ horizontally ]
+sudo apt-get install compizconfig-settings-manager
+sudo apt-get install compiz-fusion-plugins-extra        # extra plugin
+[ delete cookies ] [ window ] [ chrome ] [ flash ]
+
+C:\Users\<username>\AppData\Roaming\Macromedia\Flash Player\*.
+C:\Users\<username>\AppData\Local\Google\Chrome\User Data
+[ grub2 ] [ default
+
+gksu gvim /etc/default/grub   ## after changes, must run update-grub
+grep -c "menuentry" /boot/grub/grub.cfg
+sudo update-grub
+sudo grub-set-default X         ## start with 0
+grep "menuentry" /boot/grub/grub.cfg   ## see all the entries
+
+[ remove old kernel entry ]
+linux-image-xxx
+check current with uname -a
+
+
+
+[ bluetooth ]
+- to switch off bluetooth power at starting
+sudo vim /etc/bluetooth/main.conf 
+InitiallyPowered = true
+
+[ brightness ][ not working ]
+chmod o+w /sys/class/backlight/acpi_video0/brightness
+echo 5 > /sys/class/backlight/acpi_video0/brightness
+
+sudo vim /etc/rc.local
+put following line before the “exit 0”
+echo 0 > /sys/class/backlight/acpi_video0/brightness
+
+[ brightness ][ command ]
+pkexec /usr/lib/gnome-settings-daemon/gsd-backlight-helper --set-brightness $(expr $(/usr/lib/gnome-settings-daemon/gsd-backlight-helper --get-brightness) + 1)
+
+[ brightness ][ init.d ][ not working ]
+sudo vim /etc/init.d/local
+then add the following line to it
+pkexec /usr/lib/gnome-settings-daemon/gsd-backlight-helper --set-brightness 0
+
+[ brightness ][ working ]
+gvim /home/insidepower/.config/autostart/setbrightness.desktop    ##setbrightness.desktop is a filename, filename can be changed
+add the following to setbrightness.desktop
+[Desktop Entry]
+Type=Application
+Exec=pkexec /usr/lib/gnome-settings-daemon/gsd-backlight-helper --set-brightness 0
+Hidden=false
+X-GNOME-Autostart-enabled=true
+
+Comment[en_US]=to set the brightness of monitor
+Comment=to set the brightness of monitor
+
+
+
+[ brightness ][ python ]
+https://github.com/ishanthilina/setBrightness/blob/master/src/setBrightness.py
+First you need to add it to the startup applications list. The command to be given in the startup applications is “python /<path>/<to>/<script>/setBrightness.py < Brightness level>”.
+(If you don’t know how to add this to start-up applications please refer http://linuxandfriends.com/2011/06/01/how-to-add-startup-programs-in-gnome-3/ )
+#!/usr/bin/python
+import argparse
+import dbus
+import datetime
+
+# Level settings:
+day_level = 75
+night_level = 20
+
+bus = dbus.SessionBus()
+
+proxy = bus.get_object('org.gnome.SettingsDaemon',
+                       '/org/gnome/SettingsDaemon/Power')
+#print proxy
+
+iface = dbus.\
+  Interface(proxy, dbus_interface='org.gnome.SettingsDaemon.Power.Screen')
+
+# Description
+parser = argparse.ArgumentParser(description='Sets the Monitor Brightness')
+
+# Set int argument:
+parser.add_argument("level", nargs="?", type=int, help='Integer from 1 to 100')
+# nargs="?" wont make error if missing argument
+
+args = parser.parse_args()
+
+#print 'Bright: ', args.level
+
+if not args.level and args.level != 0:
+
+    # Setting brightness based on time:
+    print "Setting brightness based on Time"
+
+    now = datetime.datetime.now()
+    #print "Current hour: %d" % now.hour
+
+    if now.hour > 7 and now.hour < 20:
+        level = day_level
+        #print "Brigthness Changed"
+    else:
+        level = night_level
+
+else:
+        level = args.level
+
+print "Setting brightness to: ", level
+
+# Set brightness:
+try:
+    iface.SetPercentage(level)
+except:
+    print "Wrong brightness input: \nplease enter int from 1 to 100"
+
+
+
+[ launcher ][ custom program ]
+
+default location:  /usr/share/applications
+can also include in user home desktop: ~/Desktop/xxx.desktop
+[Desktop Entry]
+Version=1.0
+Type=Application
+Terminal=false
+Icon[en_SG]=/home/insidepower/Pictures/eclipse.xpm
+Name[en_SG]=Eclipse
+Exec=/opt/eclipse/eclipse
+Name=Eclipse
+Icon=/home/insidepower/Pictures/eclipse.xpm
+
+
+
+
+[ startup ][ launcher ]
+ubuntu Softwaresetup
+
+
+
+[ installation ]
+- currently using ext4 for root
+- root is in /dev/sda4 (ext4)
+- home at /dev/sda11 (ext4)
+- second partition at /dev/sda12 (ext3)
+- configure swap area
+
+
+
+1. Editing PS (command prompt) @ vi ~/.bashrc
+2. gksudo and kdesu for graphical applications. sudo for command-line applications.
+3. /etc/apt/sources.list (synatic source)
+4. command line shortcut: sudo mv /usr/bin/firefox f
+5. gconf-editor
+6. echo $PATH (win: echo %PATH%)
+7. "Headers" mean development (*.h) files which are conveyed by -dev packages.
+8. smb://192.168.1.101
+9. Alt+ Print Screen + (Raising Elephants Is So Utterly Boring) - to restart ubuntu
+
+[ software ] recommended
+accessories
+speedcrunch (calculator)
+quaculate
+synergys and quicksynergy - mouse and keyboard sharing
+
+game
+cgoban
+
+graphics
+gThumb
+scribus
+inkscape
+
+internet
+wireshark
+kotepe? (replace pidgin?)
+Epiphany (fast gtk browser)
+midori (promising webkit browser)
+
+programming
+ddd
+meld (like beyond compare)
+FLUID (fltk gui editor)
+quanta plus
+valgrind (memory debugger, profile)
+
+sound and video
+vlc
+audacity
+
+system tools
+hotwire shell
+
+pdf
+pdf2ps  - convert to postscript then open using scribus
+scribus 
+pdftk
+pdftk 1.pdf 2.pdf 3.pdf cat output 123.pdf      # merge a few pdfs into one
+
+misc
+rar + 7zip support
+Konsole (KDE)
+Liferea – Linux based feed reader
+
+[ dual panel file manger ]
+krusader (qt, slow, but have many feature) - use this 
+xfe (clickable path like nautilus) - use this
+tux commander (tabbable)
+gnome commander (no tabable)
+
+network ?
+nmap - For double checking IP allocations, finding that system downstairs that uses DHCP
+netcat - networking "swiss army knife"
+logwatch - or something similar to aid in reading / paring log files or serious messages
+
+fonts ?
+ttf-mscorefonts-installer - download gratis Microsoft core web fonts
+ttf-liberation - Red Hat work-alike fonts
+ttf-inconsolata - monospace font for programming
+adblock-plus and foxyproxy web browser plugins
+
+online storage ?
+Dropbox, for offsite backup
+skydrive
+
+chat?
+Quassel - the irc client with quite progressive features.
+irssi - IRC client
+Liferea is one of the best among desktop feed readers.
+
+file browser
+Midnight Commander
+misc
+ubuntu tweak
+glippy (simple clipboard manager + image)
+gmrun (autocompletion, history)
+
+c-r, c-s, !, tab
+wallpaper
+Real-time Sunlight Wallpaper
+
+enhancement
+screen -ls          # to list
+byobu (enhancement to screen)
+
+F2 - create new session (or window)
+F3 - move to prev session /window
+F4 - move to next window
+F6 - detach from byobu
+F7 - start copy (to paste use ctrl-a ])
+F8 - change window title
+F12 - to lock the screen
+ctrl-a h - screen shot current output to hardcopy.n
+ctrl-a <0-9> - switch to screen #0-9
+ctrl-a " - view list of current screen and select from it
+ctrl-a esc - copy mode
+ctrl-a A - name a session
+ctrl-a S - horizontal split (ctrl-a | for vertical split)
+
+multiuser
+
+ sudo chmod u+s /usr/bin/screen
+c-a : then type "multiuser on"
+c-a : then type "acladd user-name"
+to attach: screen -x <user-name>/
+
+man page for everything
+manpages-posix
+
+apt-get install xxx
+apt-get remove xxx
+apt-get autoremove
+apt-cache search phpmyadmin    #to search for phpmyadmin,
+apt-get update   #update database, said if apt-cache couldn't find a package
+
+to consider
+axel - download manager
+elinks - text browser
+ncdu - disk usage viewer (kn: like a bit slow)
+htop - enhancement to top
+surfraw - kn: chrome like can't use this properly
+
+surfraw google kmandla -browser=elinks
+
+elinks
+esc -> setup -> option
+
+Document->Cache->Ignore cache-control info from server (0)
+Document->Default color settings->Use document-specified colors (1)
+Document->HTML Rendering->Underline Links (1)
+Document->Browser->Forms->external editor (vim)
+User interface -> LEDs
+Terminals->xterm->colors(3)
+Document->downloading->directory
+
+esc->Terminal options (VT100, 256, block cursor, tranparency, underline)
+to edit form (press enter)
+press . then enter the link number, enter once to highlight the link, enter again to activate
+to go back <-, to go forward ->
+/ to search
+[ or ] to scroll horizontaly
+w to wrap
+< or > to switch between tabs
+t to open new tab
+g for location dialog
+h for history manager
+\ to see source
+D for download manager
+d to download link target
+q to quit
+
+[ window ] software
+1. irfanview
+2. fineprint (iprint is new software)
+3. flash
+4. photoshop
+5. notepad++
+6. sourceInsight
+7. xplorer2 (freeCommander)
+8. artrage
+9. cygwin
+10. spacemonger
+11. andLinux - let's Linux apps run natively in Windows
+12. magicDisc (by MagicISO)
+VirtuaWin – Provides multiple desktops similar to Linux
+13. CDex - grab audio to mp3
+14. Calibre - ebook management (format conversion)
+
+
+user icon 96x96
+
+package to install on new pc
+sudo apt-get -y install vim-gnome #(gtk is for xubuntu)
+sudo apt-get -y install build-essential
+sudo apt-get -y install exuberant-ctags
+sudo apt-get -y install git-svn
+sudo apt-get -y install git-doc
+sudo apt-get -y install gitk
+sudo apt-get -y install meld
+sudo apt-get -y install subversion
+sudo apt-get -y install ddd
+aii libncursesw5-dev
+sudo apt-get -y install apparix
+sudo apt-get -y install speedcrunch
+#sudo apt-get -y install doxygen
+
+
+chrome plugin
+adblock
+Google Quick Scroll
+autopager
+Copy Without Formatting
+Docs PDF/PowerPoint Viewer (by Google)
+FastestChrome - Browse Faster
+Google Dictionary (by Google)
+Google Translate
+Recent Tabs
+RSS Subscription Extension (by Google)
+Session Manager
+Web Developer
+Sexy Undo Close Tab
+Webpage Screenshot
+WOT
+SmoothScroll by PatrickB
+Screen Capture (by Google)
+AutoZoom by Red
+Development and Coding Search
+
+Explain and Send Screenshots
+
+
+[ 12.04 ] [ color profiles ]
+
+
+[ 12.04 ][ language set up ]
+In Dash, type Language Support
+Choose Keyboard Input method system: ibus (step1)
+Then choose the language to install (step2)
+log out and log in, then should see the keyboard icon
+click the keyboard icon, select the preference
+click the “input method” select the input method, then add it
+
+
+
+[ keyboard shortcut ][ 12.04 ]
+
+ Super - open up search key
+Keyboard Shortcuts
+
+Holding down the Super key will get you a keyboard overlay that documents most of these (12.04 only).
+Launcher
+
+
+Hold Super - Invoke the Launcher (Pre-12.04).
+Hold Super, then press 1 or 2 or 3 and so on until 0 to open or focus an application. The number corresponds to the location of the icon on the launcher from top to bottom.
+Adding Shift will open a new instance of the application if it's already open.
+Holding the key is also useful when you want to get to the Launcher but do not want to invoke the Dash.
+Super-T - Open the rubbish bin/trash can.
+Alt-F1 - Put keyboard focus on the Launcher, use arrow keys to navigate, Enter launches an application, Right arrow exposes the quicklists if an application has them.
+Ctrl-Alt-T - Launch a terminal window.
+Dash
+
+
+Tap Alt - Opens the HUD
+Hold Alt - Reveals application menu
+Tap Super - Opens the Dash. The open signal is sent when you let go of the key, not when you push it down, so if it feels slow just let go of the key earlier.
+Ubuntu 11.10
+Tab Move to the next lens (When the dash is open)
+Shift-Tab Move to the previous lens (when the dash is open)
+Ubuntu 12.04
+Ctrl-Tab Move to the next lens (When the dash is open)
+Ctrl-Shift-Tab Move to the previous lens (when the dash is open)
+Alt-F2 - Invoke the Dash in a "special mode" to run a command. Typing in a Folder Name will find that folder in Nautilus, you can also use ~ as a shortcut in the field.
+The Dash opens with focus on the search box to find applications and files. Using the arrow keys will navigate the results, use Enter to launch. Hitting Enter twice in rapid succession after a search term will automatically launch the first match in a search, even if it's still ongoing. (Basically a dash version of "I'm feeling lucky").
+Super-A - Open Applications lens
+Super-F - Open Files & Folders lens
+Super-M (11.10+ only) - Open the music lens
+Super-V (12.04 only) - Open the video lens
+Panel
+
+
+F10 (11.10 and earlier) / Alt-F10 (12.04) - Open the first menu on the panel, use the arrows keys to "scrub" across the menus. (There is no shortcut for the session menu, so hitting F10 and left arrow is a quick way to get there)
+Press Esc to close the menus without choosing anything.
+Window Management
+
+
+Ctrl-Super-D - Show desktop; hitting it again restores the windows.d
+Super-W - (11.10 and earlier) Spread mode, zoom out on all windows in all workspaces, in 12.04 it zooms out on the windows in the current workspace.
+Super-D (11.10 and earlier) - Minimize all windows; hitting it again restores them.
+Alt-Space - Opens the window's accessibility menu.
+Alt-Tab - Switch to other applications, you can hold Alt down and then hit tab to switch to the next application.
+Alt-` - (11.10+ only) - Switch between an application's windows. Hitting this combo when you're already focused on an application will automatically switch only between the windows for that application. The ` key on US layouts, but Unity will use whichever key is above your Tab key. (More info) (Video)
+Ctrl-Super-↑ (12.04 only) - Maximize the current window (seems to be buggy at the moment)
+Ctrl-Super-↓ (12.04 only) - Restore/Minimize the current window (seems to be buggy at the moment)
+Ctrl-Super-← (12.04 only) - Maximize current window to the left
+Ctrl-Super-→ (12.04 only) - Maximize current window to the right
+Window Placement
+
+If you cycle through the same key Unity will cycle through different placement widths, so experiment by hitting the numkey multiple times, for example Ctrl-Alt-numpad 5 5 5:
+Ctrl-Alt-Numpad 7 - Place window in top left corner of screen.
+Ctrl-Alt-Numpad 8 - Place window in top half of screen.
+Ctrl-Alt-Numpad 9 - Place window in top right corner of screen.
+Ctrl-Alt-Numpad 5 - Center/Maximize the window in the middle of the screen. In 12.04 this toggles between maximize and restore state
+Ctrl-Alt-Numpad 1 - Place window in the bottom left corner of the screen.
+Ctrl-Alt-Numpad 2 - Place window in the bottom half of the screen.
+Ctrl-Alt-Numpad 3 - Place window in the bottom right corner of the screen.
+Ctrl-Alt-Numpad 0 - Maximize the current window.
+Workspace Management
+
+
+Super-S - Expo mode (for everything), zooms out on all the workspaces and lets you manage windows.
+Shift-Alt-↑ - Expo mode for all windows in the current workspace only.
+Ctrl-Alt-← / → / ↑ / ↓ - (11.10+) - Change to a new workspace.
+Ctrl-Alt-Shift-← / → / ↑ / ↓ - Place window to a new workspace.
+Ctrl-Alt-L - Lock the screen.
+Screenshots
+
+
+PrtScn - Take a screenshot of the current workspace
+Alt-PrtScn - Take a screenshot of the current window
+System
+
+
+Ctrl-Alt-Del - Logout
+Mouse Tricks
+
+Launcher
+
+
+Clicking and holding an icon and then dragging it around will allow you to reorder it on the launcher. You can also drag it off to the right of the launcher to move it around. Note that you need to make an explicit movement to the right to move the icon off the launcher before you can move it around.
+Dragging and Dropping an icon into the trash can will remove it from the Launcher. The program itself will remain installed and accessible through the dash.
+Scrolling the mouse wheel while over the Launcher scrolls the icons if you have too many and need to move around quickly.
+Window Management
+
+
+Maximizing - Dragging a window to the top panel, or double-clicking a window's titlebar, orAlt-F10 (11.10 and earlier), will maximize it.
+Restore - There are two ways to restore, or unmaximize, the topmost maximized window of the current monitor for this workspace (not using the window controls)
+Double clicking on the top panel (but not in the application's menu)
+Dragging the top panel down.
+Middle click on Maximize - Maximize Window Vertically.
+Right click on Maximize - Maximize Window Horizontally
+Focus the topmost maximized window of the current monitor for this workspace: Left click on the top panel (but not in the application's menu)
+Tiling - Dragging a Window to the left/right border will auto tile it to that side of the screen.
+Middle click on an application's launcher icon - Open a new instance of the application in a new window. If the application isn't running it will just open it normally.
+Middle click on the top panel or window title bar (but not the menu) - send the current window behind all other windows.
+
+
+
+[ lucid ]setting
+
+[ bluetooth ]
+sudo update-rc.d -f bluetooth remove # to disable at boot run
+sudo update-rc.d bluetooth defaults # to enable
+sudo /etc/init.d/bluetooth start # to start it later
+man update-rc.d
+echo "0" | sudo tee -a /sys/devices/platform/asus_laptop/bluetooth         # turn led light off
+
+[ close to right ] [ button ][ left ] [ right ] [ close ]
+gconftool-2 --set /apps/metacity/general/button_layout --type string menu:minimize,maximize,close
+
+[ nautilus ] [ shortcut key ][ hotkey ]
+gconftool --set /desktop/gnome/interface/can_change_accels --type=bool True
+gconftool --set /apps/nautilus/preferences/default_folder_viewer --type=string list_view
+gconf-editor /apps/nautilus/preferences/side_pane_view
+on the menu, just press the key to be assigned to
+sudo apt-get install nautilus-actions
+
+[ ctrl-alt ]
+Ctrl + Alt + F1 through F12 are mapped for switching between virtual consoles. graphical display is F7 or F8.
+Ctrl + Alt + BkSp aborts your graphical server and kills all graphical processes.
+Ctrl + Alt + - and + switch to a smaller or higher screen resolution, respectively.
+Ctrl + Alt + Esc runs xkill by default. The next window you click is killed.
+
+[ sound ] [ applet ] [ taskbar ]
+gnome-volume-control-apple
+
+-----------------
+AVG antivirus
+-----------------
+1. simply type sudo avggui
+
+2.
+sudo gedit /usr/share/applications/avgupdate.desktop
+
+File:/usr/share/applications/avg.desktop
+[Desktop Entry]
+Name=AVG Updater
+Comment=Antivirus
+Exec=sudo /opt/grisoft/avg7/bin/avgupdate -o
+Icon=/opt/grisoft/avggui/prog/pixmaps/avgupdateico.png
+Terminal=true
+Type=Application
+Categories=Application;System;
+
+[or]
+
+@ /usr/share/applications/avggui.desktop
+Exec=gksudo avggui &
+
+-----------------
+enable desktop effect
+-----------------
+
+install envy
+install xserver-xgl
+
+To disable Xgl autostart for this user, create a file named ~/.config/xserver-xgl/disable
+
+-----------------
+smb file sharing
+-----------------
+find the /media/sdax
+right click to share
+then
+sudo smbpasswd -a 'insidepower'
+
+--problem--
+not able to create new user
+currently accessing using linux user
+change the password for it
+$ sudo smbpasswd -a insidepower
+
+-----------------
+firefox
+-----------------
+cd /home/insidepower/.mozilla/firefox
+cat profiles.ini
+(change relative path to absolute, point to the profile we have backup)
+
+firefox -ProfileManager
+
+
+--------------------------
+installing ie5 (with wine installed)
+--------------------------
+sudo gedit /etc/apt/sources.list
+uncomment (remove ##) from feisty universe
+
+synaptic package manager -> search cabextract ->install
+
+goto user home, type
+wget http://www.tatanka.com.br/ies4linux/downloads/ies4linux-latest.tar.gz
+
+unzip
+tar zxvf ies4linux-latest.tar.gz
+
+run the application
+
+-----------------------
+installing chinese
+-----------------------
+scim -d
+export XMODIFIERS=@im=scim
+export GTK_IM_MODULE=scim
+gnome-session
+ 
+new method:
+locale | grep LANG=
+sudo apt-get install scim-qtimm im-switch scim-pinyin
+im-switch -z <LANGUAGE CODE> -s scim
+im-switch -z en_SG.utf8  -s scim
+Control-spacekey starts and stops Chinese input
+
+[ google ] [ pinyin ]
+git clone git://github.com/tchaikov/scim-googlepinyin.git
+aptitude install autotools-dev libgtk2.0-dev libscim-dev
+sudo apt-get install automake
+sudo apt-get install libtool
+./autogen.sh
+make
+sudo make install
+
+-----------------
+remove ntfs mount icon on desktop
+-------------------
+$gconf-editor
+apps>nautilus>desktop > volumes visible (unselect) to remove *ALL* volumes icon
+
+-----------------
+grub
+-------------------
+sudo grub
+root(hd0,1)
+setup (hd0)
+quit
+
+----------------
+win chkdsk
+----------------
+chkdsk c: /R (repair errors, locate bad sectors, and recover readable information)
+chkdsk c: /f (repair errors without scanning the volume for bad sectors)
+
+----------------
+misc
+----------------
+1. blacklist driver (gksu gedit /etc/modprobe.d/blacklist
+2. (proxy) gksu gedit /etc/bash.bashrc
+(last line) type **export http_proxy="http://username:password@proxyAddr:port_number/"**
+
+----------------
+removing drivers
+----------------
+sudo mv /etc/X11/org.conf.original-0 /etc/X11/xorg.conf
+
+----------------
+installing dhcp
+----------------
+Please note that if you are installing the DHCP server for the first
+time you need to configure it first. Please stop (/etc/init.d/dhcp
+stop) the DHCP server daemon, edit /etc/dhcpd.conf to suit your needs
+and particular configuration, and restart the DHCP server daemon
+(/etc/init.d/dhcp start).
+
+You also need to edit /etc/default/dhcp to specify the interfaces dhcpd
+should listen to. By default it listens to eth0.
+
+< option routers 192.168.1.1;
+< option domain-name "mydomain.org";
+< option domain-name-servers 192.168.1.1, 192.168.1.2;
+---
+< option subnet-mask 255.255.255.0;
+---
+< subnet 192.168.1.0 netmask 255.255.255.0 {
+< range 192.168.1.100 192.168.1.149;
+
+----------------
+font
+----------------
+fontconfig-voodoo -f -s zh_CN
+sudo gedit /usr/share/language-selector/fontconfig/zh_CN
+(move the western fonts (ie Bitstream, Deja Vu, etc) higher up on the list)
+and set
+<edit name="antialias" mode="assign">
+<bool>false</bool>
+
+#bytecode hinting
+sudo dpkg-reconfigure fontconfig-config
+sudo dpkg-reconfigure fontconfig (apply the change)
+
+#--skip--
+$ sudo apt-get install msttcorefonts
+x-ttcidfont-conf
+
+----------------
+firefox
+----------------
+firefox.exe -ProfileManager (or f -ProfileManager)
+~/.mozilla/firefox/
+
+# In profiles.ini, locate the entry for the profile you've just moved. Change the Path= line to the new location. If you are using a non-relative pathname, the direction of the slashes may be relevant (this is true for Windows XP).
+# Change IsRelative=1 to IsRelative=0.
+# Save profiles.ini and restart Firefox.
+
+----------------
+type of files
+----------------
+# d (directory)
+# l (symbolic link)
+# b (block device)
+# c (character device)
+# p (named pipe)
+# s (socket)
+
+---------------
+create hardisk link (softlink)
+---------------
+ln -s /media/sda1 winNew
+ln -s /media/sda
+ln -s /media/sda5 entertainments
+ln -s /media/sda6 softwareNew
+ln -s /media/sda7 nebula2
+ln -s /media/sda8 ubuntu_vm
+ln -s /media/sda9 anime2
+ln -s /media/sda10 powerWord2
+ln -s /media/sda11 old
+ln -s /media/sdb10 powerWord
+ln -s /media/sdb1 win_vm
+ln -s /media/sdb5 software
+ln -s /media/sdb6 song
+ln -s /media/sdb7 anime
+ln -s /media/sdb8 Nebula
+ln -s /media/sdb9 badSector
+
+----------------
+vmware-mouse not scrollable
+----------------
+$ sudo gedit /etc/X11/xorg.conf
+Then find "InputDevice" section with Identifier "Configured Mouse"
+Change Option "Protocol" "ps/2"
+to
+Option Option "Protocol" "IMPS/2"
+Last restart X using Ctrl + Alt + Backspace
+
+----------------
+vmware
+----------------
+wget http://download3.vmware.com/software/wkst/VMware-workstation-5.5.0-18463.tar.gz
+
+or
+
+http://download3.vmware.com/software/vmplayer/VMware-player-2.0.2-59824.i386.tar.gz
+
+Locate the windows.iso file (example):
+$ tar ztvf VMware-workstation-5.5.0-18463.tar.gz | grep windows.iso
+vmware-distrib/lib/isoimages/windows.iso
+
+Extract the windows.iso file (example):
+$ tar zxvf VMware-workstation-5.5.0-18463.tar.gz vmware-distrib/lib/isoimages/windows.iso
+
+Or, to extract windows.iso without creating the vmware-distrib/lib/isoimages directory structure, use pax:
+$ pax -zrvf VMware-workstation-5.5.0-18463.tar.gz -s,vmware-distrib/lib/isoimages/,, vmware-distrib/lib/isoimages/windows.iso
+
+3. Mount the windows.iso file as a loopback file system, and either share the loopback file system with Samba, or copy the VMware Tools files to a location accessible by your guest system.
+
+$ mkdir /tmp/vmware_tools
+$ mount -o loop windows.iso /tmp/vmware_tools
+
+In your guest system, run setup.exe from the VMware Tools directory.
+
+uninstall vmware
+/usr/bin/vmware-uninstall.pl
+
+----------------
+customKey
+----------------
+gconf-editor
+apps-metacity-
+keybinding (paste the command)
+global keybinding (choose run_command_x) type in the shortcut Key
+
+
+---------------
+video
+---------------
+w32codecs
+totem-xine
+libxine-extracodecs
+
+(third party tab) add:
+deb http://www.debian-multimedia.org etch main
+
+(install real-player): remove w32codecs version of Realplayer plug-in
+sudo rm -rf /usr/lib/firefox/plugins/libtotem-complex-plugin.*
+
+sun-java5-plugin
+
+dvd:
+libdvdread3
+
+sudo  /usr/share/doc/libdvdread3/install-css.sh
+
+rmvb:
+1. sudo wget http://www.medibuntu.org/sources.list.d/gutsy.list -O /etc/apt/sources.list.d/medibuntu.list
+2. wget -q http://packages.medibuntu.org/medibuntu-key.gpg -O- | sudo apt-key add - && sudo apt-get update
+3. sudo apt-get install mplayer
+4. sudo apt-get install w32codecs
+5. gmplayer video.rmvb
+---------------
+Desktop/Icon/Gdm Theme
+---------------
+gdm / Login Window Preferences
+1. Open the "gdmsetup/Login Window Preferences" > tab "Local"
+2. Use the "Add" Button and select the downloaded file.
+
+Icon:
+1. extract into ~/.icon then In <Appearance> choose Customize <Icon>
+
+awn:
+1.
+sudo apt-get install build-essential automake1.9 autotools-dev bzr libxdamage-dev libxcomposite-dev libgnome2-common libgnome2-dev libgnome-desktop-dev libgnome-vfs-dev libgtk2.0-dev libwnck-dev libgconf2-dev libglib2.0-dev libdbus-glib-1-dev libgnomevfs2-0 libgnome-desktop-2 libgnome2-0 libwnck-common python-gtk2 python-gconf gnome-common python-dev python-gtk2-dev python-cairo-dev python-gnome2-dev
+2. download awn software
+https://launchpad.net/awn/+download
+3. unzip the file and in that directory, run "./config" then "sudo make" then "sudo make install"
+
+curve-awn
+1. If you have avant already installed, remove it:
+sudo rm -f /usr/local/bin/awn*
+sudo rm -f /usr/local/bin/avant*
+sudo rm -rf /usr/local/lib/awn
+sudo rm -f /usr/local/share/locale/*/LC_MESSAGES/avant-window-navigator.mo
+sudo rm -f /usr/local/share/applications/avant*
+sudo rm -f /usr/local/share/applications/awn*
+sudo rm -rf /usr/local/share/avant-window-navigator
+sudo rm -f /usr/local/lib/libawn*
+sudo rm -rf /usr/local/include/libawn
+sudo rm -f /usr/local/lib/libawn*
+sudo rm -f /usr/local/lib/pkgconfig/awn.pc
+sudo rm -rf /usr/local/share/awn-core-applets
+sudo rm -rf /usr/local/lib/python2.5/site-packages/awn/
+
+2. sudo apt-get install bzr m4 gnome-common
+3.
+sudo apt-get install build-essential autotools-dev libxdamage-dev libxcomposite-dev libgnome2-common libgnome2-dev libgnome-desktop-dev libgnome-vfs-dev libgtk2.0-dev libwnck-dev libgconf2-dev libglib2.0-dev libdbus-glib-1-dev libgnomevfs2-0 libgnome-desktop-2 libgnome2-0 libwnck-common python-gtk2 python-gconf bzr gnome-common python-dev python-gtk2-dev python-cairo-dev python-gconf python-gnome2-dev 
+bzr co http://bazaar.launchpad.net/~awn-curves-team/awn/awn-curves awn-curves
+cd awn-curves
+./autogen.sh && make
+sudo make install
+ 
+4. gedit /etc/apt/sources.list
+5.
+deb http://download.tuxfamily.org/syzygy42 gutsy avant-window-navigator
+deb-src http://download.tuxfamily.org/syzygy42 gutsy avant-window-navigator
+6.
+wget http://download.tuxfamily.org/syzygy42/reacocard.asc
+sudo apt-key add reacocard.asc
+rm reacocard.asc
+sudo apt-get update
+7. sudo apt-get install avant-window-navigator-bzr awn-core-applets-bzr
+
+---------------
+customized startup
+---------------
+1. System > prefernces > sessions
+2. add "avant-window-navigator"
+
+---------------
+Installing IE6
+---------------
+sudo apt-get install cabextract
+sudo apt-get install wine
+copy mfc42.dll
+wget http://www.tatanka.com.br/ies4linux/downloads/ies4linux-latest.tar.gz
+tar zxvf ies4linux-latest.tar.gz
+cd ies4linux-2.99.0/
+./ies4linux
+Type "ie6" to run
+
+---------------
+Installing IrfanView
+---------------
+copy mfc42.dll
+
+
+---------------
+Accessing Ext3 from window
+---------------
+1. DiskInternals
+2. Explore2fs
+3. Ext2 Installable File
+
+---------------
+Checking portable hdisk
+---------------
+1. fdisk -l
+2. df -h (df - system disk space usage)
+3. cat /etc/fstab
+
+to mount: mount /dev/sda1 /mnt/sda1
+to unmount: umount /mnt/sda1
+
+
+---------------
+Ubuntu stuck at ... running local boot script (reading etc/rc.boot)
+---------------
+1. press control alt F1-F6 to log into one of the tty (1 to 6)
+2. type ...  sudo dpkg-reconfigure xserver-xorg
+3. set all the value to default one....
+4. type ... startx
+
+
+---------------
+To let other to remote access this computer
+---------------
+set the permission at system->remote desktop
+vncviewer greengrass:0
+
+---------------
+To list installed software
+---------------
+dpkg --get-selections
+
+
+---------------
+Virtual Box
+---------------
+#to mount
+sudo mount -t vboxsf sharename mnt_point/
+e.g. sudo mount -t vboxsf del2 mnt/
+
+#download
+sudo aptitude install virtualbox-ose virtualbox-ose-modules-generic
+sudo aptitude remove virtualbox-ose-modules-2.6.24-16-38
+
+#give permission to run virtual box
+sudo usermod -G vboxusers -a [your username]
+
+sudo apt-get install build-essential
+sudo apt-get install linux-headers-(replaced with uname -r result)
+sudo /etc/init.d/vboxdrv setup
+
+install guest addition (under devices)
+/media/cdrom0$ sudo ./VBoxLinuxAdditions.run
+
+to map shared folder
+net use x: \\vboxsvr\sharedfolderName
+
+# something is wrong, vbox not able to load image
+/etc/init.d/vboxdrv setup
+
+to move vdi and image file to another location
+
+change the following in VirtualBox.xml to reflect the changes
+<MachineRegistry>
+      <MachineEntry uuid="{5bababfa-ad62-471c-44b8-24bc07022f03}" src="Machines/winXP/winXP.xml"/>
+
+    <DiskRegistry>
+      <HardDisks>
+        <HardDisk uuid="{901f1f7e-dc57-48a3-f2a3-d14434f71cf5}" type="normal">
+          <VirtualDiskImage filePath="/media/software/virtualBox/winXP/winXP.vdi"/>
+          <DiffHardDisk uuid="{623b34a6-606c-45cf-8e99-9f2ba5c53459}">
+            <VirtualDiskImage filePath="/media/Software/VirtualBox/Machines/winXP/Snapshots/{623b34a6-606c-45cf-8e99-9f2ba5c53459}.vdi"/>Audio:
+choose "Alsa Audio Driver/pulse (recommended)" if you running virtualbox from Linux host and want to run windows virtual machine.
+choose "Null Audio Driver" if you running virtualbox from Linux host and want to run linux virtual machine.
+choose "Oss Audio Driver" if you running virtualbox from Windows host..
+
+new partition:
+create a new vdi
+goto setting->hardisk-> add ide primary slave
+
+move configuration VirtualBox.xml file to new location
+set new environment variable
+VBOX_USER_HOME=D:\VirtualBox
+
+--------------
+Enter password for default keyring to unlock
+-------------
+sudo apt-get install libpam-keyring
+
+The next step is to actually make use of this PAM plug-in. Edit /etc/pam.d/gdm and add the following in the bottom:
+auth optional pam_keyring.so try_first_pass
+session optional pam_keyring.so
+Log out and back in, and the Gnome keyring will be opened by your login!
+
+
+---------------
+vnc
+--------------
+vncviewer -fullscreen 192.168.0.1:0
+Press 'F8' -> Quit viewer
+from windown realVNC: 
+192.168.1.2:0 or 192.168.1.2::5900 to connect to desktop 0, 
+to connect to desktop 1 use 192.168.1.2:1 or 192.168.1.2::5901 and so on
+-------------
+openssh-server
+-------------
+if ever get connection refused (port 22)
+sudo apt-get install openssh-server
+
+--------------
+wants access to the default keyring but it is locked
+--------------
+to fix it - just delete /home/YOUR NAME/.gnome2/keyrings/default.keyring
+
+-------------
+gnu go
+-------------
+sudo apt-get build-dep gnugo
+
+-----------
+graphical git
+-----------
+sudo apt-get install gitk
+
+----------
+sun-java6-plugin
+---------
+sudo apt-get install sun-java6-plugin (or)
+sudo apt-get install sun-java5-jre sun-java5-plugin sun-java5-fonts
+sudo apt-get install sun-java6-jre sun-java6-plugin
+------
+company ssl vpn
+------
+gksudo firefox (need root privilege to install some file)
+https://extranet.scei.a-star.edu.sg/dana-na/auth/(I2R)url_default/welcome.cgi
+
+------------
+shortcut key
+------------
+Keyboard shortcuts for GNOME desktop
+Ctrl + Alt + F1 = Switch to the first virtual terminal
+Ctrl + Alt + F2(F3)(F4)(F5)(F6) = Select the different virtual terminals
+Ctrl + Alt + F7 = Restore back to the current terminal session with X
+Alt + F3 = opens the Deskbar Applet
+Alt + F5 = unmaximizes the current window.f
+Alt + F7 = move the current window
+Alt + F8 = resizes the current window.
+Alt + F9 = minimizes the current window.
+Alt + F10 =  maximizes the current window.
+Alt + Space = opens the window menu.
+Ctrl + Alt + + = Switch to next X resolution
+Ctrl + Alt + - = Switch to previous X resolution
+
+Ctrl + A = Move cursor to beginning of line
+Ctrl + E = Move cursor to end of line
+Ctrl + C = kills the current process.
+Ctrl + Z = sends the current process to the background.
+Ctrl + D = logs you out.
+Ctrl + R = finds the last command matching the entered letters.
+Enter a letter, followed by Tab + Tab = lists the available commands beginning with those letters.
+Ctrl + U = deletes the current line.
+Ctrl + K = deletes the command from the cursor right.
+Ctrl + W = deletes the word before the cursor.
+Ctrl + L = clears the terminal output
+Shift + Ctrl + C = copy the highlighted command to the clipboard.
+Shift + Ctrl + V (or Shift + Insert) = pastes the contents of the clipboard.
+Alt + F = moves forward one word.
+Alt + B = moves backward one word.
+Arrow Up/Down = browse command history
+Shift + PageUp / PageDown = Scroll terminal output
+
+Keyboard shortcuts for Compiz
+Alt + F6 = switch between windows in an application
+Alt + Tab = switch between open windows
+Win + Tab = switch between open windows with Shift Switcher or Ring Switcher effect
+Win + E = Expo, show all workspace
+Ctrl + Alt + Down = Film Effect
+Ctrl + Alt + Left mouse button = Rotate Desktop Cube
+Alt + Shift + Up = Scale Windows
+Ctrl + Alt + D = Show Desktop
+Win + Left mouse button = take screenshot on selected area
+Win + Mousewheel = Zoom In/Out
+Alt + Mousewheel = Transparent Window
+Alt + F8 = Resize Window
+Alt + F7 = Move Window
+Win + P = Add Helper
+F9 = show widget layer
+Shift + F9 = show water effects
+Win + Shift + Left mouse button = Fire Effects
+Win + Shift + C = Clear Fire Effects
+Win + Left mouse button = Annotate: Draw
+Win + 1 = Start annotation
+Win + 3 = End annotation
+Win + S = selects windows for grouping
+Win + T = Group Windows together
+Win + U = Ungroup Windows
+Win + Left/Right = Flip Windows
+Keyboard shortcut for Nautilus
+Shift + Ctrl + N = Create New Folder
+Ctrl + T = Delete selected file(s) to trash
+Alt + ENTER = Show File/Folder Properties
+Ctrl + 1 = Toggle View As Icons
+Ctrl + 2 = Toggle View As List
+Shift + Right = Open Directory (Only in List View)
+Shift + Left = Close Directory (Only in List View)
+Ctrl + S = Select Pattern
+F2 = Rename File
+Ctrl + A = Select all files and folders
+Ctrl + W = Close Window
+Ctrl + Shift + W = Close All Nautilus Windows
+Ctrl + R = Reload Nautilus Window
+Alt + Up = Open parent directory
+Alt + Left = Back
+Alt + Right = Forward
+Alt + Home = go to Home folder
+Ctrl + L = go to location bar
+F9 = Show sidepane
+Ctrl + H = Show Hidden Files
+Ctrl + + = Zoom In
+Ctrl + - = Zoom Out
+Ctrl + 0 = Normal Size
+
+
+xfce
+close window : Alt + F4
+Maximize window : Alt + F5
+Maximize vertically : Alt + F6
+Maximize horizontally : Alt + F7
+Hide window : Alt + F8
+Shade window : Alt + F9
+Stick window : Alt + F10
+Cycle windows focus : Alt + Tab
+Move window : Control + Shift + Alt + Arrow (up, down, left, or right)
+Resize window : Shift + Alt + Arrow (up, down, left, or right)
+Next workspace : Control + Alt + Arrow right arrow
+Previous workspace : Control + Alt + Arrow left
+Add a workspace : Alt + Inser
+Delete a workspace : Alt + Delete
+Go to workspace number N (1-9) : Control + F(N)
+Move the window to previous|next workspace : Alt + Control + Home|End
+Move a window to workspace number N (1-9) : Alt + Control + keypad key number N
+Start xfhelp4 : Alt + F1
+Start xfrun4 : Alt + F2
+Lock the screen : Alt + Control + Delete
+
+xbind-key
+sudo aptitude install xbindkeys-config
+$ xbindkeys --defaults > ~/.xbindkeysrc  #create config file
+xbindkeys-config
+Terminal Emulator
+
+quadkonsole --columns 1 --rows 1
+
+Terminal browser
+
+links http://www.google.com
+wake from hibernate/standby
+
+I am using kernel boot parameters "noapic nolapic pci=noacpi". "noapic nolapic" are required to prevent complete freeze on "Uncompressing Linux", and "pci=noacpi" is required for network and external CD-ROM to work.
+
+Suspend-to-ram works now with i915. I am bypassing the blank screen problem with xorg.conf 'Option "VBERestore" "true"' and /etc/default/
+acpi-support 'DOUBLE_CONSOLE_SWITCH=true'
+http://www.iki.fi/karvinen/acer_travelmate_3004wtmi_with_linux.html
+Clean up
+
+sudo apt-get autoremove and sudo apt-get clean
+reinstall software with newer version manually
+
+
+to change the link (which Alt+F2 run application invoke), do
+1. which firefox
+2. relink the firefox to newer version (soft link) and Done!
+
+list of software
+1. conduit (synchonization)
+2.
+
+re-enable ctrl-alt-backspace
+
+gksu gedit /etc/X11/xorg.conf
+
+Section "ServerFlags"
+    Option "DontZap"  "yes"
+EndSection
+
+Option "DontZap"  "yes"
+
+restart x-server
+sudo /etc/init.d/gdm restart
+terminal client window
+to exit full screen (ctrl+alt+enter)
+enable virtual box usb: Jaunty (ubuntu 9.04)
+1. Add yourself to the vboxusers group:
+sudo usermod -G vboxusers -a YOURUSERNAME
+2. Determine the devgid for the vboxusers group:
+grep vboxusers /etc/group
+It will return something like:
+vboxusers: x:123:username
+3. Add the usbfs to fstab using vboxusers devgid:
+gksudo gedit /etc/fstab
+Add this line (be sure to use the devgid from step 2):
+none /proc/bus/usb usbfs devgid=123,devmode=664 0 0
+4 Reboot
+
+or
+if [ "`grep vboxusers /etc/group|grep $USER`" == "" ] ; then sudo usermod -G vboxusers -a $USER ; fi
+ sudo -i
+vGid="`grep vboxusers /etc/group|cut -d\: -f3`" # Determine the devgid for the vboxusers group
+if [ "$vGid" ] && [ "`grep usbfs /etc/fstab`" == "" ] ; then
+echo "none /proc/bus/usb usbfs devgid=${vGid},devmode=664 0 0" >>/etc/fstab
+mount -a
+fi
+ubuntu crash
+Alt + SysRq + K
+Alt + SysRq + ‘R’ ‘E’ ‘I’ ‘S’ ‘U’ ‘B’  (reverse BUSIER)
+
+Whenever I tried to turn on AMD’s Cool’n'Quiet feature, the system became very unstable. I had to go through a lot of pain to remove that driver without crashing the system.
+The equivalent software in Linux is powernowd, also known in Gnome (and, therefore, Ubuntu) as “CPU Frequency manager”, which takes advantage of the different CPU power-stepping features to slow down your processor when you don’t need it. This fits the pattern of crashing on high activity (when the CPU steps up) and occasionally at idle (when the CPU steps down after high activity).
+The fix: Go to System -> Administration -> Services and uncheck the option for powernowd. This will permanently stop the daemon. You can also run “/etc/init.d/powernowd stop” on Ubuntu and several other distributions to stop the daemon temporarily. (Distributions vary as to how to permanently stop a daemon. In Gentoo, for example, you’d run “rc-update del powernowd default”.)
+So, it seems that the chipset on many motherboards (mine is an Asus M2N-SLI Deluxe), or perhaps the processor (mine is an AMD Athlon 64 X2 5200+), is incompatible with power stepping. The same advice applies to Ubuntu 8.04 (Hardy Heron) and probably previous releases as well.
+xclip
+
+problem:
+xclip.c:27:27: error: X11/Xmu/Atoms.h: No such file or directory
+need to install libxmu-dev   (if still not enough then install libxmu-headers)
+copy the bin file from installed dir to loca/bin
+vnc
+
+exit full screen (f8)
+thunderbirds
+
+POP3 (not recommended, use IMAP, which will always sync with email server, port=143)
+incoming server: mailbe01.i2r.a-star.edu.sg
+SMTP
+outgoing server: mailfe01.i2r.a-star.edu.sg
+missing libstdc++5
+
+sudo apt-get install libstdc++5
+give password to root user
+
+sudo passwd
+funny
+
+fortune - print a random, hopefully interesting, adage
+samba - unable to connect
+samba not running
+firewall blocking
+
+system adminstration
+get webmin faclity from webmin.com
+after install, http://localhost:10000
+fedora admin tool usually start with system-config-xxx (e.g. system-config-network)
+
+check ubuntu name
+cat /etc/issue
+cat /etc/lsb-release
+cat /etc/apt/sources.list
+install deb file
+
+dpkg -i filename.deb
+[ game ]
+alien blaster
+battle tanks (fast 2D)
+cgoban
+chromium b.s.u
+enigma (golf-puzzle, paired box)
+exterme tux racer
+fish fillet (puzzle)
+FrenesiaLinux (arcade)
+hedgewars (worm-like)
+i have no tomatoes (bomberman-like)
+kbounce 
+neverball (balancing)
+super tux kart (mario kart)
+wormux (hedgewars)
+xmoto (balancing on motor)
+
+command:
+sudo apt-get install btanks
+
+not good:
+bomber clone
+xscorch
+
+to try: (seems good)
+pingus
+GLtron
+ManiaDrive
+
+to try:
+Maze of Galious
+bzflag
+beneath a steel sky (commercial science fiction adventure
+foobiliard
+freeciv
+freedroid
+GL-117
+Torus Trooper
+blobAndConquer
+starfighter
+Excalibur: Morgana's Revenge  (action adventure)
+ppracer (tux racer)
+torcs
+
+??
+junior-game-gl
+
+
+okay:
+mealstrom (asteroid)
+powermanga (plane shout-up)
+
+[ go ]
+uligo - go problem
+linux resourse
+
+SourceForge - 
+
+freshmeat.net 
+www.source-forge.net 
+slashdot.org
+www.newsforge.com
+www.linux.com
+www.ibm.com/linux
+www.ibiblio.org - linux software archive
+www.ibiblio.org/pub/linux - document
+www.softwarefreedom.org
+www.laptop.org
+
+linux news
+slashdot.org - top news site for open source devotees (news articles, book reviews and interviews)
+digg.com/linux_unix
+www.groklaw.net - legal issues surrounding open source software
+www.linuxtoday.com - news that is of particular interest to software developers and it managers
+www.lwn.net - weekly newsleeter covering a range of topics
+www.newsforge.com - online newspaper for linux and open source (many original articles)
+www.linuxinsdier.com
+en.wikipedia.org/wiki/Linux
+
+
+Proxy support for Synaptic Package Manager.
+Start the software and click Settings-> Preferences-> Network Tab. Click Manual Proxy Configuration and enter your proxy information. If you have to login to the proxy then use the host format username:password@host.
+
+Proxy support for apt-get package management
+Define the http_proxy variable in the format http://host:port/. If you have to login then use the format http://username:password@host:port/. To define this variable add the following lines to the root login file /root/.bashrc.
+
+http_proxy=http://username:password@host:port/
+export http_proxy
+
+Proxy support for Mozilla Firefox
+Start Mozilla then click on Edit->Preferences. In the General section click on Connection Settings. Enter your proxy infomation here. If you have to authenticate against your proxy then Mozilla will prompt you for a username and password.
+
+Proxy support for the Gnome desktop
+Click on Computer->Desktop Preferences->Network Proxy
+
+-------------------------
+actuall representation
+-------------------------
+1# CTRL+D does send EOF (quit)
+2# Ctrl+C does *NOT* kill the running app, it simply sends SIGINT to it, which is completely different from actually sending SIGKILL.
+CTRL-C = SIGINT
+kill = SIGTERM
+kill -9 = SIGKILL
+-------------------------
+history
+-------------------------
+history | tail -3
+481 aixpert -l low -n
+482 ls -l /etc/security/aixpert/core/
+483 vi /etc/security/aixpert/core/secaixpert.xml
+!481 will run the aixpert command.
+
+-------------------------
+foreground background
+-------------------------
+Addition to CTRL+Z:
+While fg will resume the process, bg will continue running the process in the background. It's the equivalent of ending a a command with "&".
+
+-------------------------
+reset
+-------------------------
+reset
+If you mess up your terminal, use the reset command. For example, if you try to cat a binary file, the terminal starts showing weird characters. Note that you may not be able to see the command when you're typing it.
+
+-------------------------
+mouse
+-------------------------
+Middle mouse button
+* Paste text.
+* Move items.
+* Move windows to the back.
+
+-------------------------
+home directory
+-------------------------
+cd #return to home directory
+cd ~ #return to home directory
+cp 123.txt ~123.txt #copy to home directory
+mv 123.txt ./test/123.txt #moving a file to home directory/test folder
+
+--------------------------
+FAT and tar.gz2
+--------------------------
+when try to extract, encounter this problem:
+Cannot utime: Operation not permitted
+Problem solved by another guru, he adviced not to
+execute commands in FAT partitions (symb. links).
+
+-------------------------
+ How to boot Ubuntu from ISO image on hard drive or USB stick
+-------------------------
+Copy ISO image to any partition or flash drive which you have. Add to kernel parameters:
+find_iso=/path/to/image/ubuntu-live-cd.iso boot=casper
+In the GRUB menu: press 'e', then point to kernel string, then again press 'e'. After edition press 'Enter', then 'b'.
+If you boot from CD/DVD press 'F6'.
+
+https://help.ubuntu.com/community/RecoveringUbuntuAfterInstallingWindows
+
+Error: Too many open files
+
+ulimit -a
+ulimit -n
+
+/etc/security/limits.conf
+add
+uidc1325 hard nofile 4096
+
+connecting to ubuntu from window
+
+There are many tools available for this purpose. Currently, only XMing has been trialed.
+This tool uses XDMCP protocol to remotely connect to linux pc.
+Install the XMing in the windows selecting the default setting where ever it is irrelevant.
+On installations you get XLaunch and XMing at the startup programs in Windows PC.
+To connect to the remote linux PC start XLaunch.
+Select "One Window" option and Next
+Select "Open Session via XDMCP" and Next
+Key in the ip address of the linux pc  and Next
+Choose default setting for all the irrelevant queries.
+Save configurations for future use
+Click Finish to launch the remote window.
+This will initiate a new user login into your linux pc. Close the windows like any other applications once you are done with your linux pc.
+
+For the XMing to operate successfully, below settings may be needed at the linux PC
+Go to System-> Administrator-> FireStarter and Stop or lock the firewall.
+Go to System-> Preferences-> Remote Desktop Preferences, 
+select Allow other users to view and Control your desktop
+select 'Configure network automatically to accept connections'
+Go to Sytem-> Administrator-> Login window and
+In General Tab -> Unclick 'Disable multiple logins for a single user'
+In Remote Tab -> Select Style 'Same as local'
+In Security Tab -> Unclick 'Deny TCP connections to XServer'
+Some of the above may not be needed for successful connection of linux pc to XMing tool.
+
+disable automount 
+
+There is a solution but you will have to enter your password every time you want to mount a removable device:
+1. Press Alt+F2 and enter: polkit-gnome-authorization
+2. Go to Storage => Mount file systems from removable drivers
+3. Press the "Edit..." button
+4. Choose "Active Console: Authentication"
+5. Press the "Modify..." button
+[ sudoer ]
+
+sudo select-editor
+sudo visudo
+export EDITOR=vim
+sudo -E visudo
+export EDITOR="nano"
+%sudo ALL= NOPASSWD: /usr/sbin/firestarter
+
+[ jaunty repo ]
+
+deb http://us.archive.ubuntu.com/ubuntu/ jaunty multiverse
+deb http://us.archive.ubuntu.com/ubuntu/ jaunty-updates multiverse
+sudo add-apt-repository "deb http://ftp.science.nus.edu.sg/ubuntu/ jaunty multiverse"
+[ byobu ]
+
+gedit /etc/apt/sources.list
+sudo add-apt-repository "deb http://ppa.launchpad.net/byobu/ppa/ubuntu jaunty main"
+sudo apt-key adv --keyserver keyserver.ubuntu.com --recv-keys F430BBA5 
+sudo aptitude update 
+sudo aptitude install byobu byobu-extras
+[ swap size ]
+System with about 4 GB of physical memory 	1 GB 	1 GB 
+Mid-range server with about 8 GB of physical memory 	2 GB 	2 GB 
+High-end server with about 16 to 128 GB of physical memory 	4 GB 	4 GB 
+High-end server with more than 128 GB of physical memory 	1/4 of physical memory size 	1/4 of physical memory size 
+
+
+[ repository ]
+Main - Officially supported software.
+Restricted - Supported software that is not available under a completely free license.
+Universe - Community maintained software, i.e. not officially supported software.
+Multiverse - Software that is not free
+
+deb http://us.archive.ubuntu.com/ubuntu/ hardy main restricted deb-src http://us.archive.ubuntu.com/ubuntu/ hardy main restricted
+Here's what they say:
+
+deb: These repositories contain binaries or precompiled packages. These repositories are required for most users.
+deb-src: These repositories contain the source code of the packages. Useful for developers.
+http://archive.ubuntu.com/ubuntu: The URI (Uniform Resource Identifier), in this case a location on the internet. See the official mirror list or the self-maintained mirror list to find other mirrors.
+hardy is the release name or version of your distribution.
+main & restricted are the section names or components. There can be several section names, separated by spaces.
+
+faster Ubuntu aptitude source in Singapore
+
+deb http://ubuntu.oss.eznetsols.org/ubuntu/ lucid main restricted
+deb-src http://ubuntu.oss.eznetsols.org/ubuntu/ lucid main restricted
+
+deb http://ubuntu.oss.eznetsols.org/ubuntu/ lucid universe
+deb-src http://ubuntu.oss.eznetsols.org/ubuntu/ lucid universe
+deb http://ubuntu.oss.eznetsols.org/ubuntu/ lucid-updates universe
+deb-src http://ubuntu.oss.eznetsols.org/ubuntu/ lucid-updates universe
+deb http://ubuntu.oss.eznetsols.org/ubuntu/ lucid multiverse
+deb-src http://ubuntu.oss.eznetsols.org/ubuntu/ lucid multiverse
+deb http://ubuntu.oss.eznetsols.org/ubuntu/ lucid-updates multiverse
+deb-src http://ubuntu.oss.eznetsols.org/ubuntu/ lucid-updates multiverse
+deb http://ubuntu.oss.eznetsols.org/ubuntu/ lucid-security main restricted
+deb-src http://ubuntu.oss.eznetsols.org/ubuntu/ lucid-security main restricted
+deb http://ubuntu.oss.eznetsols.org/ubuntu/ lucid-security universe
+deb-src http://ubuntu.oss.eznetsols.org/ubuntu/ lucid-security universe
+deb http://ubuntu.oss.eznetsols.org/ubuntu/ lucid-security multiverse
+deb-src http://ubuntu.oss.eznetsols.org/ubuntu/ lucid-security multiverse
+
+deb http://ftp.science.nus.edu.sg/ubuntu/ YOUR_UBUNTU_VERSION_HERE main
+deb-src http://ftp.science.nus.edu.sg/ubuntu/ YOUR_UBUNTU_VERSION_HERE main
+
+deb http://ftp.science.nus.edu.sg/ubuntu/ YOUR_UBUNTU_VERSION_HERE main
+deb-src http://ftp.science.nus.edu.sg/ubuntu/ YOUR_UBUNTU_VERSION_HERE main 
+[ virtualbox ] [ physical drive ]
+
+sudo apt-get install mbr
+install-mbr -f ~/.VirtualBox/FAKE.mbr
+VBoxManage internalcommands listpartitions -rawdisk /dev/sda
+
+Number Type StartCHS EndCHS Size (MiB) Start (Sect)
+1 0x07 0 /1 /1 1023/254/63 119240 63
+5 0x07 1023/254/63 1023/254/63 30718 244204128
+Whichever one(s) have 0×07 as their “Type” are the one we want to use (here is 1,5)
+
+sudo chmod 666 /dev/sda
+sudo chmod 666 /dev/sda1
+sudo chmod 666 /dev/sda5
+
+sudo usermod -a -G disk uidc1325
+
+## need to logout and log in back
+VBoxManage internalcommands createrawvmdk -filename ~/.VirtualBox/winxp.vmdk -rawdisk /dev/sda -partitions 1,5 -mbr ~/.VirtualBox/FAKE.mbr -relative -register
+
+The “partitions” parameter is what tells VirtualBox “only give Windows access to these partitions, and no where else!”
+Just to break down what’s going on here:
+VBoxManage internalcommands createrawvmdk – this portion runs the program to “Create Raw VMDK”. Self-explanatory. DO NOT USE SUDO HERE (h/t to Javier, below!)
+-filename ~/.VirtualBox/winxp.vmdk – this is the output file that actually holds the micro-image. You can call it whatever you like, and you can put it whereever you like. If you have multiple Virtual Machines, you may like to file them away in a separate folder. Whatever you like.
+-rawdisk /dev/sda -partitions 4 -This tells it that the raw Windows installation is located on device /dev/sda and that you only want to use partition 4 (yours may be different, as noted above)
+-mbr ~/.VirtualBox/FAKE.mbr -relative – the -mbr parameter tells it to use that Fake MBR we created earlier. It won’t work without this. -relative is a parameter that works in conjunction with the -partitions parameter, to allow you to explicitly specify which partition you want to use.
+-register – This tells VirtualBox to register it in its database of available images. Not absolutely necessary, but it’s a nice shortcut.
+
+That’s it. Chances are, if you are going to get errors anywhere, it’s likely to be here.
+
+Enable IO APIC
+
+Some of the sites I’ve read have suggested creating an alternate hardware profile for when you boot into Vbox. This is a good idea if you plan on booting into it normally once in a while (for games or whatnot). To create a new Hardware Profile, right click on “My Computer” and click “Properties”. Select “Hardware” then at the bottom, select “Hardware Profiles”. Create a new one and name it “Raw Boot”, and rename the current one to “VBox Boot”.
+
+Windows will go through some growing pains this first boot sequence, as it maps all the hardware drivers to the VirtualBox extensions provided — You will likely need to restart. No guarantees on all the hardware working as it does in a native boot. You should be able to use things like Word, browse the web, use Photoshop (if you allocated enough RAM…you can always change that later), etc. Anything relatively lightweight should be fine.
+[ display ]
+
+XServer does not listen to TCP connections (default Ubuntu 10.04 configuration)
+
+Problem: 
+1. borg > xhost +
+2. borg > ssh <anyuser>@<anyhost>
+3. anyhost > export DISPLAY:<borg's IP>:0.0
+4. xclock
+
+NOTHING HAPPENS!!!! Any ideas? Here is what I have tried thus far.
+
+Efforts:
+1. gdmsetup - looked for security tab, doesn't exist
+2. installed gdm2setup - still not there
+3. looked for gdm.conf - not there
+4. when doing ps -ef|grep X - there is a -nolisten tcp "could this be culprit" hmm not sure
+5. modified /etc/ssh/ssh_config to Forward X
+
+None of above worked
+
+GDM2 uses custom.conf
+export display
+add the following:
+[security]
+DisallowTCP=false
+------
+Forget all the above. Just be sure the following is set. in etc/sysconfig/displaymanager
+
+DISPLAYMANAGER_REMOTE_ACCESS="yes"
+DISPLAYMANAGER_ROOT_LOGIN_REMOTE="yes"
+DISPLAYMANAGER_XSERVER_TCP_PORT_6000_OPEN="yes"
+
+Uncommeted the following line in /etc/services 
+x11 6000-6063/tcp X Window System 
+
+Then reset X.
+[ synergys ] 
+synergys -c /home/uidc1325/.synergy.conf
+section: screens
+sgp1404c:
+switchCorners = right
+end
+
+[ printer ] [ pdf ]
+sudo apt-get install cups-pdf
+or use the print-to-file already installed in ubuntu
+[ compiz ] [ arrange window ] [ horizontally ]
+sudo apt-get install compizconfig-settings-manager
+sudo apt-get install compiz-fusion-plugins-extra        # extra plugin
+[ delete cookies ] [ window ] [ chrome ] [ flash ]
+
+C:\Users\<username>\AppData\Roaming\Macromedia\Flash Player\*.
+C:\Users\<username>\AppData\Local\Google\Chrome\User Data
+[ grub2 ] [ default
+
+gksu gvim /etc/default/grub   ## after changes, must run update-grub
+grep -c "menuentry" /boot/grub/grub.cfg
+sudo update-grub
+sudo grub-set-default X         ## start with 0
+grep "menuentry" /boot/grub/grub.cfg   ## see all the entries
+
+[ remove old kernel entry ]
+linux-image-xxx
+check current with uname -a
+
+
+
+[ bluetooth ]
+- to switch off bluetooth power at starting
+sudo vim /etc/bluetooth/main.conf 
+InitiallyPowered = true
+
+[ brightness ]
+chmod o+w /sys/class/backlight/acpi_video0/brightness
+echo 5 > /sys/class/backlight/acpi_video0/brightness
+
+[ startup ] [ launcher ]
+sudo apt-get install --no-install-recommends gnome-panel
+gnome-desktop-item-edit ~/Desktop/ --create-new
+
+
+[ monitor ] [ off ]
+
+xset dpms force off
+
+
+[ mouse ]
+
+imwheel -c     ## a gui to check the mouse button pressed
+powerlogic  mouse - 
+Thumb1 (button8)
+Thumb2 (button9)- first (outer) btn at the side
+Left (button6) - wheel tilt left
+Right (button7) - wheel tilt right
+Down (button 5) 
+Up (button4)
+/etc/X11/imwheel/imwheelrc or ~/.imwheelrc
+restart X to take effect
+use xev
+
+[ abbreviation ]
+
+'Compiz Config Settings Manager' (CCSM)
+
+[ optimize ]
+
+[ show desktop ]Launch Dconf Editor from dash and go to com > canonical > unity > launcher. In favorites, add unity://desktop-icon entry
+
+[ grub ][ repair ]
+
+sudo add-apt-repository ppa:yannubuntu/boot-repair && sudo apt-get update
+sudo apt-get install -y boot-repair && boot-repair
