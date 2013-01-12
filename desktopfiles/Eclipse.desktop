@@ -1,0 +1,7 @@
+[Desktop Entry]
+Version=1.0
+Type=Application
+Terminal=false
+Exec=/home/ken/android/adt-bundle-linux-x86/eclipse/eclipse
+Name=Eclipse
+Icon=/home/ken/confignewpc/desktopfiles/Eclipse_icon.png
