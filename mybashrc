@@ -17,7 +17,7 @@
 
 VIM_SERVER=`hostname`
 
-#essential
+### [ essential ]
 alias rm="rm -i"
 alias cp="cp -i"
 alias mv="mv -i"
@@ -38,8 +38,11 @@ alias xx="xsel -b"
 alias cdd="cd .."
 alias cddd="cd ../.."
 alias cdddd="cd ../../.."
+# to go to previous directory: cd -
+### copy last command
 alias xxx="history | tail -2 | head -1 | cut -d' ' -f5- | xsel -b"
-alias pwdd="pwd | xsel -b && pwd"
+### copy current directory
+alias pwdd="echo -n $PWD | xsel -b && pwd"
 alias pp="popd"
 alias p="pushd"
 
@@ -345,3 +348,14 @@ EFind() {
 #function zugzug() { ssh -A -p <non_standard_port> -t <proxy_server> ssh $1; }
 
 export PATH=$PATH:~/bin
+
+function addjavapath() {
+    if [ -n `which java` ] ; then
+        echo "java exist"
+        export JAVA_HOME=`which java`
+    else
+        echo "java directory is not exist in /opt/java"
+    fi
+}
+
+addjavapath
