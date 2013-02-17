@@ -189,6 +189,10 @@ if [ -n `which apparix` ]; then
 	source ~/confignewpc/apparix.sh
 fi
 
+if [ -f ~/scripts-kn/local-bashrc.sh ]; then
+    source ~/scripts-kn/local-bashrc.sh
+fi
+
 # copy file path to clipboard and output to stdout (no newline)
 function cff() {
 	FILE_NAME=$PWD"/"$1
@@ -351,7 +355,6 @@ export PATH=$PATH:~/bin
 
 function addjavapath() {
     if [ -n `which java` ] ; then
-        echo "java exist"
         export JAVA_HOME=`which java`
     else
         echo "java directory is not exist in /opt/java"
